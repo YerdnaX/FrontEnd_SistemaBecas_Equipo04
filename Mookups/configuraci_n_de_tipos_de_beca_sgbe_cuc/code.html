@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-highest": "#d8e3fa",
+                        "outline-variant": "#c3c6d1",
+                        "secondary": "#5c5f60",
+                        "on-surface": "#111c2c",
+                        "on-primary": "#ffffff",
+                        "surface-variant": "#d8e3fa",
+                        "surface-container-high": "#dee8ff",
+                        "on-error": "#ffffff",
+                        "outline": "#737780",
+                        "on-background": "#111c2c",
+                        "primary-container": "#003366",
+                        "on-surface-variant": "#43474f",
+                        "background": "#f9f9ff",
+                        "primary": "#001e40",
+                        "on-secondary": "#ffffff",
+                        "inverse-primary": "#a7c8ff",
+                        "error": "#ba1a1a",
+                        "surface-container": "#e7eeff",
+                        "on-primary-container": "#799dd6",
+                        "surface-container-lowest": "#ffffff",
+                        "surface": "#f9f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "base": "8px",
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-sm": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "label-sm": ["12px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface">
+<!-- SideNavBar (Authority: JSON Component) -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col p-4 gap-2 bg-surface-container-low dark:bg-surface-container border-r border-outline-variant z-50">
+<div class="mb-8 px-2 py-4">
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-on-surface">Gestiòn de Becas</h1>
+<p class="text-label-sm text-on-surface-variant mt-1">Administraciòn Central</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<!-- Active Tab: Solicitudes (Simulating Admin Flow) -->
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="text-label-md font-label-md">Solicitudes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="text-label-md font-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Configuraciòn</span>
+</a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4">
+<div class="flex items-center gap-3 px-2 mb-4">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white font-bold">U</div>
+<div>
+<p class="text-label-md font-bold text-on-surface">Usuario SGBE</p>
+<p class="text-[10px] text-on-surface-variant">Admin / TS</p>
+</div>
+</div>
+<button class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-error/10 hover:text-error rounded-lg transition-all duration-150">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Cerrar Sesiòn</span>
+</button>
+</div>
+</aside>
+<!-- Main Canvas -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- TopNavBar (JSON Injected Styles) -->
+<header class="flex justify-between items-center w-full pl-8 pr-margin-desktop h-16 sticky top-0 bg-surface/80 backdrop-blur-md border-b border-outline-variant z-40">
+<div class="flex items-center gap-4">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-xl">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container border-none rounded-lg text-body-sm focus:ring-2 focus:ring-primary" placeholder="Buscar por categoría o requisito..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">notifications</button>
+<button class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">help_outline</button>
+</div>
+<div class="h-8 w-[1px] bg-outline-variant"></div>
+<div class="flex items-center gap-3 cursor-pointer">
+<img alt="Foto de perfil del usuario" class="w-8 h-8 rounded-full border border-outline-variant" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjwuUkCT_S_jwsdYKemQCF0RAKJIARq8T_m5Yu57sjvqRXYitfmVzXmDxTAE7W4a5WBiNGl5BDdfZUk53KHejisWgdRw3BOLxdWkwwQaCTpuw96kCujO_8JzoCumhAc77pqCoVCXdYaC91yH3eWHa9ZzEawfWUwNPRmR0DhOHmjPEbxvnZLN1tbj8UuVcyPKXs_tTlURFOC--Bjup7VuJkVQp2ijpjfkIrPqYc5s9_uSAxG89EWy1movU52O5LbRJdQJ2njCtzOgA"/>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<section class="p-margin-desktop flex-1">
+<!-- Header Section -->
+<div class="flex justify-between items-end mb-10">
+<div>
+<nav class="flex items-center gap-2 text-label-sm text-on-surface-variant mb-2">
+<span>Configuración</span>
+<span class="material-symbols-outlined text-sm">chevron_right</span>
+<span class="text-primary font-bold">Tipos de Beca</span>
+</nav>
+<h2 class="text-headline-lg font-headline-lg text-primary">Configuración de Beneficios</h2>
+<p class="text-body-md text-on-surface-variant max-w-2xl mt-2">
+                        Administre las categorías de apoyo institucional, ajuste coberturas y actualice los criterios de elegibilidad para el Colegio Universitario de Cartago.
+                    </p>
+</div>
+<button class="flex items-center gap-2 bg-primary-container text-on-primary-container px-6 py-3 rounded-xl font-label-md hover:shadow-lg transition-all transform hover:-translate-y-0.5">
+<span class="material-symbols-outlined">add</span>
+                    Nueva Convocatoria
+                </button>
+</div>
+<!-- Dashboard Stats Summary -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+<div class="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-primary/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">category</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Categorías Activas</p>
+<p class="text-headline-sm font-bold">08</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-tertiary-fixed-dim/30 flex items-center justify-center text-tertiary-container">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Presupuesto Ejecutado</p>
+<p class="text-headline-sm font-bold">64%</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-emerald-100 flex items-center justify-center text-emerald-800">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">Becas Asignadas</p>
+<p class="text-headline-sm font-bold">1,240</p>
+</div>
+</div>
+<div class="bg-surface-container-low p-6 rounded-2xl border border-outline-variant/30 flex items-center gap-4">
+<div class="w-12 h-12 rounded-full bg-amber-100 flex items-center justify-center text-amber-800">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+<div>
+<p class="text-label-sm text-on-surface-variant">En Revisión</p>
+<p class="text-headline-sm font-bold">85</p>
+</div>
+</div>
+</div>
+<!-- Bento-Style Table Container -->
+<div class="bg-surface-container-lowest rounded-3xl shadow-sm border border-outline-variant/40 overflow-hidden">
+<div class="p-6 border-b border-outline-variant/20 bg-surface-container-low flex items-center justify-between">
+<h3 class="text-headline-sm font-bold text-on-surface">Tipos de Beca</h3>
+<div class="flex gap-2">
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors border border-outline-variant/40">
+<span class="material-symbols-outlined text-on-surface-variant">filter_list</span>
+</button>
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors border border-outline-variant/40">
+<span class="material-symbols-outlined text-on-surface-variant">download</span>
+</button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low">
+<tr>
+<th class="px-6 py-4 text-label-md text-on-surface-variant font-semibold">Tipo de Beca</th>
+<th class="px-6 py-4 text-label-md text-on-surface-variant font-semibold">Cobertura</th>
+<th class="px-6 py-4 text-label-md text-on-surface-variant font-semibold">Requisitos Clave</th>
+<th class="px-6 py-4 text-label-md text-on-surface-variant font-semibold">Estado</th>
+<th class="px-6 py-4 text-label-md text-on-surface-variant font-semibold text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/10">
+<!-- Beca Socioeconómica -->
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-primary-container/10 flex items-center justify-center text-primary">
+<span class="material-symbols-outlined">home_health</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Beca Socioeconómica</p>
+<p class="text-label-sm text-on-surface-variant">Apoyo según estrato social</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex flex-col gap-1">
+<span class="text-body-md font-bold text-on-surface">50% - 100%</span>
+<div class="w-24 h-1 bg-outline-variant rounded-full overflow-hidden">
+<div class="w-full h-full bg-primary"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-surface-container rounded text-[11px] text-on-surface-variant border border-outline-variant/20">Estudio Social</span>
+<span class="px-2 py-0.5 bg-surface-container rounded text-[11px] text-on-surface-variant border border-outline-variant/20">Ingresos</span>
+</div>
+</td>
+<td class="px-6 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Activa
+                                    </span>
+</td>
+<td class="px-6 py-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary p-2">edit</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary p-2">more_vert</button>
+</td>
+</tr>
+<!-- Beca de Honor -->
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-amber-100 flex items-center justify-center text-amber-800">
+<span class="material-symbols-outlined">school</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Beca de Honor</p>
+<p class="text-label-sm text-on-surface-variant">Excelencia Académica</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex flex-col gap-1">
+<span class="text-body-md font-bold text-on-surface">100% Cobertura</span>
+<div class="w-24 h-1 bg-outline-variant rounded-full overflow-hidden">
+<div class="w-full h-full bg-primary"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-surface-container rounded text-[11px] text-on-surface-variant border border-outline-variant/20">Promedio &gt; 90</span>
+<span class="px-2 py-0.5 bg-surface-container rounded text-[11px] text-on-surface-variant border border-outline-variant/20">No reprobados</span>
+</div>
+</td>
+<td class="px-6 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Activa
+                                    </span>
+</td>
+<td class="px-6 py-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary p-2">edit</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary p-2">more_vert</button>
+</td>
+</tr>
+<!-- Beca Deportes -->
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-blue-100 flex items-center justify-center text-blue-800">
+<span class="material-symbols-outlined">fitness_center</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Representación Deportiva</p>
+<p class="text-label-sm text-on-surface-variant">Atletas de alto rendimiento</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex flex-col gap-1">
+<span class="text-body-md font-bold text-on-surface">75% Cobertura</span>
+<div class="w-24 h-1 bg-outline-variant rounded-full overflow-hidden">
+<div class="w-[75%] h-full bg-primary"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-surface-container rounded text-[11px] text-on-surface-variant border border-outline-variant/20">Carta Entrenador</span>
+<span class="px-2 py-0.5 bg-surface-container rounded text-[11px] text-on-surface-variant border border-outline-variant/20">Competición</span>
+</div>
+</td>
+<td class="px-6 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-emerald-100 text-emerald-800 rounded-full text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span> Activa
+                                    </span>
+</td>
+<td class="px-6 py-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary p-2">edit</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary p-2">more_vert</button>
+</td>
+</tr>
+<!-- Beca en Pausa (Simulación) -->
+<tr class="hover:bg-primary-container/5 transition-colors group opacity-70">
+<td class="px-6 py-6">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-lg bg-outline-variant/20 flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined">theater_comedy</span>
+</div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Extensión Cultural</p>
+<p class="text-label-sm text-on-surface-variant">Grupos artísticos</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex flex-col gap-1">
+<span class="text-body-md font-bold text-on-surface">50% Cobertura</span>
+<div class="w-24 h-1 bg-outline-variant rounded-full overflow-hidden">
+<div class="w-[50%] h-full bg-on-surface-variant"></div>
+</div>
+</div>
+</td>
+<td class="px-6 py-6">
+<div class="flex flex-wrap gap-1">
+<span class="px-2 py-0.5 bg-surface-container rounded text-[11px] text-on-surface-variant border border-outline-variant/20">Audición</span>
+</div>
+</td>
+<td class="px-6 py-6">
+<span class="inline-flex items-center gap-1.5 px-3 py-1 bg-surface-container-highest text-on-surface-variant rounded-full text-label-sm font-semibold">
+<span class="w-1.5 h-1.5 rounded-full bg-on-surface-variant"></span> Inactiva
+                                    </span>
+</td>
+<td class="px-6 py-6 text-right">
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary p-2">edit</button>
+<button class="material-symbols-outlined text-on-surface-variant hover:text-primary p-2">more_vert</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="px-6 py-4 bg-surface-container-low flex items-center justify-between">
+<p class="text-label-sm text-on-surface-variant">Mostrando 4 de 8 tipos de beca registrados</p>
+<div class="flex gap-2">
+<button class="px-3 py-1 rounded border border-outline-variant bg-white text-on-surface-variant hover:bg-surface-container-high transition-colors text-label-sm">Anterior</button>
+<button class="px-3 py-1 rounded border border-outline-variant bg-white text-on-surface-variant hover:bg-surface-container-high transition-colors text-label-sm">Siguiente</button>
+</div>
+</div>
+</div>
+<!-- Configuration Sidebar / Drawer Placeholder -->
+<div class="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8">
+<div class="glass-card p-8 rounded-3xl relative overflow-hidden group">
+<div class="relative z-10">
+<h4 class="text-headline-sm font-bold text-primary mb-4">Criterios de Ponderación</h4>
+<p class="text-body-md text-on-surface-variant mb-6 leading-relaxed">
+                            Ajuste los pesos porcentuales para el análisis de Trabajo Social en becas de tipo socioeconómico. Estas variables afectan el cálculo automático del índice de vulnerabilidad.
+                        </p>
+<div class="space-y-4">
+<div class="flex justify-between items-center">
+<span class="text-label-md">Ingreso Per Cápita</span>
+<span class="font-bold text-primary">40%</span>
+</div>
+<div class="w-full bg-outline-variant/20 h-2 rounded-full">
+<div class="bg-primary h-full rounded-full" style="width: 40%"></div>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-label-md">Condición de Vivienda</span>
+<span class="font-bold text-primary">30%</span>
+</div>
+<div class="w-full bg-outline-variant/20 h-2 rounded-full">
+<div class="bg-primary h-full rounded-full" style="width: 30%"></div>
+</div>
+</div>
+<button class="mt-8 text-primary font-bold flex items-center gap-2 hover:underline">
+                            Configurar Pesos <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+</div>
+<div class="absolute -right-10 -bottom-10 opacity-5 group-hover:opacity-10 transition-opacity pointer-events-none">
+<span class="material-symbols-outlined" style="font-size: 200px;">analytics</span>
+</div>
+</div>
+<div class="bg-surface-container p-8 rounded-3xl flex flex-col justify-center border border-outline-variant/30">
+<h4 class="text-headline-sm font-bold text-primary mb-2">Auditoría Institucional</h4>
+<p class="text-body-md text-on-surface-variant mb-6">
+                        El Colegio Universitario de Cartago mantiene un registro estricto de todos los cambios realizados en las políticas de becas para garantizar transparencia total.
+                    </p>
+<div class="flex -space-x-3 overflow-hidden mb-6">
+<img alt="Auditor 1" class="inline-block h-10 w-10 rounded-full ring-2 ring-white" data-alt="Professional institutional auditor woman in business attire looking at digital screen in a high-key office environment, representing corporate transparency and academic governance, minimalist high-end lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDmHjAEoTdcEghvlB0TKrHXcHTnhiJRq6uCKOb93hJSomWaqDOmqsOzeb-on4Vgiq8z6T69ZtiPECafIDaMMM4iaF-fTTaykBl2BztqEuXLq9Bl-4oM1qE6oU7NL0cRcppUVQ0KK9CIX0OhbB4VjWPMIqGRXGTbSjKU5-rsB4R3oS58bGOR0j5IXYyLFLPmywt62zlRrLc9TwQetZ99TWsWhUue8vpjt8LaEPyECSTEhlCamIfipSnTwX7KVomQ8msFNYpaDC-8KVk"/>
+<img alt="Auditor 2" class="inline-block h-10 w-10 rounded-full ring-2 ring-white" data-alt="Male institutional compliance officer working in a modern minimalist workspace with clean lines and soft ambient lighting, focused expression, blue and white professional tones." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCiTg7-Dy4dxkfPL2fqBGrA2QZ2h6lI1QNkGDnkdY5m8f-4fWEe7iucqTcUwfqMgY1591YRJ9bnT_4s4zgNDBmpyKGFOhaOGbqxO4eGWwfMlXIAHZS6JOH9TjeIqhxUCZfYM6ROfRYPmmcx45i8xpEVLZe4x9YiXBXjsVMQRP6PfU9IxcKq-vyB1f0aWGjvYzd0wETEbTZxCSdsnUCXGdslpc7n8V-7MhmOAl6lqToNgaMPmudChIHSnpBZqGzMgeZ0S5bAXIggZ7o"/>
+<div class="flex items-center justify-center h-10 w-10 rounded-full ring-2 ring-white bg-primary text-white text-[10px] font-bold">+12</div>
+</div>
+<p class="text-label-sm text-on-surface-variant italic">Última modificación hace 2 horas por: Dept. Bienestar Estudiantil</p>
+</div>
+</div>
+</section>
+<!-- Footer (Authority: JSON Component) -->
+<footer class="flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full mt-auto bg-surface-container-highest dark:bg-surface-container-lowest border-t border-outline-variant">
+<div class="mb-4 md:mb-0">
+<p class="text-label-md font-label-md font-bold text-on-surface">SGBE - CUC</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant max-w-xs mt-1">© 2024 Colegio Universitario de Cartago. Departamento de Bienestar Estudiantil.</p>
+</div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary hover:underline text-body-sm transition-opacity" href="#">Contacto</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline text-body-sm transition-opacity" href="#">Transparencia</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline text-body-sm transition-opacity" href="#">Privacidad</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline text-body-sm transition-opacity" href="#">Ayuda</a>
+</div>
+</footer>
+</main>
+<!-- Floating Tooltip for Quick Help (Micro-interaction) -->
+<div class="fixed bottom-8 right-8 bg-primary text-white w-12 h-12 rounded-full flex items-center justify-center shadow-xl cursor-pointer hover:scale-110 transition-transform active:scale-95 group z-50" id="help-fab">
+<span class="material-symbols-outlined">smart_toy</span>
+<div class="absolute right-full mr-4 bg-on-surface text-surface text-[10px] px-3 py-1.5 rounded-lg whitespace-nowrap opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
+            ¿Necesitas ayuda con los criterios?
+        </div>
+</div>
+<script>
+        // Micro-interactions and tab handling logic
+        document.addEventListener('DOMContentLoaded', () => {
+            // Subtle hover effect logic for rows
+            const rows = document.querySelectorAll('tbody tr');
+            rows.forEach(row => {
+                row.addEventListener('mouseenter', () => {
+                    // Logic for custom highlight if needed beyond CSS
+                });
+            });
+
+            // Smooth scroll or transitions for drawer simulation
+            const helpFab = document.getElementById('help-fab');
+            helpFab.addEventListener('click', () => {
+                console.log('Open support assistant');
+            });
+        });
+    </script>
+</body></html>

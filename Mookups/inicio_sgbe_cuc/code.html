@@ -1,0 +1,336 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SGBE - Colegio Universitario de Cartago</title>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "error-container": "#ffdad6",
+                    "on-surface": "#111c2c",
+                    "secondary-fixed-dim": "#c5c7c8",
+                    "on-background": "#111c2c",
+                    "on-secondary-fixed-variant": "#454748",
+                    "surface": "#f9f9ff",
+                    "tertiary-container": "#6d0013",
+                    "on-primary-container": "#799dd6",
+                    "surface-bright": "#f9f9ff",
+                    "outline-variant": "#c3c6d1",
+                    "on-tertiary-container": "#ff6b6e",
+                    "primary-fixed": "#d5e3ff",
+                    "surface-container-high": "#dee8ff",
+                    "on-tertiary-fixed-variant": "#92001c",
+                    "secondary-container": "#e1e3e4",
+                    "on-secondary": "#ffffff",
+                    "on-surface-variant": "#43474f",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-container": "#e7eeff",
+                    "surface-container-lowest": "#ffffff",
+                    "secondary-fixed": "#e1e3e4",
+                    "primary": "#001e40",
+                    "background": "#f9f9ff",
+                    "surface-variant": "#d8e3fa",
+                    "primary-container": "#003366",
+                    "on-primary-fixed-variant": "#1f477b",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#263142",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "inverse-primary": "#a7c8ff",
+                    "on-error": "#ffffff",
+                    "tertiary": "#450008",
+                    "on-tertiary-fixed": "#410007",
+                    "on-primary": "#ffffff",
+                    "tertiary-fixed": "#ffdad8",
+                    "surface-dim": "#cfdaf1",
+                    "outline": "#737780",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "surface-container-highest": "#d8e3fa",
+                    "inverse-on-surface": "#ebf1ff",
+                    "on-secondary-fixed": "#191c1d",
+                    "secondary": "#5c5f60",
+                    "surface-tint": "#3a5f94",
+                    "surface-container-low": "#f0f3ff",
+                    "tertiary-fixed-dim": "#ffb3b1",
+                    "on-secondary-container": "#626566"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "base": "8px",
+                    "margin-desktop": "48px",
+                    "container-max": "1280px",
+                    "margin-mobile": "16px",
+                    "gutter": "24px"
+            },
+            "fontFamily": {
+                    "label-sm": ["Hanken Grotesk"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "label-md": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "label-sm": ["12px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "600"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+      .material-symbols-outlined {
+        font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+      }
+      .glass-card {
+        background: rgba(255, 255, 255, 0.7);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2);
+      }
+      .elevation-l2 {
+        box-shadow: 0 4px 12px rgba(0, 51, 102, 0.05);
+      }
+      body {
+        font-family: 'Hanken Grotesk', sans-serif;
+      }
+    </style>
+</head>
+<body class="bg-surface text-on-surface selection:bg-primary-container selection:text-on-primary-container overflow-x-hidden">
+<!-- Top Navigation Bar -->
+<nav class="fixed top-0 left-0 w-full h-16 flex justify-between items-center px-margin-mobile md:px-margin-desktop bg-surface dark:bg-surface-container-highest shadow-sm z-50">
+<div class="text-headline-sm font-headline-sm font-bold text-primary dark:text-inverse-primary">
+            SGBE - CUC
+        </div>
+<!-- Desktop Nav -->
+<div class="hidden md:flex items-center gap-base">
+<a class="px-4 py-2 text-primary font-bold border-b-2 border-primary pb-1 text-label-md font-label-md transition-all duration-200 ease-in-out" href="#">Inicio</a>
+<a class="px-4 py-2 text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md transition-all duration-200 ease-in-out" href="#">Convocatorias</a>
+<a class="px-4 py-2 text-on-surface-variant hover:text-primary transition-colors text-label-md font-label-md transition-all duration-200 ease-in-out" href="#">Ingresar</a>
+<button class="ml-4 px-6 py-2 bg-primary-container text-on-primary text-label-md font-label-md rounded-lg hover:opacity-90 transition-opacity">Registrarse</button>
+</div>
+<!-- Mobile Menu Toggle (Simplified for Layout) -->
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary">menu</span>
+</div>
+</nav>
+<!-- Hero Section -->
+<section class="relative w-full pt-16 min-h-[870px] flex items-center overflow-hidden">
+<div class="absolute inset-0 z-0">
+<img alt="SGBE CUC University Campus" class="w-full h-full object-cover grayscale-[20%]" data-alt="A wide-angle, high-resolution architectural photograph of a modern university campus building at the Colegio Universitario de Cartago. The structure features clean lines, glass facades, and white concrete surfaces under a bright, clear blue sky. The environment is serene and professional, with lush green landscapes and manicured gardens in the foreground. The lighting is natural and crisp, creating a bright and welcoming institutional atmosphere that emphasizes academic excellence and stability." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIdv5doGnXH4A2EhFsGr4omBovMD25lpUt0OT2g6AfkaXyBH0yA3_1iGNdRHvnTH37SNyuDalYhyVVFZJyXMbLPyu83yzjQYc_ooPPx5XTacCBLX9zMu9VibIDbP9CTXllv-WSqoT71EZKEzWueRDN9PbMgp22TpD9qWgYm1p6eUimY83fIJTBmhjIzk_hEzK3TmIp_ah4kEeQ-3wQgLoYsdF7DNcx4xdlLwQ6xbDm75vaFS5lgW_BEVZZV_HoVl9O9Qar4y8BEOs"/>
+<div class="absolute inset-0 bg-gradient-to-r from-surface via-surface/80 to-transparent"></div>
+</div>
+<div class="relative z-10 max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop w-full grid grid-cols-1 md:grid-cols-2 gap-gutter items-center">
+<div class="max-w-xl py-12">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-headline-lg-mobile md:text-headline-lg text-primary mb-4 leading-tight">
+                    Sistema de Gestión de Becas Estudiantiles
+                </h1>
+<p class="font-body-lg text-body-lg text-on-surface-variant mb-8 max-w-md">
+                    Compromiso con tu excelencia académica y bienestar integral. Accede a las oportunidades que transformarán tu futuro profesional.
+                </p>
+<div class="flex flex-wrap gap-4">
+<button class="px-8 py-3 bg-primary-container text-on-primary font-label-md text-label-md rounded-lg shadow-lg hover:translate-y-[-2px] transition-all">
+                        Iniciar Sesión
+                    </button>
+<button class="px-8 py-3 border-2 border-primary-container text-primary font-label-md text-label-md rounded-lg hover:bg-primary-container/5 transition-all">
+                        Registrarme
+                    </button>
+</div>
+</div>
+<!-- Floating Bento Cards (Visual Anchor) -->
+<div class="hidden lg:grid grid-cols-2 gap-4 h-[400px]">
+<div class="glass-card elevation-l2 rounded-xl p-6 flex flex-col justify-end mt-12 transform rotate-2">
+<span class="material-symbols-outlined text-primary-container text-4xl mb-4">school</span>
+<h3 class="font-headline-sm text-headline-sm text-primary mb-2">Excelencia</h3>
+<p class="text-body-sm text-on-surface-variant">Impulsamos tu rendimiento con apoyo económico directo.</p>
+</div>
+<div class="bg-primary-container text-on-primary rounded-xl p-6 flex flex-col justify-start mb-12 transform -rotate-1">
+<span class="material-symbols-outlined text-3xl mb-4" style="font-variation-settings: 'FILL' 1;">stars</span>
+<h3 class="font-headline-sm text-headline-sm mb-2">Oportunidades</h3>
+<p class="text-body-sm opacity-90">Nuevas convocatorias abiertas para el ciclo lectivo actual.</p>
+</div>
+</div>
+</div>
+</section>
+<!-- Role Section (Bento Grid) -->
+<section class="py-24 px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto">
+<div class="text-center mb-16">
+<h2 class="font-headline-md text-headline-md text-primary mb-2">Un sistema diseñado para ti</h2>
+<p class="text-body-md text-on-surface-variant">Gestión transparente y eficiente para toda la comunidad universitaria.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Aspirante -->
+<div class="group bg-surface-container-low rounded-xl p-8 hover:bg-primary-container hover:text-on-primary transition-all duration-300 elevation-l2 cursor-default">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary flex items-center justify-center mb-6 group-hover:bg-on-primary group-hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined">person_add</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm mb-4">Aspirante</h4>
+<p class="text-body-sm mb-6 opacity-80">Si estás iniciando tu carrera o deseas aplicar por primera vez, este es tu punto de partida. Revisa requisitos y completa tu postulación.</p>
+<ul class="space-y-2 text-label-md font-label-md opacity-90">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Registro inicial</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Carga de documentos</li>
+</ul>
+</div>
+<!-- Becado -->
+<div class="group bg-surface-container-low rounded-xl p-8 hover:bg-primary-container hover:text-on-primary transition-all duration-300 elevation-l2 cursor-default">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary flex items-center justify-center mb-6 group-hover:bg-on-primary group-hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined">account_circle</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm mb-4">Becado</h4>
+<p class="text-body-sm mb-6 opacity-80">Administra tu beneficio actual, consulta estados de pago, renovaciones automáticas y realiza seguimiento de tu rendimiento académico.</p>
+<ul class="space-y-2 text-label-md font-label-md opacity-90">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Seguimiento de pagos</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Trámites de renovación</li>
+</ul>
+</div>
+<!-- Trabajadora Social -->
+<div class="group bg-surface-container-low rounded-xl p-8 hover:bg-primary-container hover:text-on-primary transition-all duration-300 elevation-l2 cursor-default">
+<div class="w-12 h-12 rounded-full bg-primary-container text-on-primary flex items-center justify-center mb-6 group-hover:bg-on-primary group-hover:text-primary-container transition-colors">
+<span class="material-symbols-outlined">support_agent</span>
+</div>
+<h4 class="font-headline-sm text-headline-sm mb-4">Trabajadora Social</h4>
+<p class="text-body-sm mb-6 opacity-80">Gestión especializada para el análisis socioeconómico. Herramientas avanzadas para la evaluación y adjudicación de beneficios.</p>
+<ul class="space-y-2 text-label-md font-label-md opacity-90">
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Revisión de expedientes</li>
+<li class="flex items-center gap-2"><span class="material-symbols-outlined text-sm">check_circle</span> Generación de informes</li>
+</ul>
+</div>
+</div>
+</section>
+<!-- News & Calls Section -->
+<section class="bg-surface-container-lowest py-24 border-t border-outline-variant/30">
+<div class="max-w-container-max mx-auto px-margin-mobile md:px-margin-desktop">
+<div class="flex flex-col md:flex-row justify-between items-end mb-12 gap-4">
+<div>
+<span class="text-primary font-bold text-label-md tracking-wider uppercase">Actualidad</span>
+<h2 class="font-headline-md text-headline-md text-primary mt-2">Convocatorias y Noticias</h2>
+</div>
+<a class="flex items-center gap-2 text-primary font-bold text-label-md hover:underline decoration-2 underline-offset-4" href="#">
+                    Ver todas las novedades <span class="material-symbols-outlined text-base">arrow_forward</span>
+</a>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<!-- Scholarship Call Card -->
+<div class="bg-surface elevation-l2 rounded-xl overflow-hidden group">
+<div class="relative h-40">
+<img alt="Student studying" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A close-up photograph of a student's hands writing notes in a clean, organized notebook on a wooden desk. Beside the notebook is a tablet and a steaming cup of coffee. The setting is a minimalist library with soft natural light streaming in from large windows. The overall aesthetic is calm, focused, and academic, featuring a color palette of warm wood tones, soft whites, and deep institutional blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAGILZ51J6PVuhMaE2M12739VCeYtj33S4o3qGXblUmYhSJ5Y81Fo3dqo3c00YYAjJya-23i1dgJuyOyauXp46MeKy7fDlL4I4Gz8R7hBcdizuLCSs-pXvvxVNjNN_vJr7CTZIfygTrmmrtlFydNPAzJvEq0lVhnyiZUuGwlBdNrxM3gpUOldES1SiCRb7QNlSIIRa41V9GrAQWpJoHdXkwqfXb7EUDCC755Ghi7HVl0mphxCM1fsgN8llbUY0XFnZXLEdhPxKGw6g"/>
+<div class="absolute top-3 left-3">
+<span class="px-3 py-1 bg-primary text-on-primary text-[10px] font-bold rounded-full uppercase tracking-widest">Activa</span>
+</div>
+</div>
+<div class="p-5">
+<span class="text-on-surface-variant font-label-md text-label-sm">Cierre: 15 de Mayo</span>
+<h5 class="font-headline-sm text-headline-sm text-primary mt-2 mb-3">Beca de Honor 2024</h5>
+<p class="text-body-sm text-on-surface-variant line-clamp-2">Dirigida a estudiantes con promedios superiores a 9.0 en el cuatrimestre anterior.</p>
+<button class="mt-4 text-primary font-bold text-label-md flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Leer más <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Regular News Card -->
+<div class="bg-surface elevation-l2 rounded-xl overflow-hidden group">
+<div class="relative h-40">
+<img alt="Group of students" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A group of diverse university students sitting together on a grassy area of a campus plaza, engaged in a collaborative discussion. They are holding tablets and laptops, smiling and pointing at a screen. The background shows institutional buildings and bright, sunny weather. The atmosphere is energetic, communal, and professional, maintaining a high-key light-mode visual style with primary blue accents." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCfIhT092LcsyZXf0-hmOIJrXS049PzYHNzV6tnG5XRg6nx7-GfXjItMnCMZVw9bqvwjwZkeylHBRI6dVhH2xMe87HpH2Ijc8Z_EBVqjZbxraGfAnRlInTTUYIRX1tNyjLqPRR4RVzQU7W88jW7oEG5Zb0fc140SmWps-GExBbJu87XXGdwvQoCW7ArYBOTV6-lgnL28USR78nYwbIsu3JQ4noTXlBez4j4yiLyN4G6CbRP6_slTnZGusdh9Oya9x1KbzUh2Lc-xpg"/>
+</div>
+<div class="p-5">
+<span class="text-on-surface-variant font-label-md text-label-sm">Institucional</span>
+<h5 class="font-headline-sm text-headline-sm text-primary mt-2 mb-3">Nuevos Convenios</h5>
+<p class="text-body-sm text-on-surface-variant line-clamp-2">Se amplían las becas de transporte para estudiantes de zonas alejadas del GAM.</p>
+<button class="mt-4 text-primary font-bold text-label-md flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Leer más <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Call Card 2 -->
+<div class="bg-surface elevation-l2 rounded-xl overflow-hidden group">
+<div class="relative h-40">
+<img alt="Campus architecture" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A minimalist architectural detail of a university hallway, featuring large glass windows, clean white walls, and polished floors reflecting the sky. In the distance, a silhouette of a person walks through the light-filled space. The mood is modern, clean, and institutionally authoritative, using a palette of crisp whites, soft grays, and the signature deep blue of the institution." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBjS5OEBMddcTlRNcYVumAaOWieUAT7XLQZKpzHuGSLF-1iHq2b_M0s0-rNdHdZAUlMEwX4L0_GEwcMIxcQTiZTsliO2yO1rukT4Nyer2Wp1D16ZxHpz7KrE-Jz9IuvKQhFH2IAjSN4bdi0-1kRND8E4Hav1lyR6w5IAlweg9Bn58xjrEvNDMFSIMzvVavo1mmIs9nT2m0nRr9tGy2ObkXAWQ2-85buDejkgW57uspQAeKcpm9P09cpJBzA4M3Krk9aw4Bv8BlR0pM"/>
+<div class="absolute top-3 left-3">
+<span class="px-3 py-1 bg-secondary text-on-secondary text-[10px] font-bold rounded-full uppercase tracking-widest">Próximamente</span>
+</div>
+</div>
+<div class="p-5">
+<span class="text-on-surface-variant font-label-md text-label-sm">Inicia: 1 de Junio</span>
+<h5 class="font-headline-sm text-headline-sm text-primary mt-2 mb-3">Becas Socioeconómicas</h5>
+<p class="text-body-sm text-on-surface-variant line-clamp-2">Apertura del periodo ordinario para solicitantes de ingreso 2024-II.</p>
+<button class="mt-4 text-primary font-bold text-label-md flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Leer más <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+<!-- Call Card 3 -->
+<div class="bg-surface elevation-l2 rounded-xl overflow-hidden group">
+<div class="relative h-40">
+<img alt="Administrative office" class="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" data-alt="A professional setting showing a modern workspace within a university department. A large screen displays complex data charts and scholarship statistics. The room is designed with ergonomic furniture and bright, even lighting. The visual style is highly organized and technologically advanced, echoing institutional efficiency and transparency, focused on the colors of navy blue and white." src="https://lh3.googleusercontent.com/aida-public/AB6AXuC9PDTkDEU1f1A2_FnS6TGxte8M-QhvbBc-ZrO_wxGwxS9N5yb7LKJmgrinVnEGWpUBkcAs1VJ-XHRagofsH-2BceIJx3MouCucsyt65Gkw5f0ov_vseirS_MHCB2eRkLp9tTNeomw0xnp0E034-Ap2kh07GnM2iSC2bcgFM05xm3MRvrvL_63jBH4HhxJBTL0U8rOgD6oMX7Dg1XVvr5dQhbLQbyQ0GACbXCtN8FyFg-zi191n3EJfEc0PxuGgzYe6FAYH1mYKiKo"/>
+</div>
+<div class="p-5">
+<span class="text-on-surface-variant font-label-md text-label-sm">Tutorial</span>
+<h5 class="font-headline-sm text-headline-sm text-primary mt-2 mb-3">Guía de Postulación</h5>
+<p class="text-body-sm text-on-surface-variant line-clamp-2">Descubre paso a paso cómo cargar tus documentos correctamente en el portal.</p>
+<button class="mt-4 text-primary font-bold text-label-md flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Ver tutorial <span class="material-symbols-outlined text-sm">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer -->
+<footer class="bg-surface-container-highest border-t border-outline-variant flex flex-col md:flex-row justify-between items-center py-12 px-margin-mobile md:px-margin-desktop w-full mt-auto">
+<div class="mb-8 md:mb-0">
+<div class="text-label-md font-label-md font-bold text-on-surface mb-2">Colegio Universitario de Cartago</div>
+<p class="text-body-sm font-body-sm text-on-surface-variant max-w-sm">
+                © 2024 Departamento de Bienestar Estudiantil. Fortaleciendo el futuro de Costa Rica.
+            </p>
+</div>
+<div class="flex flex-wrap justify-center gap-gutter">
+<a class="text-on-surface-variant hover:text-primary hover:underline text-body-sm font-body-sm transition-opacity duration-200" href="#">Contacto</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline text-body-sm font-body-sm transition-opacity duration-200" href="#">Transparencia</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline text-body-sm font-body-sm transition-opacity duration-200" href="#">Privacidad</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline text-body-sm font-body-sm transition-opacity duration-200" href="#">Ayuda</a>
+</div>
+<div class="mt-8 md:mt-0 flex gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container cursor-pointer hover:bg-primary-container hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-xl">public</span>
+</div>
+<div class="w-8 h-8 rounded-full bg-primary-container/10 flex items-center justify-center text-primary-container cursor-pointer hover:bg-primary-container hover:text-on-primary transition-all">
+<span class="material-symbols-outlined text-xl">share</span>
+</div>
+</div>
+</footer>
+<!-- Simple Scroll Interaction -->
+<script>
+        document.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 20) {
+                nav.classList.add('bg-white/90', 'backdrop-blur-md');
+                nav.classList.remove('bg-surface');
+            } else {
+                nav.classList.add('bg-surface');
+                nav.classList.remove('bg-white/90', 'backdrop-blur-md');
+            }
+        });
+    </script>
+</body></html>

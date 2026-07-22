@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SGBE - Gestión de Visitas Domiciliarias</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#e7eeff",
+                    "on-tertiary-container": "#ff6b6e",
+                    "surface-container-highest": "#d8e3fa",
+                    "on-primary": "#ffffff",
+                    "outline": "#737780",
+                    "inverse-on-surface": "#ebf1ff",
+                    "outline-variant": "#c3c6d1",
+                    "on-primary-fixed": "#001b3c",
+                    "on-background": "#111c2c",
+                    "on-secondary-fixed": "#191c1d",
+                    "surface-container-high": "#dee8ff",
+                    "secondary-fixed-dim": "#c5c7c8",
+                    "on-surface": "#111c2c",
+                    "secondary": "#5c5f60",
+                    "on-primary-fixed-variant": "#1f477b",
+                    "background": "#f9f9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-tint": "#3a5f94",
+                    "on-tertiary-fixed": "#410007",
+                    "inverse-primary": "#a7c8ff",
+                    "primary-container": "#003366",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d8e3fa",
+                    "on-secondary-fixed-variant": "#454748",
+                    "surface-dim": "#cfdaf1",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#263142",
+                    "primary-fixed": "#d5e3ff",
+                    "secondary-fixed": "#e1e3e4",
+                    "secondary-container": "#e1e3e4",
+                    "tertiary-container": "#6d0013",
+                    "on-secondary-container": "#626566",
+                    "surface-bright": "#f9f9ff",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "on-tertiary-fixed-variant": "#92001c",
+                    "on-primary-container": "#799dd6",
+                    "error-container": "#ffdad6",
+                    "primary": "#001e40",
+                    "surface-container-low": "#f0f3ff",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#ffdad8",
+                    "tertiary-fixed-dim": "#ffb3b1",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#43474f",
+                    "surface": "#f9f9ff",
+                    "tertiary": "#450008"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "base": "8px",
+                    "margin-desktop": "48px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "label-md": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .sidebar-active { background-color: #003366; color: #799dd6; font-weight: 600; border-radius: 0.5rem; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(8px); }
+        .no-scrollbar::-webkit-scrollbar { display: none; }
+        .custom-shadow { box-shadow: 0 4px 12px rgba(0, 51, 102, 0.05); }
+    </style>
+</head>
+<body class="bg-background text-on-surface">
+<!-- Shell Layout: SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low flex flex-col p-4 gap-2 z-50">
+<div class="mb-8 px-2">
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary">SGBE</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Gestión de Becas</p>
+</div>
+<nav class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">calendar_today</span> Visitas
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined">description</span> Expedientes
+            </a>
+<a class="flex items-center gap-3 px-3 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined">settings</span> Configuración
+            </a>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<button class="flex items-center gap-3 px-3 py-3 w-full text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 text-label-md font-label-md">
+<span class="material-symbols-outlined">logout</span> Cerrar Sesión
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="pl-64 min-h-screen flex flex-col">
+<!-- TopNavBar Shell -->
+<header class="flex justify-between items-center w-full px-margin-desktop h-16 border-b border-outline-variant sticky top-0 bg-surface z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-label-md focus:ring-2 focus:ring-primary-container" placeholder="Buscar expedientes o visitas..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors cursor-pointer relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="text-label-md font-bold text-on-surface">Lic. Ana Torres</p>
+<p class="text-label-sm text-on-surface-variant">Trabajadora Social</p>
+</div>
+<img alt="Usuario SGBE" class="w-10 h-10 rounded-full object-cover border-2 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBRzFDJA8D3jpVaMsvzmj_YkooJkcL23uI5c9oc2ZVBdcia9mT9GQB5MybZNe97y00sie-Y-3R2D7I0kioj715ot0hL9KhYUnqJl74gI5lp6IwXhR2W0oQNON5LQUUMOVlU3VzDeMImVFSogY1wEmbpsI-d77A5jN6HQvLOsXqiuzDmmt7GYolvG1cWovgp-4C4H6pReD1r2URv1mg48mjlIc11XBGgDLuetyhVOonwjq-xztaAoXntbyK6qR-NuWDogEIxBtzzXVM"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-margin-desktop flex-1 space-y-gutter">
+<!-- Welcome Header -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-primary">Gestión de Visitas Domiciliarias</h2>
+<p class="text-body-md text-on-surface-variant">Seguimiento y registro de entorno socioeconómico estudiantil.</p>
+</div>
+<button class="bg-primary-container text-on-primary text-label-md font-label-md px-6 py-3 rounded-lg flex items-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span> Programar Nueva Visita
+                </button>
+</section>
+<!-- Bento Grid Dashboard -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Column: Calendar & List -->
+<div class="md:col-span-8 space-y-gutter">
+<!-- Stats Quick View -->
+<div class="grid grid-cols-3 gap-base">
+<div class="bg-surface-container-low p-6 rounded-xl custom-shadow">
+<p class="text-label-sm text-on-surface-variant">Hoy</p>
+<h3 class="text-headline-md font-headline-md text-primary">4 Visitas</h3>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl custom-shadow border-l-4 border-[#FFB300]">
+<p class="text-label-sm text-on-surface-variant">Pendientes</p>
+<h3 class="text-headline-md font-headline-md text-primary">12</h3>
+</div>
+<div class="bg-surface-container-low p-6 rounded-xl custom-shadow border-l-4 border-emerald-500">
+<p class="text-label-sm text-on-surface-variant">Realizadas (Mes)</p>
+<h3 class="text-headline-md font-headline-md text-primary">45</h3>
+</div>
+</div>
+<!-- Scheduled List -->
+<div class="bg-white rounded-xl custom-shadow overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h4 class="text-headline-sm font-headline-sm">Agenda del Día</h4>
+<div class="flex gap-2">
+<button class="p-1 hover:bg-surface-container-low rounded"><span class="material-symbols-outlined">chevron_left</span></button>
+<span class="text-label-md font-bold px-2 py-1">24 Mayo, 2024</span>
+<button class="p-1 hover:bg-surface-container-low rounded"><span class="material-symbols-outlined">chevron_right</span></button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead class="bg-surface-container-low text-on-surface-variant text-label-sm uppercase tracking-wider">
+<tr>
+<th class="px-6 py-3 font-semibold">Hora</th>
+<th class="px-6 py-3 font-semibold">Estudiante / Expediente</th>
+<th class="px-6 py-3 font-semibold">Ubicación</th>
+<th class="px-6 py-3 font-semibold">Estado</th>
+<th class="px-6 py-3 font-semibold">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- Row 1 -->
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-4 text-label-md font-bold text-primary">08:00 AM</td>
+<td class="px-6 py-4">
+<p class="text-body-md font-semibold">Carlos Jiménez Mora</p>
+<p class="text-label-sm text-on-surface-variant">EXP-2024-0432</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-body-sm">Paraíso, Cartago</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-blue-100 text-blue-800 text-[11px] font-bold uppercase">Programada</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:underline text-label-sm font-bold">Iniciar Informe</button>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary-container/5 transition-colors group bg-surface-container-low/30">
+<td class="px-6 py-4 text-label-md font-bold text-primary">10:30 AM</td>
+<td class="px-6 py-4">
+<p class="text-body-md font-semibold">Elena Rodríguez Soto</p>
+<p class="text-label-sm text-on-surface-variant">EXP-2024-0511</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-body-sm">Tejar, El Guarco</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-[#FFF3E0] text-[#E65100] text-[11px] font-bold uppercase">En Tránsito</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:underline text-label-sm font-bold">Registrar</button>
+</td>
+</tr>
+<!-- Row 3 -->
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-4 text-label-md font-bold text-on-surface-variant">01:30 PM</td>
+<td class="px-6 py-4">
+<p class="text-body-md font-semibold">Josué Quesada Fallas</p>
+<p class="text-label-sm text-on-surface-variant">EXP-2024-0389</p>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[18px]">location_on</span>
+<span class="text-body-sm">Cervantes, Alvarado</span>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[11px] font-bold uppercase">Realizada</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column: Map & Tools -->
+<div class="md:col-span-4 space-y-gutter">
+<!-- Location Reference -->
+<div class="bg-white rounded-xl custom-shadow overflow-hidden flex flex-col h-[320px]">
+<div class="p-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low">
+<h4 class="text-label-md font-bold">Ruta del Día</h4>
+<span class="text-[10px] bg-primary-container text-white px-2 py-0.5 rounded">Cartago Centro</span>
+</div>
+<div class="relative flex-1 bg-surface-container-highest">
+<img alt="Mapa de Cartago Costa Rica" class="w-full h-full object-cover grayscale brightness-90 contrast-125" data-alt="A clean, minimalist topographical map style image showing a city layout with soft blue and gray tones. The map is designed for a professional UI, featuring subtle glowing markers representing route points in Paraíso and Cartago. The lighting is diffused and modern, emphasizing clarity and order in a cartographic visualization." data-location="Cartago, Costa Rica" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD3gFANu76Uk9VRruRMwqSFqRwYVad6ju26MCGk4z0rfVT7MPEKZs2XWW4BokdBiICLGhpIGLBRdBkli56bzN0mfgoCFvBYwt5SrgG88YnDVTqXLZi8nt1qsFL5UmnLe5dV3QAeaVHtPQsGzKUWqJ3EwkHJaN82on0yqIrf_ErxI-eBABFVQwnEaD0oZC9Nx33Vq0TlxH-Minsg2JSXJ5U8ZAql6ylj8tWT9sEvKfdd0oCTnszIzjVQ688j5lLDWQgOb3sNzuI0gN8"/>
+<div class="absolute inset-0 flex items-center justify-center">
+<div class="bg-white/90 backdrop-blur px-4 py-2 rounded-full border border-primary-container flex items-center gap-2 shadow-lg">
+<span class="w-3 h-3 bg-error rounded-full animate-pulse"></span>
+<span class="text-label-sm font-bold text-primary">Siguiente parada: Paraíso</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Progress/Calendar Widget -->
+<div class="bg-primary text-white rounded-xl p-6 shadow-xl relative overflow-hidden">
+<div class="relative z-10">
+<p class="text-label-sm opacity-80 mb-2">Meta Semanal</p>
+<h4 class="text-headline-sm font-headline-sm mb-4">Visitas de Seguimiento</h4>
+<div class="flex items-end gap-2 mb-2">
+<span class="text-headline-lg font-headline-lg">18</span>
+<span class="text-body-md opacity-60 mb-1">/ 25 completadas</span>
+</div>
+<div class="w-full bg-white/20 h-2 rounded-full overflow-hidden">
+<div class="bg-on-primary-container h-full w-[72%] transition-all duration-1000"></div>
+</div>
+</div>
+<span class="material-symbols-outlined absolute -bottom-4 -right-4 text-[120px] opacity-10">fact_check</span>
+</div>
+</div>
+</div>
+<!-- Full Width Form: Registro de Informe -->
+<section class="bg-white rounded-xl custom-shadow border border-outline-variant">
+<div class="p-8 border-b border-outline-variant">
+<div class="flex items-center gap-4 mb-4">
+<div class="bg-primary-container/10 p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined">edit_document</span>
+</div>
+<div>
+<h3 class="text-headline-md font-headline-md text-primary">Formulario de Registro de Informe</h3>
+<p class="text-body-sm text-on-surface-variant">Complete los detalles observados durante la visita domiciliaria para el expediente EXP-2024-0432.</p>
+</div>
+</div>
+</div>
+<div class="p-8 grid grid-cols-1 md:grid-cols-2 gap-8">
+<!-- Left: Text Data -->
+<div class="space-y-6">
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-1">
+<label class="text-label-sm font-bold text-on-surface-variant">Hora de Inicio</label>
+<input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary text-body-md" type="time" value="08:05"/>
+</div>
+<div class="space-y-1">
+<label class="text-label-sm font-bold text-on-surface-variant">Hora de Finalización</label>
+<input class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary text-body-md" type="time"/>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-label-sm font-bold text-on-surface-variant">Estado de la Vivienda</label>
+<select class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary text-body-md">
+<option>Excelente - Materiales permanentes</option>
+<option>Bueno - Algunos daños menores</option>
+<option>Regular - Requiere mejoras estructurales</option>
+<option>Precaria - Riesgo inminente</option>
+</select>
+</div>
+<div class="space-y-1">
+<label class="text-label-sm font-bold text-on-surface-variant">Observaciones del Entorno Socio-Familiar</label>
+<textarea class="w-full border-outline-variant rounded-lg focus:border-primary focus:ring-1 focus:ring-primary text-body-md" placeholder="Describa la dinámica familiar, miembros presentes y situación actual..." rows="4"></textarea>
+</div>
+</div>
+<!-- Right: Evidence & Finalize -->
+<div class="space-y-6">
+<div class="space-y-1">
+<label class="text-label-sm font-bold text-on-surface-variant">Carga de Evidencia Fotográfica</label>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-[40px] mb-2 group-hover:scale-110 transition-transform">cloud_upload</span>
+<p class="text-label-md font-bold">Arrastre fotos aquí o haga clic para buscar</p>
+<p class="text-[10px] mt-1">Formatos JPG, PNG (Max 5MB cada una)</p>
+</div>
+<!-- Mock Upload Previews -->
+<div class="flex gap-2 mt-3">
+<div class="w-16 h-16 bg-surface-container rounded-lg overflow-hidden border border-outline-variant relative">
+<img alt="Preview 1" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuChMH33hGMBaxrZsBhw0eVDqZBwCjS6lbjzSolEqpTxqgErzKGBJZQ9XopbiUhETGgiGfSTXHJhG4NHSfOv5cGH_2qqqm7hQzIfX1kcnOjOHJIK5mYxPSXLo2jXwTl5-vZJalDK-oZJzAolD39LdTK1mjUBqfoxKWW4l9KStsbk6ZmjxIqGfSoA8QndZYdy0Bzam6Cfn0U5c_1UDpvTeeCrmo71rT2YvCzAIS4f-8RHbfbXYzLQFHrekciIplUxVDT8R8_nMuKZLNE"/>
+<button class="absolute top-0 right-0 bg-error text-white p-0.5 rounded-bl"><span class="material-symbols-outlined text-[12px]">close</span></button>
+</div>
+<div class="w-16 h-16 bg-surface-container rounded-lg border border-outline-variant border-dashed flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">add_a_photo</span>
+</div>
+</div>
+</div>
+<div class="space-y-1">
+<label class="text-label-sm font-bold text-on-surface-variant">Firma Digital del Entrevistado (Opcional)</label>
+<div class="bg-surface-container-low w-full h-24 rounded-lg border border-outline-variant relative">
+<canvas class="w-full h-full"></canvas>
+<button class="absolute bottom-1 right-1 text-[10px] text-on-surface-variant uppercase font-bold px-2 py-1 bg-white border border-outline-variant rounded hover:bg-error hover:text-white transition-colors">Limpiar</button>
+</div>
+</div>
+<div class="flex items-center gap-4 pt-4">
+<button class="flex-1 border border-primary text-primary text-label-md font-bold px-6 py-3 rounded-lg hover:bg-primary-container/10 transition-colors">
+                                Guardar Borrador
+                            </button>
+<button class="flex-1 bg-primary text-white text-label-md font-bold px-6 py-3 rounded-lg hover:opacity-90 transition-opacity shadow-lg shadow-primary/20">
+                                Finalizar Visita
+                            </button>
+</div>
+</div>
+</div>
+</section>
+</div>
+<!-- Footer Shell -->
+<footer class="flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full mt-auto border-t border-outline-variant bg-surface-container-highest">
+<div class="flex items-center gap-2 mb-4 md:mb-0">
+<span class="text-label-md font-label-md font-bold text-on-surface">SGBE - Bienestar Estudiantil</span>
+<span class="text-on-surface-variant">|</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">© 2024 Colegio Universitario de Cartago.</p>
+</div>
+<div class="flex gap-6">
+<a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-colors" href="#">Contacto</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-colors" href="#">Transparencia</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-colors" href="#">Privacidad</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary hover:underline transition-colors" href="#">Ayuda</a>
+</div>
+</footer>
+</main>
+<!-- Floating Action for Mobile (Hidden on MD up) -->
+<button class="md:hidden fixed bottom-6 right-6 w-14 h-14 bg-primary text-white rounded-full shadow-2xl flex items-center justify-center z-50">
+<span class="material-symbols-outlined">add</span>
+</button>
+<script>
+        // Simple Interaction logic
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('click', () => {
+                // Focus on the form when a row is clicked (simulated behavior)
+                document.getElementById('informe-section')?.scrollIntoView({ behavior: 'smooth' });
+            });
+        });
+    </script>
+</body></html>

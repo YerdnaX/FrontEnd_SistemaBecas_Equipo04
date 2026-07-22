@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SGBE - Dashboard de Informes y Reportes</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .chart-container { position: relative; width: 100%; height: 100%; }
+        .glass-card { background: rgba(255, 255, 255, 0.8); backdrop-filter: blur(10px); }
+        .custom-scrollbar::-webkit-scrollbar { width: 4px; height: 4px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c3c6d1; border-radius: 10px; }
+    </style>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#e7eeff",
+                    "on-tertiary-container": "#ff6b6e",
+                    "surface-container-highest": "#d8e3fa",
+                    "on-primary": "#ffffff",
+                    "outline": "#737780",
+                    "inverse-on-surface": "#ebf1ff",
+                    "outline-variant": "#c3c6d1",
+                    "on-primary-fixed": "#001b3c",
+                    "on-background": "#111c2c",
+                    "on-secondary-fixed": "#191c1d",
+                    "surface-container-high": "#dee8ff",
+                    "secondary-fixed-dim": "#c5c7c8",
+                    "on-surface": "#111c2c",
+                    "secondary": "#5c5f60",
+                    "on-primary-fixed-variant": "#1f477b",
+                    "background": "#f9f9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-tint": "#3a5f94",
+                    "on-tertiary-fixed": "#410007",
+                    "inverse-primary": "#a7c8ff",
+                    "primary-container": "#003366",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d8e3fa",
+                    "on-secondary-fixed-variant": "#454748",
+                    "surface-dim": "#cfdaf1",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#263142",
+                    "primary-fixed": "#d5e3ff",
+                    "secondary-fixed": "#e1e3e4",
+                    "secondary-container": "#e1e3e4",
+                    "tertiary-container": "#6d0013",
+                    "on-secondary-container": "#626566",
+                    "surface-bright": "#f9f9ff",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "on-tertiary-fixed-variant": "#92001c",
+                    "on-primary-container": "#799dd6",
+                    "error-container": "#ffdad6",
+                    "primary": "#001e40",
+                    "surface-container-low": "#f0f3ff",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#ffdad8",
+                    "tertiary-fixed-dim": "#ffb3b1",
+                    "on-tertiary": "#ffffff",
+                    "on-surface-variant": "#43474f",
+                    "surface": "#f9f9ff",
+                    "tertiary": "#450008"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "base": "8px",
+                    "margin-desktop": "48px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "label-md": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-sm": ["12px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+            }
+          },
+        },
+      }
+    </script>
+</head>
+<body class="bg-surface text-on-surface flex min-h-screen">
+<!-- SideNavBar Anchor -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low flex flex-col p-4 gap-2 z-50">
+<div class="mb-8 flex items-center gap-3 px-2">
+<div class="w-10 h-10 bg-primary-container rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white" style="font-variation-settings: 'FILL' 1;">analytics</span>
+</div>
+<div>
+<h2 class="text-headline-sm font-headline-sm font-bold text-primary">SGBE</h2>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Gestión de Becas</p>
+</div>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined">assessment</span> Informes
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined">description</span> Solicitudes
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined">folder_shared</span> Documentos
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined">settings</span> Configuración
+            </a>
+</nav>
+<button class="mt-4 bg-primary text-on-primary py-2 px-4 rounded-lg text-label-md font-bold flex items-center justify-center gap-2">
+<span class="material-symbols-outlined text-sm">add</span> Nueva Convocatoria
+        </button>
+<div class="mt-auto border-t border-outline-variant pt-4">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 text-label-md font-label-md" href="#">
+<span class="material-symbols-outlined">logout</span> Cerrar Sesión
+            </a>
+</div>
+</aside>
+<main class="ml-64 flex-1 flex flex-col min-h-screen">
+<!-- TopNavBar Anchor -->
+<header class="flex justify-between items-center w-full pl-8 pr-margin-desktop h-16 sticky top-0 bg-surface/80 backdrop-blur-md border-b border-outline-variant z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-lg">search</span>
+<input class="w-full bg-surface-container border-none rounded-full pl-10 py-2 text-body-sm focus:ring-2 focus:ring-primary" placeholder="Buscar reportes o datos..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4 text-on-surface-variant">
+<button class="hover:text-primary transition-colors cursor-pointer"><span class="material-symbols-outlined">notifications</span></button>
+<button class="hover:text-primary transition-colors cursor-pointer"><span class="material-symbols-outlined">help_outline</span></button>
+</div>
+<div class="flex items-center gap-3 pl-6 border-l border-outline-variant">
+<div class="text-right hidden md:block">
+<p class="text-label-md font-bold text-on-surface">Admin Institucional</p>
+<p class="text-label-sm text-on-surface-variant">CUC - Bienestar</p>
+</div>
+<img alt="Usuario SGBE" class="w-10 h-10 rounded-full border-2 border-primary-container object-cover" data-alt="Portrait of a professional institutional administrator in a modern office setting. The lighting is soft and natural, emphasizing a trustworthy and expert character. He is wearing a minimalist navy blue suit that matches the institutional primary color. The background shows a clean, organized workspace with academic certificates." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBiX_obb6aMmX14ofDQtOSfyXQgqiMJwnAxnR36An4XKpJErsS4DPvYBMbF-cZZrocY1bscVTkKg5xtsegxrTrnGaLtTHspM5LSYHxq54a9XLqwMTTj5_Hrtg0tBfCIE8O-ngDrg0t5u4PNSihhEsCAn1yywPjfeMlYVl1VecaASb5rPYvWfcWhDZd8jZWTzMOgkElJuzk4O1g2zRQ-2D3dx1JX9KDKXn6_KaBjmcEBY1zoPg6wRagI_QGQiV265KRGospE3_f8izg"/>
+</div>
+</div>
+</header>
+<section class="p-8 max-w-7xl mx-auto w-full">
+<!-- Header & Filters -->
+<div class="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8">
+<div>
+<h1 class="text-headline-lg font-headline-lg text-primary mb-2">Reportes Estadísticos</h1>
+<p class="text-body-md text-on-surface-variant">Análisis detallado del impacto y ejecución del programa de becas.</p>
+</div>
+<div class="flex flex-wrap gap-3">
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-bold text-on-surface-variant px-1">Periodo</label>
+<select class="bg-surface-container-low border-outline-variant rounded-lg text-label-md py-2 px-4 focus:ring-primary min-w-[160px]">
+<option>I Cuatrimestre 2024</option>
+<option>III Cuatrimestre 2023</option>
+<option>II Cuatrimestre 2023</option>
+</select>
+</div>
+<div class="flex flex-col gap-1">
+<label class="text-label-sm font-bold text-on-surface-variant px-1">Facultad</label>
+<select class="bg-surface-container-low border-outline-variant rounded-lg text-label-md py-2 px-4 focus:ring-primary min-w-[160px]">
+<option>Todas las Facultades</option>
+<option>Tecnologías de Información</option>
+<option>Administración</option>
+<option>Ingenierías</option>
+</select>
+</div>
+<div class="flex items-end">
+<button class="bg-primary-container text-on-primary-container py-2 px-4 rounded-lg font-bold flex items-center gap-2 hover:bg-primary-container/90 transition-all">
+<span class="material-symbols-outlined">download</span> Exportar
+                        </button>
+</div>
+</div>
+</div>
+<!-- Bento Grid - Stats & Charts -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-6 mb-8">
+<!-- Main Trend Chart -->
+<div class="md:col-span-8 bg-white p-6 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col gap-6">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-primary">Becas Otorgadas por Tipo</h3>
+<p class="text-body-sm text-on-surface-variant">Evolución histórica de asignaciones</p>
+</div>
+<div class="flex gap-4">
+<div class="flex items-center gap-2 text-label-sm"><span class="w-3 h-3 rounded-full bg-primary"></span> Socioeconómica</div>
+<div class="flex items-center gap-2 text-label-sm"><span class="w-3 h-3 rounded-full bg-tertiary"></span> Excelencia</div>
+</div>
+</div>
+<div class="h-64 flex items-end justify-between gap-4 px-2">
+<!-- Simulated Bar Chart -->
+<div class="flex-1 flex flex-col items-center group relative">
+<div class="flex w-full gap-1 h-full items-end">
+<div class="bg-primary/20 w-1/2 h-[45%] rounded-t group-hover:bg-primary transition-all duration-300"></div>
+<div class="bg-tertiary-fixed-dim w-1/2 h-[30%] rounded-t group-hover:bg-tertiary transition-all duration-300"></div>
+</div>
+<span class="text-label-sm mt-2 text-on-surface-variant">Ene</span>
+<div class="absolute -top-8 bg-primary text-white text-[10px] py-1 px-2 rounded opacity-0 group-hover:opacity-100 transition-opacity">120/45</div>
+</div>
+<div class="flex-1 flex flex-col items-center group relative">
+<div class="flex w-full gap-1 h-full items-end">
+<div class="bg-primary/20 w-1/2 h-[60%] rounded-t group-hover:bg-primary transition-all duration-300"></div>
+<div class="bg-tertiary-fixed-dim w-1/2 h-[40%] rounded-t group-hover:bg-tertiary transition-all duration-300"></div>
+</div>
+<span class="text-label-sm mt-2 text-on-surface-variant">Feb</span>
+</div>
+<div class="flex-1 flex flex-col items-center group relative">
+<div class="flex w-full gap-1 h-full items-end">
+<div class="bg-primary/20 w-1/2 h-[85%] rounded-t group-hover:bg-primary transition-all duration-300"></div>
+<div class="bg-tertiary-fixed-dim w-1/2 h-[55%] rounded-t group-hover:bg-tertiary transition-all duration-300"></div>
+</div>
+<span class="text-label-sm mt-2 text-on-surface-variant">Mar</span>
+</div>
+<div class="flex-1 flex flex-col items-center group relative">
+<div class="flex w-full gap-1 h-full items-end">
+<div class="bg-primary/20 w-1/2 h-[75%] rounded-t group-hover:bg-primary transition-all duration-300"></div>
+<div class="bg-tertiary-fixed-dim w-1/2 h-[50%] rounded-t group-hover:bg-tertiary transition-all duration-300"></div>
+</div>
+<span class="text-label-sm mt-2 text-on-surface-variant">Abr</span>
+</div>
+<div class="flex-1 flex flex-col items-center group relative">
+<div class="flex w-full gap-1 h-full items-end">
+<div class="bg-primary/20 w-1/2 h-[90%] rounded-t group-hover:bg-primary transition-all duration-300"></div>
+<div class="bg-tertiary-fixed-dim w-1/2 h-[65%] rounded-t group-hover:bg-tertiary transition-all duration-300"></div>
+</div>
+<span class="text-label-sm mt-2 text-on-surface-variant">May</span>
+</div>
+</div>
+</div>
+<!-- Budget Card -->
+<div class="md:col-span-4 bg-primary text-on-primary p-6 rounded-xl shadow-md flex flex-col justify-between">
+<div>
+<div class="flex justify-between items-center mb-4">
+<h3 class="text-headline-sm font-bold">Presupuesto</h3>
+<span class="material-symbols-outlined opacity-60">account_balance_wallet</span>
+</div>
+<div class="space-y-1">
+<p class="text-label-sm opacity-80 uppercase tracking-wider">Ejecutado</p>
+<h4 class="text-[28px] font-bold">₡145,200,000</h4>
+</div>
+<div class="mt-6 space-y-2">
+<div class="flex justify-between text-label-md">
+<span>Progreso Anual</span>
+<span>68%</span>
+</div>
+<div class="h-2 w-full bg-white/20 rounded-full overflow-hidden">
+<div class="h-full bg-white w-[68%]"></div>
+</div>
+</div>
+</div>
+<div class="pt-6 border-t border-white/10 flex justify-between items-center">
+<div>
+<p class="text-[10px] opacity-60">DISPONIBLE</p>
+<p class="text-label-md font-bold">₡68,800,000</p>
+</div>
+<span class="text-[10px] bg-white/20 px-2 py-1 rounded-full">+12% vs 2023</span>
+</div>
+</div>
+<!-- Demographic Map -->
+<div class="md:col-span-4 bg-white p-6 rounded-xl shadow-sm border border-outline-variant/30">
+<h3 class="text-label-md font-bold text-on-surface mb-4">Distribución Geográfica</h3>
+<div class="relative rounded-lg overflow-hidden h-48 bg-surface-container mb-4">
+<img class="w-full h-full object-cover grayscale opacity-50" data-alt="A stylized minimalist digital map of a province featuring subtle color heat-map overlays. The aesthetic is professional and clean, using a palette of light grays and institutional blue accents to denote concentration areas. Soft lighting and high-quality rendering give it a high-tech dashboard feel, consistent with a modern corporate student management system." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBFu8-JUOZrBQRf50g3ICdibIXIB5CkGRfvgKBSRQLaaKvr6eq8p3H6U-ekWAcdYnOFBOuwADGQ-tna0BjUU4JesctYlzs0K7Z9_15cez_zNE_psN63IQvd6IBe7om1SH3NrYhSsV2q3yWd58mvLZoZqUg0n8b6yjpmfWmTxvpHYHy1Ypi7EM3igV2b8tK0gqYK5XW8mcK7P1SfAQETpGONg0RVooNbieiHRGtkbD9hAEhEZb4XoDtDPX-NmJ2eBhHuVIeTT-YGJ7k"/>
+<div class="absolute top-1/2 left-1/3 w-3 h-3 bg-primary rounded-full shadow-[0_0_10px_rgba(0,30,64,0.5)] animate-pulse"></div>
+<div class="absolute top-1/4 left-1/2 w-2 h-2 bg-primary rounded-full shadow-[0_0_10px_rgba(0,30,64,0.5)]"></div>
+<div class="absolute bottom-1/3 right-1/4 w-4 h-4 bg-primary/40 rounded-full border border-primary animate-ping"></div>
+</div>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-body-sm">Cartago Central</span>
+<span class="text-label-md font-bold">42%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-sm">Paraíso</span>
+<span class="text-label-md font-bold">18%</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-body-sm">Oreamuno</span>
+<span class="text-label-md font-bold">12%</span>
+</div>
+</div>
+</div>
+<!-- Socioeconomic Profiles -->
+<div class="md:col-span-4 bg-white p-6 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col">
+<h3 class="text-label-md font-bold text-on-surface mb-6">Perfil Socioeconómico</h3>
+<div class="flex-1 flex items-center justify-center relative py-4">
+<!-- Simulated Donut Chart -->
+<svg class="w-32 h-32 transform -rotate-90" viewbox="0 0 36 36">
+<circle cx="18" cy="18" fill="none" r="16" stroke="#f0f3ff" stroke-width="4"></circle>
+<circle cx="18" cy="18" fill="none" r="16" stroke="#001e40" stroke-dasharray="60, 100" stroke-linecap="round" stroke-width="4"></circle>
+<circle cx="18" cy="18" fill="none" r="16" stroke="#450008" stroke-dasharray="25, 100" stroke-dashoffset="-60" stroke-linecap="round" stroke-width="4"></circle>
+<circle cx="18" cy="18" fill="none" r="16" stroke="#c3c6d1" stroke-dasharray="15, 100" stroke-dashoffset="-85" stroke-linecap="round" stroke-width="4"></circle>
+</svg>
+<div class="absolute inset-0 flex flex-col items-center justify-center">
+<span class="text-headline-sm font-bold">1,240</span>
+<span class="text-[10px] text-on-surface-variant uppercase">Estudiantes</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 mt-4">
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-primary"></span>
+<span class="text-[11px] text-on-surface-variant">Nivel 1 (60%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-tertiary"></span>
+<span class="text-[11px] text-on-surface-variant">Nivel 2 (25%)</span>
+</div>
+<div class="flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-outline-variant"></span>
+<span class="text-[11px] text-on-surface-variant">Nivel 3 (15%)</span>
+</div>
+</div>
+</div>
+<!-- Quick Action Reports -->
+<div class="md:col-span-4 bg-surface-container-high p-6 rounded-xl shadow-sm border border-outline-variant/30 flex flex-col gap-4">
+<h3 class="text-label-md font-bold text-primary uppercase tracking-widest">Atajos de Reportes</h3>
+<div class="space-y-3">
+<button class="w-full text-left bg-white p-3 rounded-lg flex items-center justify-between group hover:shadow-md transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">analytics</span>
+<span class="text-label-md">Impacto por Carrera</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</button>
+<button class="w-full text-left bg-white p-3 rounded-lg flex items-center justify-between group hover:shadow-md transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">group</span>
+<span class="text-label-md">Retención Estudiantil</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</button>
+<button class="w-full text-left bg-white p-3 rounded-lg flex items-center justify-between group hover:shadow-md transition-all">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">history</span>
+<span class="text-label-md">Historial de Pagos</span>
+</div>
+<span class="material-symbols-outlined text-outline-variant group-hover:text-primary transition-colors">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Data Table Section -->
+<div class="bg-white rounded-xl shadow-sm border border-outline-variant/30 overflow-hidden">
+<div class="p-6 border-b border-outline-variant/30 flex justify-between items-center">
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Detalle de Beneficiarios</h3>
+<p class="text-body-sm text-on-surface-variant">Registros recientes de becas activas</p>
+</div>
+<div class="flex gap-2">
+<button class="px-3 py-1.5 text-label-sm border border-outline-variant rounded hover:bg-surface-container transition-colors">Filtrar</button>
+<button class="px-3 py-1.5 text-label-sm border border-outline-variant rounded hover:bg-surface-container transition-colors">Columnas</button>
+</div>
+</div>
+<div class="overflow-x-auto custom-scrollbar">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low text-on-surface-variant text-label-sm uppercase font-bold">
+<tr>
+<th class="px-6 py-4">ID Estudiante</th>
+<th class="px-6 py-4">Nombre Completo</th>
+<th class="px-6 py-4">Facultad</th>
+<th class="px-6 py-4">Tipo de Beca</th>
+<th class="px-6 py-4">Estado</th>
+<th class="px-6 py-4">Monto Semestral</th>
+<th class="px-6 py-4 text-center">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/20 text-body-sm">
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-mono">2024-0015</td>
+<td class="px-6 py-4 font-bold">Mariana Rodríguez Solís</td>
+<td class="px-6 py-4 text-on-surface-variant">Tecnologías de Información</td>
+<td class="px-6 py-4">Socioeconómica</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-full bg-emerald-100 text-emerald-800 text-[10px] font-bold uppercase tracking-wider">Aprobado</span>
+</td>
+<td class="px-6 py-4 font-bold text-primary">₡350,000</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-mono">2024-0082</td>
+<td class="px-6 py-4 font-bold">Andrés Vargas Quesada</td>
+<td class="px-6 py-4 text-on-surface-variant">Administración</td>
+<td class="px-6 py-4">Excelencia Académica</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-full bg-blue-100 text-blue-800 text-[10px] font-bold uppercase tracking-wider">En Revisión</span>
+</td>
+<td class="px-6 py-4 font-bold text-primary">₡500,000</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors">
+<td class="px-6 py-4 font-mono">2023-0941</td>
+<td class="px-6 py-4 font-bold">Lucía Mendez Castro</td>
+<td class="px-6 py-4 text-on-surface-variant">Ingeniería Eléctrica</td>
+<td class="px-6 py-4">Transporte y Alimentación</td>
+<td class="px-6 py-4">
+<span class="px-2 py-1 rounded-full bg-amber-100 text-amber-800 text-[10px] font-bold uppercase tracking-wider">Pendiente</span>
+</td>
+<td class="px-6 py-4 font-bold text-primary">₡210,000</td>
+<td class="px-6 py-4 text-center">
+<button class="text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined text-lg">visibility</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-6 bg-surface-container-low border-t border-outline-variant/30 flex justify-between items-center text-label-sm">
+<span class="text-on-surface-variant">Mostrando 3 de 1,240 registros</span>
+<div class="flex gap-2">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-white disabled:opacity-50" disabled=""><span class="material-symbols-outlined text-sm">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-primary bg-primary text-on-primary">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-white">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-white">...</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-white"><span class="material-symbols-outlined text-sm">chevron_right</span></button>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Anchor -->
+<footer class="flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full mt-auto border-t border-outline-variant bg-surface-container-highest/30">
+<div class="mb-4 md:mb-0">
+<p class="text-body-sm font-body-sm text-on-surface-variant">© 2024 Colegio Universitario de Cartago. Departamento de Bienestar Estudiantil.</p>
+</div>
+<div class="flex gap-6">
+<a class="text-label-md font-label-md font-bold text-on-surface hover:text-primary transition-colors" href="#">Contacto</a>
+<a class="text-label-md font-label-md font-bold text-on-surface hover:text-primary transition-colors" href="#">Transparencia</a>
+<a class="text-label-md font-label-md font-bold text-on-surface hover:text-primary transition-colors" href="#">Privacidad</a>
+<a class="text-label-md font-label-md font-bold text-on-surface hover:text-primary transition-colors" href="#">Ayuda</a>
+</div>
+</footer>
+</main>
+<!-- FAB Suppression Rule - Not rendered here as it's a detail/dashboard report screen -->
+<script>
+        // Simple interactivity for dashboard
+        document.querySelectorAll('.group').forEach(el => {
+            el.addEventListener('mouseenter', () => {
+                const tooltip = el.querySelector('.opacity-0');
+                if(tooltip) tooltip.classList.replace('opacity-0', 'opacity-100');
+            });
+            el.addEventListener('mouseleave', () => {
+                const tooltip = el.querySelector('.opacity-100');
+                if(tooltip) tooltip.classList.replace('opacity-100', 'opacity-0');
+            });
+        });
+    </script>
+</body></html>

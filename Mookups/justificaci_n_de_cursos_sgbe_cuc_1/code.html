@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Justificación de Cursos - SGBE CUC</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-secondary-container": "#626566",
+                        "on-primary-container": "#799dd6",
+                        "tertiary-fixed": "#ffdad8",
+                        "primary-fixed-dim": "#a7c8ff",
+                        "tertiary-fixed-dim": "#ffb3b1",
+                        "on-error-container": "#93000a",
+                        "surface-bright": "#f9f9ff",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-lowest": "#ffffff",
+                        "on-primary-fixed": "#001b3c",
+                        "secondary-container": "#e1e3e4",
+                        "surface": "#f9f9ff",
+                        "background": "#f9f9ff",
+                        "surface-container-highest": "#d8e3fa",
+                        "on-primary": "#ffffff",
+                        "tertiary-container": "#6d0013",
+                        "tertiary": "#450008",
+                        "surface-container": "#e7eeff",
+                        "on-surface": "#111c2c",
+                        "secondary": "#5c5f60",
+                        "inverse-surface": "#263142",
+                        "on-secondary-fixed": "#191c1d",
+                        "on-secondary-fixed-variant": "#454748",
+                        "surface-variant": "#d8e3fa",
+                        "on-background": "#111c2c",
+                        "on-primary-fixed-variant": "#1f477b",
+                        "inverse-on-surface": "#ebf1ff",
+                        "error": "#ba1a1a",
+                        "surface-dim": "#cfdaf1",
+                        "surface-container-low": "#f0f3ff",
+                        "primary": "#001e40",
+                        "outline-variant": "#c3c6d1",
+                        "on-tertiary-fixed": "#410007",
+                        "on-surface-variant": "#43474f",
+                        "secondary-fixed": "#e1e3e4",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed-dim": "#c5c7c8",
+                        "on-error": "#ffffff",
+                        "inverse-primary": "#a7c8ff",
+                        "outline": "#737780",
+                        "primary-container": "#003366",
+                        "on-secondary": "#ffffff",
+                        "surface-tint": "#3a5f94",
+                        "primary-fixed": "#d5e3ff",
+                        "on-tertiary-container": "#ff6b6e",
+                        "on-tertiary-fixed-variant": "#92001c",
+                        "surface-container-high": "#dee8ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "sans": ["Hanken Grotesk", "sans-serif"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .status-pill {
+            @apply px-3 py-1 rounded-full text-xs font-semibold;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-sans">
+<!-- Header Section (Process View Header as per logic) -->
+<nav class="sticky top-0 z-50 bg-white border-b border-outline-variant px-margin-mobile lg:px-margin-desktop py-4 flex items-center justify-between shadow-sm">
+<div class="flex items-center gap-4">
+<button class="p-2 hover:bg-surface-container rounded-lg transition-colors" onclick="window.history.back()">
+<span class="material-symbols-outlined text-primary">arrow_back</span>
+</button>
+<div>
+<h1 class="text-headline-sm text-primary">Justificación Académica</h1>
+<p class="text-body-sm text-on-surface-variant">Trámite de apelación por rendimiento</p>
+</div>
+</div>
+<div class="hidden md:flex items-center gap-3">
+<div class="bg-surface-container-high px-4 py-2 rounded-xl flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[20px]">account_circle</span>
+<span class="text-label-md text-on-surface">Juan Pérez (20230045)</span>
+</div>
+</div>
+</nav>
+<main class="max-w-container-max mx-auto px-margin-mobile lg:px-margin-desktop py-base lg:py-12">
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Left Column: Form -->
+<div class="lg:col-span-8 space-y-8">
+<!-- Progress Indicator -->
+<div class="bg-surface-container p-6 rounded-xl border border-outline-variant">
+<div class="flex justify-between mb-4">
+<span class="text-label-md text-primary">Paso 1 de 3: Información de Cursos</span>
+<span class="text-label-sm text-on-surface-variant italic">Requerido para mantener beca</span>
+</div>
+<div class="w-full bg-surface-container-highest h-2 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-1/3 transition-all duration-500"></div>
+</div>
+</div>
+<section class="bg-white p-6 lg:p-10 rounded-xl shadow-sm border border-outline-variant">
+<form class="space-y-10" id="justificationForm">
+<!-- Course Selection -->
+<div>
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">list_alt</span>
+<h2 class="text-headline-md text-primary">Selección de Cursos</h2>
+</div>
+<p class="text-body-md text-on-surface-variant mb-6">Marque los cursos en los que ha tenido pérdida o bajo rendimiento académico durante este periodo.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<label class="flex items-center gap-4 p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-body-md font-semibold text-on-surface">Cálculo Diferencial</span>
+<span class="text-label-sm text-on-surface-variant">Grupo 01 • Prof. Méndez</span>
+</div>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-body-md font-semibold text-on-surface">Física Mecánica</span>
+<span class="text-label-sm text-on-surface-variant">Grupo 04 • Prof. Rojas</span>
+</div>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-body-md font-semibold text-on-surface">Programación Orientada a Objetos</span>
+<span class="text-label-sm text-on-surface-variant">Grupo 02 • Prof. Solano</span>
+</div>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-body-md font-semibold text-on-surface">Ética y Profesionalismo</span>
+<span class="text-label-sm text-on-surface-variant">Grupo 05 • Prof. Vargas</span>
+</div>
+</label>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Justification Text -->
+<div>
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">edit_note</span>
+<h2 class="text-headline-md text-primary">Exposición de Motivos</h2>
+</div>
+<div class="space-y-4">
+<label class="block text-label-md text-on-surface">Justificación Detallada</label>
+<textarea class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-1 focus:ring-primary p-4 text-body-md text-on-surface placeholder:text-outline" placeholder="Describa de manera clara y honesta las razones que impidieron el cumplimiento de los requisitos académicos..." rows="6"></textarea>
+<p class="text-label-sm text-on-surface-variant">Máximo 2000 caracteres. Recuerde que la información proporcionada será validada por el comité de becas.</p>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Evidence Upload -->
+<div>
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-primary">upload_file</span>
+<h2 class="text-headline-md text-primary">Comprobantes y Evidencia</h2>
+</div>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 text-center hover:border-primary-container transition-colors group">
+<span class="material-symbols-outlined text-[48px] text-outline group-hover:text-primary-container transition-colors">cloud_upload</span>
+<p class="mt-4 text-body-md font-medium text-on-surface">Haga clic o arrastre aquí sus archivos</p>
+<p class="text-label-sm text-on-surface-variant mt-2">Formatos permitidos: PDF, JPG, PNG (Máx 5MB por archivo)</p>
+<input class="hidden" id="fileUpload" multiple="" type="file"/>
+<button class="mt-6 px-6 py-2 bg-surface-container border border-primary text-primary text-label-md rounded-lg hover:bg-primary hover:text-white transition-all" onclick="document.getElementById('fileUpload').click()" type="button">Seleccionar archivos</button>
+</div>
+<!-- File List Preview -->
+<div class="mt-4 space-y-2">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded border border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">description</span>
+<span class="text-body-sm text-on-surface">Certificado_Medico_CCSS.pdf</span>
+</div>
+<button class="text-error hover:bg-error-container p-1 rounded transition-colors" type="button">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="pt-6 flex flex-col md:flex-row gap-4">
+<button class="flex-1 bg-primary text-white py-4 rounded-xl font-bold text-body-md shadow-md hover:opacity-90 transition-opacity" type="submit">
+                                Enviar Justificación
+                            </button>
+<button class="px-8 py-4 border border-outline text-on-surface-variant font-bold text-body-md rounded-xl hover:bg-surface-container-low transition-colors" type="button">
+                                Guardar Borrador
+                            </button>
+</div>
+</form>
+</section>
+</div>
+<!-- Right Column: Info & Status -->
+<div class="lg:col-span-4 space-y-6">
+<!-- Status Card -->
+<div class="bg-white p-6 rounded-xl shadow-sm border border-outline-variant">
+<h3 class="text-headline-sm text-primary mb-6">Estado Actual</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between p-4 bg-primary-container/5 rounded-lg border border-primary-container/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">info</span>
+<span class="text-label-md text-primary-container">Sin enviar</span>
+</div>
+<span class="px-3 py-1 bg-primary-container text-white text-[10px] uppercase font-bold rounded-full">Borrador</span>
+</div>
+<div class="relative pl-8 space-y-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant">
+<!-- Review Step -->
+<div class="relative">
+<div class="absolute left-[-21px] top-0 w-[24px] h-[24px] bg-white border-2 border-outline rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px] text-outline">pending</span>
+</div>
+<div class="flex flex-col">
+<span class="text-label-md text-on-surface">Recepción de Documentos</span>
+<span class="text-label-sm text-on-surface-variant">Pendiente de envío del estudiante</span>
+</div>
+</div>
+<!-- Analysis Step -->
+<div class="relative opacity-50">
+<div class="absolute left-[-21px] top-0 w-[24px] h-[24px] bg-white border-2 border-outline rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px] text-outline">search</span>
+</div>
+<div class="flex flex-col">
+<span class="text-label-md text-on-surface">Análisis del Comité</span>
+<span class="text-label-sm text-on-surface-variant">Evaluación de la justificación</span>
+</div>
+</div>
+<!-- Resolution Step -->
+<div class="relative opacity-50">
+<div class="absolute left-[-21px] top-0 w-[24px] h-[24px] bg-white border-2 border-outline rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px] text-outline">gavel</span>
+</div>
+<div class="flex flex-col">
+<span class="text-label-md text-on-surface">Resolución Final</span>
+<span class="text-label-sm text-on-surface-variant">Notificación de resultado</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Helpful Info Card -->
+<div class="bg-surface-container-highest p-6 rounded-xl border border-outline-variant">
+<h4 class="text-label-md text-primary mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">help</span>
+                        Información Importante
+                    </h4>
+<ul class="space-y-4">
+<li class="flex gap-3 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span>Solo se aceptan justificaciones por motivos de salud, laborales o fuerza mayor comprobables.</span>
+</li>
+<li class="flex gap-3 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary text-[18px]">check_circle</span>
+<span>El plazo máximo para resolver el trámite es de 10 días hábiles.</span>
+</li>
+</ul>
+</div>
+<!-- Contextual Image -->
+<div class="relative aspect-video rounded-xl overflow-hidden shadow-inner bg-slate-200">
+<img class="w-full h-full object-cover" data-alt="A focused high-angle shot of a minimalist wooden desk with a clean laptop, an open academic notebook, and a glass of water, bathed in soft, natural morning light through a large window. The setting is a serene student workspace at the Colegio Universitario de Cartago, reflecting a modern light-mode aesthetic with a palette of soft whites, deep blues, and warm wood tones. The mood is calm, professional, and studious, emphasizing clarity and administrative efficiency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyamZe_N3qqYVNlUiVUqEqo-g6Zq1iIn67IHBnipVuvmKoRIBwng7_02fE6xYHqvKee-qX7uqMn9t_kAln6dnN0jVq_EphrQrF4xDUF6RccpCF8wD_6wg3lPkYTJoTaB7pcTJmEv0c2XdDtWo8OCZlhTS8acoi1fyZF6-KZvqXp7k0t_Pi-UUNHzE73yltYYz5-kfwQNdFUTvYgIQZ9-VIkuPSvX7iYhdabWTBdHAJ4jSotwoK-IHGYku70W-l2xHB9s-mZrhCn4c"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/60 to-transparent flex items-end p-4">
+<p class="text-white text-label-sm font-medium">SGBE: Apoyando tu trayectoria académica.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<footer class="mt-20 border-t border-outline-variant py-10 px-margin-mobile text-center">
+<div class="max-w-container-max mx-auto flex flex-col md:flex-row justify-between items-center gap-6">
+<div class="flex items-center gap-3">
+<div class="size-8 text-primary">
+<svg fill="none" viewbox="0 0 48 48" xmlns="http://www.w3.org/2000/svg">
+<path d="M42.4379 44C42.4379 44 36.0744 33.9038 41.1692 24C46.8624 12.9336 42.2078 4 42.2078 4L7.01134 4C7.01134 4 11.6577 12.932 5.96912 23.9969C0.876273 33.9029 7.27094 44 7.27094 44L42.4379 44Z" fill="currentColor"></path>
+</svg>
+</div>
+<span class="text-label-md text-primary font-bold">Colegio Universitario de Cartago</span>
+</div>
+<div class="flex gap-8">
+<a class="text-label-sm text-on-surface-variant hover:text-primary" href="#">Reglamento de Becas</a>
+<a class="text-label-sm text-on-surface-variant hover:text-primary" href="#">Contacto Soporte</a>
+<a class="text-label-sm text-on-surface-variant hover:text-primary" href="#">Privacidad</a>
+</div>
+<p class="text-label-sm text-outline">© 2024 SGBE - Sistema de Gestión de Becas Estudiantiles</p>
+</div>
+</footer>
+<script>
+        // Micro-interaction for form feedback
+        document.getElementById('justificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // Basic UI simulation for demonstration
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-white">sync</span> Procesando...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Su justificación ha sido recibida satisfactoriamente. El Comité de Becas revisará su caso en los próximos días hábiles.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 1500);
+        });
+
+        // Hover effect for course selection items
+        const checkItems = document.querySelectorAll('label input[type="checkbox"]');
+        checkItems.forEach(check => {
+            check.addEventListener('change', (e) => {
+                const parent = e.target.closest('label');
+                if(e.target.checked) {
+                    parent.classList.add('bg-primary-container/10', 'border-primary');
+                } else {
+                    parent.classList.remove('bg-primary-container/10', 'border-primary');
+                }
+            });
+        });
+    </script>
+</body></html>

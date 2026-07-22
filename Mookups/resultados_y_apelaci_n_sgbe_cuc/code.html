@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+
+<html lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SGBE - Resultados y Apelación</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            background-color: #f9f9ff;
+        }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+        .timeline-step::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            left: 100%;
+            width: 100%;
+            height: 2px;
+            background: #E2E8F0;
+            z-index: 0;
+        }
+        .timeline-step:last-child::after {
+            display: none;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container": "#e7eeff",
+                        "on-tertiary-container": "#ff6b6e",
+                        "surface-container-highest": "#d8e3fa",
+                        "on-primary": "#ffffff",
+                        "outline": "#737780",
+                        "inverse-on-surface": "#ebf1ff",
+                        "outline-variant": "#c3c6d1",
+                        "on-primary-fixed": "#001b3c",
+                        "on-background": "#111c2c",
+                        "on-secondary-fixed": "#191c1d",
+                        "surface-container-high": "#dee8ff",
+                        "secondary-fixed-dim": "#c5c7c8",
+                        "on-surface": "#111c2c",
+                        "secondary": "#5c5f60",
+                        "on-primary-fixed-variant": "#1f477b",
+                        "background": "#f9f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-tint": "#3a5f94",
+                        "on-tertiary-fixed": "#410007",
+                        "inverse-primary": "#a7c8ff",
+                        "primary-container": "#003366",
+                        "error": "#ba1a1a",
+                        "on-error-container": "#93000a",
+                        "surface-variant": "#d8e3fa",
+                        "on-secondary-fixed-variant": "#454748",
+                        "surface-dim": "#cfdaf1",
+                        "on-error": "#ffffff",
+                        "inverse-surface": "#263142",
+                        "primary-fixed": "#d5e3ff",
+                        "secondary-fixed": "#e1e3e4",
+                        "secondary-container": "#e1e3e4",
+                        "tertiary-container": "#6d0013",
+                        "on-secondary-container": "#626566",
+                        "surface-bright": "#f9f9ff",
+                        "primary-fixed-dim": "#a7c8ff",
+                        "on-tertiary-fixed-variant": "#92001c",
+                        "on-primary-container": "#799dd6",
+                        "error-container": "#ffdad6",
+                        "primary": "#001e40",
+                        "surface-container-low": "#f0f3ff",
+                        "on-secondary": "#ffffff",
+                        "tertiary-fixed": "#ffdad8",
+                        "tertiary-fixed-dim": "#ffb3b1",
+                        "on-tertiary": "#ffffff",
+                        "on-surface-variant": "#43474f",
+                        "surface": "#f9f9ff",
+                        "tertiary": "#450008"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "gutter": "24px",
+                        "margin-mobile": "16px",
+                        "base": "8px",
+                        "margin-desktop": "48px",
+                        "container-max": "1280px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    },
+                    "fontSize": {
+                        "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                        "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                        "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                        "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                        "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                        "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                        "label-sm": ["12px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                        "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="min-h-screen flex flex-col">
+<!-- TopNavBar (Dashboard Context) -->
+<nav class="bg-surface dark:bg-surface-dim border-b border-outline-variant fixed top-0 w-full z-50 h-16 flex justify-between items-center pl-72 pr-margin-desktop">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm text-on-surface-variant w-64" placeholder="Buscar información..." type="text"/>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer">help_outline</span>
+<div class="flex items-center gap-3 ml-4">
+<img alt="Usuario" class="w-8 h-8 rounded-full border border-outline-variant" data-alt="A professional studio portrait of a young adult male student with a friendly expression. He is wearing a minimalist dark blue polo shirt against a clean, light gray background. The lighting is soft and even, highlighting his features with a high-key corporate aesthetic that matches the institutional and professional UI design." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAZ3wGm6XMC51wHf7AuLDr5_Eu8lWg9eQTpkW-RRalKYOb_flEhpn59PHlVPxySzaDVMD0z-9Whf3dcI_Lkc5l-sn6CHtM0QFXGMlJXeLUVzNM02HOu47uH1_fkfFEyCPPlfFTBChvwSALU1aqaAeEsZ5nSrk6y_a6VeM_BGKCjkQYnG_OtOxxKYwu3C1xVEL2g3ZCMYKmxD4W5VhwVC1Ok4SotjVJx0xojspE8Q-ry8Qt4oYbkS6bscmx-5Jxp5iMclqJRJ6u9QCA"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="bg-surface-container-low dark:bg-surface-container h-screen w-64 fixed left-0 top-0 flex flex-col p-4 gap-2 z-[60]">
+<div class="flex flex-col mb-8 px-2">
+<span class="text-headline-sm font-headline-sm font-bold text-primary">SGBE - CUC</span>
+<span class="text-label-sm text-on-surface-variant">Gestión de Becas</span>
+</div>
+<nav class="flex flex-col gap-1 flex-grow">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 p-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="text-label-md font-label-md">Solicitudes</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="text-label-md font-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Configuración</span>
+</a>
+</nav>
+<div class="pt-4 border-t border-outline-variant flex flex-col gap-1">
+<a class="flex items-center gap-3 p-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content -->
+<main class="ml-64 mt-16 p-margin-desktop flex-grow">
+<div class="max-w-4xl mx-auto space-y-10">
+<!-- Header Section -->
+<header class="space-y-2">
+<h1 class="text-headline-lg font-headline-lg text-primary">Estado de su Solicitud</h1>
+<p class="text-body-md text-on-surface-variant">Ciclo Lectivo: II Semestre 2024 • ID: B-2024-8921</p>
+</header>
+<!-- Timeline Status -->
+<section class="bg-surface p-8 rounded-xl border border-outline-variant relative">
+<div class="flex justify-between items-center relative">
+<!-- Step 1: Complete -->
+<div class="flex flex-col items-center gap-3 z-10 bg-surface">
+<div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white">
+<span class="material-symbols-outlined">check</span>
+</div>
+<span class="text-label-md text-on-surface">Envío</span>
+</div>
+<!-- Connector 1 -->
+<div class="flex-grow h-[2px] bg-emerald-600 mx-4"></div>
+<!-- Step 2: Complete -->
+<div class="flex flex-col items-center gap-3 z-10 bg-surface">
+<div class="w-10 h-10 rounded-full bg-emerald-600 flex items-center justify-center text-white">
+<span class="material-symbols-outlined">check</span>
+</div>
+<span class="text-label-md text-on-surface">Revisión DA</span>
+</div>
+<!-- Connector 2 -->
+<div class="flex-grow h-[2px] bg-emerald-600 mx-4"></div>
+<!-- Step 3: Current -->
+<div class="flex flex-col items-center gap-3 z-10 bg-surface">
+<div class="w-10 h-10 rounded-full bg-primary flex items-center justify-center text-white ring-4 ring-primary-container/20">
+<span class="material-symbols-outlined">visibility</span>
+</div>
+<span class="text-label-md font-bold text-primary">Resultado</span>
+</div>
+<!-- Connector 3 -->
+<div class="flex-grow h-[2px] bg-outline-variant mx-4"></div>
+<!-- Step 4: Future -->
+<div class="flex flex-col items-center gap-3 z-10 bg-surface">
+<div class="w-10 h-10 rounded-full bg-surface-container-highest flex items-center justify-center text-outline">
+<span class="material-symbols-outlined">history_edu</span>
+</div>
+<span class="text-label-md text-on-surface-variant">Formalización</span>
+</div>
+</div>
+</section>
+<!-- Resolution Card (State: Rejected for example purposes to show appeal) -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-gutter">
+<div class="md:col-span-2 space-y-gutter">
+<div class="bg-white p-8 rounded-xl shadow-sm border border-outline-variant relative overflow-hidden group">
+<!-- Decorative status bar -->
+<div class="absolute top-0 left-0 w-full h-2 bg-error"></div>
+<div class="flex justify-between items-start mb-6">
+<div>
+<h2 class="text-headline-md font-headline-md text-on-surface mb-2">Resolución Final</h2>
+<span class="inline-flex items-center px-4 py-1.5 rounded-full text-label-md font-bold bg-error-container text-on-error-container">
+<span class="material-symbols-outlined text-[18px] mr-2">cancel</span>
+                                    No Adjudicada
+                                </span>
+</div>
+<div class="text-right">
+<span class="text-label-sm text-on-surface-variant block">Porcentaje Asignado</span>
+<span class="text-headline-lg font-headline-lg text-outline">0%</span>
+</div>
+</div>
+<article class="space-y-4 text-body-md text-on-surface-variant leading-relaxed">
+<p>Tras un análisis detallado de su situación socioeconómica y académica según los parámetros establecidos por el Departamento de Bienestar Estudiantil, se ha determinado que su solicitud para la <strong>Beca de Asistencia Socioeconómica</strong> no cumple con los criterios de priorización para el presente periodo.</p>
+<p class="font-bold text-on-surface">Motivo de resolución: <span class="font-normal">Ingresos familiares exceden el umbral máximo de vulnerabilidad para la categoría solicitada.</span></p>
+</article>
+<div class="mt-8 pt-8 border-t border-outline-variant flex flex-col sm:flex-row gap-4 items-center">
+<button class="w-full sm:w-auto px-8 py-3 bg-primary text-on-primary font-bold rounded-lg hover:shadow-lg transition-all flex items-center justify-center gap-2" onclick="document.getElementById('appealForm').classList.remove('hidden'); this.scrollIntoView({behavior: 'smooth'})">
+<span class="material-symbols-outlined">gavel</span>
+                                Iniciar Proceso de Apelación
+                            </button>
+<button class="w-full sm:w-auto px-8 py-3 border border-primary text-primary font-bold rounded-lg hover:bg-primary/5 transition-all">
+                                Ver Detalle Técnico
+                            </button>
+</div>
+</div>
+<!-- Appeal Form Section (Hidden by default) -->
+<div class="hidden animate-in fade-in slide-in-from-top-4 duration-500 bg-white p-8 rounded-xl shadow-sm border border-outline-variant space-y-6" id="appealForm">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container p-2 bg-surface-container rounded-lg">edit_document</span>
+<h2 class="text-headline-sm font-headline-sm text-primary">Formulario de Apelación</h2>
+</div>
+<p class="text-body-sm text-on-surface-variant">Usted tiene un plazo de 5 días hábiles a partir de hoy para presentar este recurso. Por favor, describa claramente los motivos por los cuales considera que la resolución debe ser reconsiderada y adjunte evidencia nueva.</p>
+<form class="space-y-6">
+<div class="space-y-2">
+<label class="text-label-md text-on-surface font-bold">Justificación de la Apelación</label>
+<textarea class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary text-body-md" placeholder="Explique detalladamente su situación actual o corrija cualquier dato erróneo detectado..." rows="6"></textarea>
+</div>
+<div class="space-y-2">
+<label class="text-label-md text-on-surface font-bold">Documentos de Respaldo (PDF, JPG)</label>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-8 flex flex-col items-center justify-center gap-4 bg-surface-bright hover:bg-surface-container-low transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-outline group-hover:text-primary text-4xl">cloud_upload</span>
+<div class="text-center">
+<p class="text-label-md text-on-surface">Haga clic para subir o arrastre sus archivos aquí</p>
+<p class="text-label-sm text-on-surface-variant">Máximo 10MB por archivo. Formatos permitidos: PDF, DOCX, JPEG.</p>
+</div>
+</div>
+</div>
+<div class="flex justify-end gap-4 pt-4">
+<button class="px-6 py-2.5 text-on-surface-variant font-bold hover:bg-surface-container rounded-lg" onclick="document.getElementById('appealForm').classList.add('hidden')" type="button">Cancelar</button>
+<button class="px-8 py-2.5 bg-primary text-on-primary font-bold rounded-lg shadow-sm hover:shadow-md" type="submit">Enviar Apelación</button>
+</div>
+</form>
+</div>
+</div>
+<!-- Aside Support Information -->
+<div class="space-y-gutter">
+<div class="bg-surface-container-high p-6 rounded-xl space-y-4">
+<h3 class="text-label-md font-bold text-primary flex items-center gap-2 uppercase tracking-wider">
+<span class="material-symbols-outlined text-[18px]">info</span>
+                            Próximos Pasos
+                        </h3>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+<span class="text-body-sm text-on-surface-variant">Si apela, el comité técnico revisará su caso en un máximo de 10 días hábiles.</span>
+</li>
+<li class="flex gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+<span class="text-body-sm text-on-surface-variant">Recibirá una notificación vía correo institucional una vez haya un nuevo dictamen.</span>
+</li>
+<li class="flex gap-3">
+<div class="w-1.5 h-1.5 rounded-full bg-primary mt-2"></div>
+<span class="text-body-sm text-on-surface-variant">Puede solicitar una cita de orientación con Trabajo Social si tiene dudas adicionales.</span>
+</li>
+</ul>
+</div>
+<div class="relative rounded-xl overflow-hidden h-48 group">
+<img alt="CUC Campus" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" data-alt="A cinematic, wide-angle shot of the Colegio Universitario de Cartago academic campus during a bright, sunny afternoon. The architecture is modern and institutional, with clean geometric lines and large glass windows reflecting the blue sky. Students are seen walking on landscaped paths between buildings. The overall mood is aspirational, professional, and tranquil, reinforcing the academic context." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBp6dyWPcYVYo6V1p4CympNA39FMZKqgyj1yAr-IeHORsqbql6n4bV2qRgYIFGYPUFhEGStgX-oNEvuhxxnFLvU-Z9SOs2Lk0bEsTbCrrjOrPwtP-A5xgAn9iT7RjWjVkFN5u4JuNORY-VP_ap2FwO22A3f5G72IpUpVtH0HN-tMETfRD-WS2103CU_70Fe3rw5xCNOL0nWYMDoMVwoleyHwWWCx1KNXU_hdaZUtq-uPKdK3hUpjQ8CJKmA5WxoI9hvPmZO6FeuUng"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex flex-col justify-end p-4">
+<span class="text-white font-bold text-label-md">Colegio Universitario de Cartago</span>
+<span class="text-white/80 text-label-sm">Excelencia y Oportunidad</span>
+</div>
+</div>
+</div>
+</section>
+</div>
+</main>
+<!-- Footer -->
+<footer class="ml-64 bg-surface-container-highest dark:bg-surface-container-lowest border-t border-outline-variant">
+<div class="flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full max-w-container-max mx-auto">
+<div class="mb-4 md:mb-0">
+<p class="text-label-md font-label-md font-bold text-on-surface">SGBE - CUC</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant mt-1">© 2024 Colegio Universitario de Cartago. Bienestar Estudiantil.</p>
+</div>
+<div class="flex gap-8">
+<a class="text-body-sm font-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Contacto</a>
+<a class="text-body-sm font-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Transparencia</a>
+<a class="text-body-sm font-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Privacidad</a>
+<a class="text-body-sm font-body-sm text-on-surface-variant hover:text-primary hover:underline transition-all" href="#">Ayuda</a>
+</div>
+</div>
+</footer>
+<script>
+        // Micro-interaction for file upload hover or selection
+        const dropZone = document.querySelector('.border-dashed');
+        if(dropZone) {
+            dropZone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropZone.classList.add('bg-primary-container/10');
+            });
+            dropZone.addEventListener('dragleave', () => {
+                dropZone.classList.remove('bg-primary-container/10');
+            });
+        }
+    </script>
+</body></html>

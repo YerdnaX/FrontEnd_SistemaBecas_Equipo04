@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Justificación de Cursos - SGBE CUC</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001e40",
+                        "primary-container": "#003366",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#799dd6",
+                        "secondary": "#5c5f60",
+                        "secondary-container": "#e1e3e4",
+                        "surface": "#f9f9ff",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-container": "#e7eeff",
+                        "surface-container-high": "#dee8ff",
+                        "surface-container-highest": "#d8e3fa",
+                        "outline": "#737780",
+                        "outline-variant": "#c3c6d1",
+                        "error": "#ba1a1a",
+                        "error-container": "#ffdad6",
+                        "on-error-container": "#93000a",
+                        "on-surface": "#111c2c",
+                        "on-surface-variant": "#43474f",
+                        "background": "#f9f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "sans": ["Hanken Grotesk", "sans-serif"],
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        .custom-shadow {
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.05);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex">
+<!-- SideNavBar (Shared Component from SCREEN_17) -->
+<aside class="hidden md:flex h-screen w-64 fixed left-0 top-0 bg-surface-container-low flex-col p-4 gap-2 z-50 border-r border-outline-variant">
+<div class="flex flex-col gap-1 mb-8 px-2">
+<h1 class="text-xl font-bold text-primary-container">SGBE - CUC</h1>
+<p class="text-[12px] font-medium text-on-surface-variant">Gestión de Becas</p>
+</div>
+<nav class="flex-1 flex flex-col gap-1">
+<a class="text-on-surface-variant hover:bg-secondary-container/50 rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-sm font-semibold">Dashboard</span>
+</a>
+<a class="bg-primary-container text-white font-bold rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">description</span>
+<span class="text-sm">Solicitudes</span>
+</a>
+<a class="text-on-surface-variant hover:bg-secondary-container/50 rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="text-sm font-semibold">Documentos</span>
+</a>
+<a class="text-on-surface-variant hover:bg-secondary-container/50 rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-sm font-semibold">Configuración</span>
+</a>
+</nav>
+<button class="mt-4 mb-8 bg-primary-container text-white font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+<span class="text-sm">Nueva Convocatoria</span>
+</button>
+<div class="mt-auto border-t border-outline-variant pt-4">
+<a class="text-on-surface-variant hover:bg-error-container/20 hover:text-error rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-sm font-semibold">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Shell -->
+<main class="flex-1 md:pl-64 flex flex-col min-h-screen">
+<!-- TopNavBar (Shared Component style) -->
+<header class="h-16 flex justify-between items-center w-full px-4 md:px-margin-desktop sticky top-0 bg-white border-b border-outline-variant z-40">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<div class="flex flex-col">
+<h2 class="text-lg font-bold text-primary-container leading-tight">Justificación Académica</h2>
+<p class="text-xs text-on-surface-variant">Trámite de apelación por rendimiento</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 ml-2 border-l border-outline-variant pl-4">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-on-surface">Juan Pérez</p>
+<p class="text-xs text-on-surface-variant">Estudiante (20230045)</p>
+</div>
+<img alt="Perfil" class="w-10 h-10 rounded-full object-cover border-2 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAFW9rsuG0mBXdlTxw65Cy2QnzHCq4aN2gKDS-Mly1xvMoYS1lySJAbCZgcAggalNt2ucCTgrVlxYR_gphRPoohrfmPJ0M4LSgk9Xs6-wTZDkqFQG-ryCREwQZXmwEFCKGIK8P9-UQhMAEnT1C69weVdKTLYbr2SFI9MJ-dnFmjehAU68HdFe-au6z6pNZu-4gY89oJAFIAbWKBlVLss5W3CPLcXInS0c5HF8228I_kZGyRFErhutuZ46iCbBSl255pPYUg04pTkW0"/>
+</div>
+</div>
+</header>
+<!-- Page Content -->
+<div class="p-4 md:p-margin-desktop max-w-container-max mx-auto w-full space-y-gutter">
+<!-- Stepper (Style matching SCREEN_22) -->
+<div class="w-full max-w-4xl mx-auto mb-12">
+<div class="relative flex justify-between">
+<div class="absolute top-5 left-0 w-full h-[2px] bg-surface-container-highest -z-10">
+<div class="h-full bg-primary-container transition-all duration-500 w-[0%]"></div>
+</div>
+<!-- Step 1 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-container text-white transition-all duration-300">
+<span class="text-sm font-bold">1</span>
+</div>
+<span class="text-xs font-bold text-primary-container">Información</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant transition-all duration-300">
+<span class="text-sm font-bold">2</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Revisión</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant transition-all duration-300">
+<span class="text-sm font-bold">3</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Resolución</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-gutter">
+<!-- Left Column: Form -->
+<div class="lg:col-span-8 space-y-gutter">
+<section class="bg-surface-container-lowest rounded-lg custom-shadow border border-outline-variant p-6 md:p-8">
+<form class="space-y-10" id="justificationForm">
+<!-- Course Selection -->
+<div>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary-container p-2 bg-surface-container-high rounded-lg">list_alt</span>
+<h2 class="text-xl font-bold text-primary-container">Selección de Cursos</h2>
+</div>
+<p class="text-sm text-on-surface-variant mb-6">Marque los cursos en los que ha tenido pérdida o bajo rendimiento académico durante este periodo.</p>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<label class="flex items-center gap-4 p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">Cálculo Diferencial</span>
+<span class="text-xs text-on-surface-variant">Grupo 01 • Prof. Méndez</span>
+</div>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">Física Mecánica</span>
+<span class="text-xs text-on-surface-variant">Grupo 04 • Prof. Rojas</span>
+</div>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">Programación Orientada a Objetos</span>
+<span class="text-xs text-on-surface-variant">Grupo 02 • Prof. Solano</span>
+</div>
+</label>
+<label class="flex items-center gap-4 p-4 rounded-lg border border-outline-variant hover:bg-surface-container-low cursor-pointer transition-all">
+<input class="w-5 h-5 rounded border-outline text-primary-container focus:ring-primary-container" type="checkbox"/>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface">Ética y Profesionalismo</span>
+<span class="text-xs text-on-surface-variant">Grupo 05 • Prof. Vargas</span>
+</div>
+</label>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Justification Text -->
+<div>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary-container p-2 bg-surface-container-high rounded-lg">edit_note</span>
+<h2 class="text-xl font-bold text-primary-container">Exposición de Motivos</h2>
+</div>
+<div class="space-y-4">
+<label class="block text-sm font-bold text-on-surface">Justificación Detallada</label>
+<textarea class="w-full rounded-lg border border-outline-variant focus:border-primary-container focus:ring-1 focus:ring-primary-container p-4 text-sm text-on-surface bg-surface placeholder:text-outline" placeholder="Describa de manera clara y honesta las razones..." rows="6"></textarea>
+<p class="text-xs text-on-surface-variant">Máximo 2000 caracteres. Recuerde que la información proporcionada será validada por el comité de becas.</p>
+</div>
+</div>
+<hr class="border-outline-variant"/>
+<!-- Evidence Upload -->
+<div>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary-container p-2 bg-surface-container-high rounded-lg">upload_file</span>
+<h2 class="text-xl font-bold text-primary-container">Comprobantes y Evidencia</h2>
+</div>
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-8 text-center hover:border-primary-container transition-colors group cursor-pointer" onclick="document.getElementById('fileUpload').click()">
+<span class="material-symbols-outlined text-4xl text-outline group-hover:text-primary-container transition-colors">cloud_upload</span>
+<p class="mt-4 text-sm font-bold text-on-surface">Sube un archivo o arrastra y suelta</p>
+<p class="text-xs text-on-surface-variant mt-2">Formatos permitidos: PDF, JPG, PNG (Máx 5MB)</p>
+<input class="hidden" id="fileUpload" multiple="" type="file"/>
+</div>
+<!-- File List Preview -->
+<div class="mt-4 space-y-2">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">description</span>
+<span class="text-sm font-medium text-on-surface">Certificado_Medico_CCSS.pdf</span>
+</div>
+<button class="text-error hover:bg-error-container/20 p-2 rounded-lg transition-colors" type="button">
+<span class="material-symbols-outlined">delete</span>
+</button>
+</div>
+</div>
+</div>
+<div class="pt-6 flex flex-col md:flex-row gap-4">
+<button class="flex-1 bg-primary-container text-white py-3 rounded-lg font-bold text-sm shadow-md hover:opacity-90 transition-opacity" type="submit">
+                                    Enviar Justificación
+                                </button>
+<button class="px-8 py-3 border border-primary-container text-primary-container font-bold text-sm rounded-lg hover:bg-surface-container-low transition-colors" type="button">
+                                    Guardar Borrador
+                                </button>
+</div>
+</form>
+</section>
+</div>
+<!-- Right Column: Info & Status -->
+<div class="lg:col-span-4 space-y-gutter">
+<!-- Status Card -->
+<div class="bg-surface-container-lowest p-6 rounded-lg custom-shadow border border-outline-variant">
+<h3 class="text-lg font-bold text-primary-container mb-6">Estado Actual</h3>
+<div class="space-y-6">
+<div class="flex items-center justify-between p-4 bg-primary-container/5 rounded-lg border border-primary-container/20">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary-container">info</span>
+<span class="text-sm font-bold text-primary-container">Sin enviar</span>
+</div>
+<span class="px-3 py-1 bg-primary-container text-white text-[10px] uppercase font-bold rounded-full">Borrador</span>
+</div>
+<div class="relative pl-8 space-y-8 before:content-[''] before:absolute before:left-[11px] before:top-2 before:bottom-2 before:w-[2px] before:bg-outline-variant">
+<div class="relative">
+<div class="absolute left-[-21px] top-0 w-[24px] h-[24px] bg-white border-2 border-outline rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px] text-outline">pending</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface leading-tight">Recepción de Documentos</span>
+<span class="text-xs text-on-surface-variant">Pendiente de envío del estudiante</span>
+</div>
+</div>
+<div class="relative opacity-50">
+<div class="absolute left-[-21px] top-0 w-[24px] h-[24px] bg-white border-2 border-outline rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px] text-outline">search</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface leading-tight">Análisis del Comité</span>
+<span class="text-xs text-on-surface-variant">Evaluación de la justificación</span>
+</div>
+</div>
+<div class="relative opacity-50">
+<div class="absolute left-[-21px] top-0 w-[24px] h-[24px] bg-white border-2 border-outline rounded-full flex items-center justify-center z-10">
+<span class="material-symbols-outlined text-[14px] text-outline">gavel</span>
+</div>
+<div class="flex flex-col">
+<span class="text-sm font-bold text-on-surface leading-tight">Resolución Final</span>
+<span class="text-xs text-on-surface-variant">Notificación de resultado</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Helpful Info Card -->
+<div class="bg-surface-container-high p-6 rounded-lg border border-primary-container/20">
+<h4 class="text-sm font-bold text-primary-container mb-4 flex items-center gap-2">
+<span class="material-symbols-outlined text-[18px]">help</span>
+                            Información Importante
+                        </h4>
+<ul class="space-y-4">
+<li class="flex gap-3 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span>
+<span>Solo se aceptan justificaciones por motivos de salud, laborales o fuerza mayor comprobables.</span>
+</li>
+<li class="flex gap-3 text-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-primary-container text-[18px]">check_circle</span>
+<span>El plazo máximo para resolver el trámite es de 10 días hábiles.</span>
+</li>
+</ul>
+</div>
+<!-- Contextual Image (as in SCREEN_15) -->
+<div class="relative aspect-video rounded-lg overflow-hidden custom-shadow">
+<img class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCyamZe_N3qqYVNlUiVUqEqo-g6Zq1iIn67IHBnipVuvmKoRIBwng7_02fE6xYHqvKee-qX7uqMn9t_kAln6dnN0jVq_EphrQrF4xDUF6RccpCF8wD_6wg3lPkYTJoTaB7pcTJmEv0c2XdDtWo8OCZlhTS8acoi1fyZF6-KZvqXp7k0t_Pi-UUNHzE73yltYYz5-kfwQNdFUTvYgIQZ9-VIkuPSvX7iYhdabWTBdHAJ4jSotwoK-IHGYku70W-l2xHB9s-mZrhCn4c"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary-container/80 to-transparent flex items-end p-4">
+<p class="text-white text-xs font-bold">SGBE: Apoyando tu trayectoria académica.</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Institutional Footer -->
+<footer class="mt-auto border-t border-outline-variant bg-surface-container-highest flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full">
+<div class="mb-4 md:mb-0">
+<p class="text-sm font-bold text-on-surface">CUC | Bienestar Estudiantil</p>
+<p class="text-xs text-on-surface-variant max-w-sm mt-1">© 2024 Colegio Universitario de Cartago. Departamento de Bienestar Estudiantil.</p>
+</div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary-container transition-colors text-xs font-bold" href="#">Contacto</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors text-xs font-bold" href="#">Transparencia</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors text-xs font-bold" href="#">Privacidad</a>
+<a class="text-on-surface-variant hover:text-primary-container transition-colors text-xs font-bold" href="#">Ayuda</a>
+</div>
+</footer>
+</main>
+<script>
+        document.getElementById('justificationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+            btn.innerHTML = '<span class="material-symbols-outlined animate-spin text-white mr-2">sync</span> Procesando...';
+            btn.disabled = true;
+            
+            setTimeout(() => {
+                alert('Su justificación ha sido recibida satisfactoriamente. El Comité de Becas revisará su caso en los próximos días hábiles.');
+                btn.innerHTML = originalText;
+                btn.disabled = false;
+            }, 1500);
+        });
+
+        // Toggle background for checked items
+        const checkItems = document.querySelectorAll('label input[type="checkbox"]');
+        checkItems.forEach(check => {
+            check.addEventListener('change', (e) => {
+                const parent = e.target.closest('label');
+                if(e.target.checked) {
+                    parent.classList.add('bg-primary-container/5', 'border-primary-container');
+                } else {
+                    parent.classList.remove('bg-primary-container/5', 'border-primary-container');
+                }
+            });
+        });
+    </script>
+</body></html>

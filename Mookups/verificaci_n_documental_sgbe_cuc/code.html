@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "secondary-fixed": "#e1e3e4",
+                    "primary-container": "#003366",
+                    "on-tertiary": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb3b1",
+                    "on-secondary": "#ffffff",
+                    "on-primary": "#ffffff",
+                    "inverse-on-surface": "#ebf1ff",
+                    "secondary": "#5c5f60",
+                    "on-background": "#111c2c",
+                    "inverse-primary": "#a7c8ff",
+                    "on-secondary-container": "#626566",
+                    "surface-bright": "#f9f9ff",
+                    "surface-container-high": "#dee8ff",
+                    "on-tertiary-fixed": "#410007",
+                    "primary-fixed": "#d5e3ff",
+                    "tertiary-fixed": "#ffdad8",
+                    "error": "#ba1a1a",
+                    "on-surface": "#111c2c",
+                    "on-secondary-fixed-variant": "#454748",
+                    "surface-container-highest": "#d8e3fa",
+                    "on-tertiary-fixed-variant": "#92001c",
+                    "on-primary-fixed": "#001b3c",
+                    "on-error": "#ffffff",
+                    "on-surface-variant": "#43474f",
+                    "tertiary-container": "#6d0013",
+                    "on-primary-fixed-variant": "#1f477b",
+                    "surface-container-low": "#f0f3ff",
+                    "surface-variant": "#d8e3fa",
+                    "secondary-fixed-dim": "#c5c7c8",
+                    "on-tertiary-container": "#ff6b6e",
+                    "surface-container-lowest": "#ffffff",
+                    "tertiary": "#450008",
+                    "secondary-container": "#e1e3e4",
+                    "outline": "#737780",
+                    "on-primary-container": "#799dd6",
+                    "inverse-surface": "#263142",
+                    "surface-tint": "#3a5f94",
+                    "surface-dim": "#cfdaf1",
+                    "outline-variant": "#c3c6d1",
+                    "error-container": "#ffdad6",
+                    "on-secondary-fixed": "#191c1d",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "surface-container": "#e7eeff",
+                    "on-error-container": "#93000a",
+                    "background": "#f9f9ff",
+                    "surface": "#f9f9ff",
+                    "primary": "#001e40"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "margin-desktop": "48px",
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"],
+                    "label-md": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
+        .document-card:hover .action-overlay { opacity: 1; }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen">
+<!-- Side Navigation Shell -->
+<aside class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low dark:bg-surface-container flex flex-col p-4 gap-2 z-50">
+<div class="mb-8 px-2">
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary">Gesti\u00f3n de Becas</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Administraci\u00f3n Central</p>
+</div>
+<nav class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-md font-label-md">Solicitudes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="text-label-md font-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Configuraci\u00f3n</span>
+</a>
+</nav>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<button class="flex items-center gap-3 px-4 py-3 w-full text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Cerrar Sesi\u00f3n</span>
+</button>
+</div>
+</aside>
+<!-- Top App Bar Shell -->
+<header class="flex justify-between items-center w-full pl-72 pr-margin-desktop h-16 bg-surface dark:bg-surface-dim border-b border-outline-variant sticky top-0 z-40">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-label-sm focus:ring-2 focus:ring-primary" placeholder="Buscar aspirante o documento..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-colors">help_outline</span>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Foto de perfil del usuario" class="w-full h-full object-cover" data-alt="A professional headshot of a female administrative officer in her 30s, wearing business casual attire. She is smiling confidently against a soft, blurred office background. The lighting is bright and even, reflecting a clean, corporate light-mode aesthetic with a palette of soft whites and institutional blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuClzbxo3cSE0KeEhDd318WiqojE5QyDhyIHuXsUPUGo2401fOPzcYDO8LRY39p33vIMXf25UhMtbxGdit39omUWSwL9e6Gk0wL3bqtDgW7tTR1yG7iozuy0xTRJ8GPr97-wIJV1ujJH5nNnHuS9lt7W360FxKCdkhfjsN9CgBESuPkdzyvg_58CzTLZOvyyow4owUp-vD9plfxAXAVS9I7EgDztLOAT-1FSBmoZuMBmEjuYn60-gIjIXoTEwmoE5OjwIR2WlzgXvWo"/>
+</div>
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="pl-64 pt-4 min-h-screen bg-background">
+<div class="max-w-7xl mx-auto px-8 py-8">
+<!-- Breadcrumbs & Header -->
+<div class="mb-8">
+<nav class="flex gap-2 text-label-sm text-on-surface-variant mb-2">
+<a class="hover:text-primary" href="#">Solicitudes</a>
+<span>/</span>
+<span class="text-on-surface font-semibold">Expediente #2024-0892</span>
+</nav>
+<div class="flex justify-between items-end">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-primary">Verificación de Documentos</h2>
+<p class="text-body-md text-on-surface-variant">Revisión técnica de requisitos para Beca de Honor</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-primary text-primary font-label-md rounded-lg hover:bg-primary/5 transition-all">Posponer Revisión</button>
+<button class="px-6 py-2 bg-primary text-on-primary font-label-md rounded-lg hover:shadow-lg transition-all">Finalizar Verificación</button>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-12 gap-8">
+<!-- Documents List (Left Column) -->
+<div class="col-span-8 space-y-6">
+<!-- Document Card: ID -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-primary-fixed flex items-center justify-center text-on-primary-fixed">
+<span class="material-symbols-outlined text-[28px]">badge</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Cédula de Identidad</h3>
+<p class="text-body-sm text-on-surface-variant">Archivo: cedula_frontal_v2.pdf • 1.2 MB</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-emerald-100 text-emerald-800 text-label-sm font-label-md rounded-full">Válido</span>
+</div>
+<div class="bg-surface-container-low rounded-lg h-48 mb-4 overflow-hidden relative group">
+<img alt="Vista previa de documento" class="w-full h-full object-cover blur-[1px] hover:blur-0 transition-all duration-300" data-alt="A clean, high-resolution mockup of a professional identification card lying on a minimalist light gray desk. The card features generic placeholders for photo and text. The environment is flooded with soft, natural light, creating a professional and secure document handling atmosphere consistent with institutional standards." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXILZ5bHlMKbY_geUtX1rXfhJFAgGg_6HH1WAc9FcLd23_bOZkaus7fFnRTD2w8eUypP9bUqrozQ5E1ls1p1Jx6_F1o_kiYAXbFuRCktkOXgh2OpDy7uE7Hfw69528L3iLuK-OJ8Ldo1crvnFEFy9ZdaFS134R8ZFouhbANkll1d-Oeb9bopgWhYbbs57uFcDgqnovJJ-AOYF78zRxMGiHuXsA2GymytjfTNtzif8z3crNhu587pADfJ_30JtKtiIA17Dy7T_jIAc"/>
+<div class="absolute inset-0 bg-primary/20 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-4">
+<button class="bg-surface-container-lowest p-3 rounded-full shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">visibility</span>
+</button>
+<button class="bg-surface-container-lowest p-3 rounded-full shadow-lg hover:scale-110 transition-transform">
+<span class="material-symbols-outlined text-primary">download</span>
+</button>
+</div>
+</div>
+<div class="flex gap-4 justify-end">
+<button class="flex items-center gap-2 text-label-sm font-label-md text-on-surface-variant hover:text-error transition-colors">
+<span class="material-symbols-outlined text-[18px]">block</span> Rechazar
+                            </button>
+<button class="flex items-center gap-2 text-label-sm font-label-md text-primary bg-primary-fixed/20 px-4 py-2 rounded-lg">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">check_circle</span> Validado
+                            </button>
+</div>
+</div>
+<!-- Document Card: Certification -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-tertiary-fixed flex items-center justify-center text-on-tertiary-fixed">
+<span class="material-symbols-outlined text-[28px]">school</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Certificación de Notas</h3>
+<p class="text-body-sm text-on-surface-variant">Archivo: record_academico_2023.pdf • 4.5 MB</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-amber-100 text-amber-800 text-label-sm font-label-md rounded-full">Pendiente</span>
+</div>
+<div class="p-4 bg-surface-container rounded-lg border-l-4 border-primary-container mb-4">
+<p class="text-body-sm italic text-on-surface-variant">"Favor verificar que el sello de Registro sea legible en la esquina superior derecha."</p>
+</div>
+<div class="flex gap-4 justify-end">
+<button class="flex items-center gap-2 text-label-sm font-label-md text-error hover:bg-error/5 px-4 py-2 rounded-lg transition-colors" onclick="toggleCommentModal()">
+<span class="material-symbols-outlined text-[18px]">feedback</span> Solicitar Subsanación
+                            </button>
+<button class="flex items-center gap-2 text-label-sm font-label-md bg-primary text-on-primary px-4 py-2 rounded-lg hover:shadow-md transition-all">
+<span class="material-symbols-outlined text-[18px]">check_circle</span> Validar Documento
+                            </button>
+</div>
+</div>
+<!-- Document Card: Economic Form -->
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant hover:shadow-md transition-shadow opacity-75 grayscale hover:grayscale-0 hover:opacity-100 transition-all">
+<div class="flex justify-between items-start">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded-lg bg-secondary-fixed flex items-center justify-center text-on-secondary-fixed">
+<span class="material-symbols-outlined text-[28px]">payments</span>
+</div>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Comprobante de Ingresos</h3>
+<p class="text-body-sm text-on-surface-variant">Pendiente de carga por el estudiante</p>
+</div>
+</div>
+<span class="px-3 py-1 bg-surface-container-highest text-on-surface-variant text-label-sm font-label-md rounded-full">Sin Subir</span>
+</div>
+</div>
+</div>
+<!-- Profile Summary (Right Column) -->
+<aside class="col-span-4 space-y-6">
+<div class="bg-surface-container-low p-6 rounded-2xl border border-outline-variant sticky top-24">
+<div class="text-center mb-6">
+<div class="w-24 h-24 rounded-full mx-auto mb-4 border-4 border-white shadow-xl overflow-hidden">
+<img alt="Aspirante" class="w-full h-full object-cover" data-alt="A portrait of a male university student in his early 20s, with a friendly and determined expression. He is wearing a simple polo shirt and standing against a soft-focus academic building background. The scene is bathed in natural daylight, emphasizing a clean, optimistic, and academic atmosphere with a palette of soft whites and collegiate blues." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD17T0EHXNvJNOsdKT1Csp76HMR5epUQQ4haqX7cPnUNZ6Lgx7OsZ9FW29zE1Q5QbOlZRcL5-NZBZP9J3vVig0ryrOylYbK2YiL3DCEJevcMv6y_ZUR291m-OVQtUhg585xawMkbUiwkU1m2DRsfYEwbsEj9daFRpju9ORk_yfuf1f5pZW_tvKglwMdnV_2gdVHoeznetEc9nsnoLCmjgjPSraslM6cip7Ys8z7tQ4oKeqt0SJS9DrOLa8TSRmH_Hm49UP-QIWvNl4"/>
+</div>
+<h4 class="text-headline-md font-headline-md text-primary">Gabriel Solano Ruíz</h4>
+<p class="text-body-sm text-on-surface-variant font-medium">Ingeniería en Tecnologías de Información</p>
+</div>
+<div class="space-y-4">
+<div class="flex justify-between items-center py-2 border-b border-outline-variant">
+<span class="text-label-md text-on-surface-variant">Carné</span>
+<span class="text-body-md font-bold">20220914</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant">
+<span class="text-label-md text-on-surface-variant">Promedio Gral.</span>
+<span class="text-body-md font-bold text-emerald-700">92.4 / 100</span>
+</div>
+<div class="flex justify-between items-center py-2 border-b border-outline-variant">
+<span class="text-label-md text-on-surface-variant">Condición</span>
+<span class="text-body-md font-bold">Regular</span>
+</div>
+<div class="flex justify-between items-center py-2">
+<span class="text-label-md text-on-surface-variant">Zona de Residencia</span>
+<span class="text-body-md font-bold">Paraíso, Cartago</span>
+</div>
+</div>
+<div class="mt-8">
+<h5 class="text-label-md font-bold text-on-surface mb-3 uppercase tracking-wider">Progreso de Revisión</h5>
+<div class="h-2 w-full bg-surface-container-highest rounded-full overflow-hidden">
+<div class="h-full bg-primary w-[66%] rounded-full"></div>
+</div>
+<div class="flex justify-between mt-2">
+<span class="text-label-sm text-on-surface-variant">2 de 3 documentos</span>
+<span class="text-label-sm font-bold text-primary">66%</span>
+</div>
+</div>
+<button class="w-full mt-8 py-3 px-4 border-2 border-primary text-primary font-bold rounded-lg hover:bg-primary hover:text-on-primary transition-all flex items-center justify-center gap-2">
+<span class="material-symbols-outlined">mail</span> Contactar Estudiante
+                        </button>
+</div>
+<!-- Internal Notes -->
+<div class="bg-tertiary-container/10 p-6 rounded-2xl border border-tertiary/20">
+<div class="flex items-center gap-2 mb-4 text-tertiary">
+<span class="material-symbols-outlined">notes</span>
+<h5 class="text-label-md font-bold">Notas del Analista</h5>
+</div>
+<textarea class="w-full bg-transparent border-none p-0 text-body-sm text-on-surface-variant focus:ring-0 placeholder:text-outline italic" placeholder="Añadir nota interna privada..." rows="3"></textarea>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Subsanación Modal (Hidden by default) -->
+<div class="fixed inset-0 bg-on-surface/40 backdrop-blur-sm z-[100] hidden flex items-center justify-center p-4" id="subsanacion-modal">
+<div class="bg-surface-container-lowest w-full max-w-lg rounded-2xl shadow-2xl overflow-hidden">
+<div class="p-6 border-b border-outline-variant flex justify-between items-center">
+<h3 class="text-headline-sm font-bold text-primary">Solicitar Subsanación</h3>
+<button class="material-symbols-outlined hover:bg-surface-container p-1 rounded-full transition-colors" onclick="toggleCommentModal()">close</button>
+</div>
+<div class="p-6 space-y-4">
+<div>
+<label class="block text-label-md font-bold mb-2">Motivo del rechazo</label>
+<select class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary text-body-md">
+<option>Documento poco legible / borroso</option>
+<option>Información no coincide con el formulario</option>
+<option>Documento vencido</option>
+<option>Faltan sellos o firmas oficiales</option>
+<option>Otro (especificar abajo)</option>
+</select>
+</div>
+<div>
+<label class="block text-label-md font-bold mb-2">Comentario para el estudiante</label>
+<textarea class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary text-body-md min-h-[120px]" placeholder="Explique qué debe corregir el estudiante..."></textarea>
+</div>
+<div class="bg-secondary-container/30 p-4 rounded-lg flex gap-3 items-start">
+<span class="material-symbols-outlined text-on-secondary-container">info</span>
+<p class="text-body-sm text-on-secondary-container">Al solicitar subsanación, el estudiante recibirá una notificación inmediata y el estado de la beca pasará a "Corrección Pendiente".</p>
+</div>
+</div>
+<div class="p-6 bg-surface-container-low flex justify-end gap-3">
+<button class="px-6 py-2 text-label-md font-bold text-on-surface-variant hover:bg-surface-container rounded-lg" onclick="toggleCommentModal()">Cancelar</button>
+<button class="px-6 py-2 text-label-md font-bold bg-error text-on-error rounded-lg shadow-md hover:opacity-90">Enviar Solicitud</button>
+</div>
+</div>
+</div>
+<!-- Footer Shell -->
+<footer class="flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full mt-auto bg-surface-container-highest border-t border-outline-variant ml-0">
+<div class="text-on-surface-variant space-y-1 mb-4 md:mb-0">
+<p class="text-brand-logo text-label-md font-bold text-on-surface">SGBE - CUC</p>
+<p class="text-body-sm">© 2024 Colegio Universitario de Cartago. Departamento de Bienestar Estudiantil.</p>
+</div>
+<div class="flex gap-8">
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Contacto</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Transparencia</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Privacidad</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors" href="#">Ayuda</a>
+</div>
+</footer>
+<script>
+        function toggleCommentModal() {
+            const modal = document.getElementById('subsanacion-modal');
+            modal.classList.toggle('hidden');
+            if (!modal.classList.contains('hidden')) {
+                modal.classList.add('flex');
+            } else {
+                modal.classList.remove('flex');
+            }
+        }
+
+        // Basic interaction feedback
+        document.querySelectorAll('button').forEach(btn => {
+            btn.addEventListener('mousedown', function() {
+                this.classList.add('scale-[0.98]');
+            });
+            btn.addEventListener('mouseup', function() {
+                this.classList.remove('scale-[0.98]');
+            });
+        });
+    </script>
+</body></html>

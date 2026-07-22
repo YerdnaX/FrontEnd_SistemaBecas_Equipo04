@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Renovación de Beca | SGBE - CUC</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                "surface-container-highest": "#d8e3fa",
+                "outline-variant": "#c3c6d1",
+                "on-tertiary-fixed": "#410007",
+                "secondary": "#5c5f60",
+                "on-surface": "#111c2c",
+                "primary-fixed": "#d5e3ff",
+                "inverse-on-surface": "#ebf1ff",
+                "secondary-container": "#e1e3e4",
+                "on-tertiary": "#ffffff",
+                "on-secondary-fixed": "#191c1d",
+                "tertiary-fixed-dim": "#ffb3b1",
+                "on-tertiary-fixed-variant": "#92001c",
+                "surface-container-high": "#dee8ff",
+                "on-error": "#ffffff",
+                "surface-container-low": "#f0f3ff",
+                "outline": "#737780",
+                "on-error-container": "#93000a",
+                "secondary-fixed-dim": "#c5c7c8",
+                "on-background": "#111c2c",
+                "on-primary-fixed-variant": "#1f477b",
+                "primary-container": "#003366",
+                "on-surface-variant": "#43474f",
+                "background": "#f9f9ff",
+                "surface-tint": "#3a5f94",
+                "primary": "#001e40",
+                "on-secondary": "#ffffff",
+                "inverse-primary": "#a7c8ff",
+                "tertiary-container": "#6d0013",
+                "error": "#ba1a1a",
+                "tertiary-fixed": "#ffdad8",
+                "on-secondary-fixed-variant": "#454748",
+                "on-primary-fixed": "#001b3c",
+                "surface-container": "#e7eeff",
+                "on-primary-container": "#799dd6",
+                "surface-container-lowest": "#ffffff",
+                "surface": "#f9f9ff",
+                "tertiary": "#450008",
+                "on-tertiary-container": "#ff6b6e",
+                "error-container": "#ffdad6",
+                "on-secondary-container": "#626566",
+                "surface-dim": "#cfdaf1",
+                "primary-fixed-dim": "#a7c8ff"
+            },
+            "borderRadius": {
+                "DEFAULT": "0.125rem",
+                "lg": "0.25rem",
+                "xl": "0.5rem",
+                "full": "0.75rem"
+            },
+            "spacing": {
+                "gutter": "24px",
+                "base": "8px",
+                "margin-mobile": "16px",
+                "margin-desktop": "48px",
+                "container-max": "1280px"
+            },
+            "fontFamily": {
+                "body-lg": ["Hanken Grotesk"],
+                "headline-lg": ["Hanken Grotesk"],
+                "body-sm": ["Hanken Grotesk"],
+                "label-sm": ["Hanken Grotesk"],
+                "headline-md": ["Hanken Grotesk"],
+                "label-md": ["Hanken Grotesk"],
+                "body-md": ["Hanken Grotesk"],
+                "headline-sm": ["Hanken Grotesk"],
+                "headline-lg-mobile": ["Hanken Grotesk"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active { color: #003366; font-weight: 700; border-bottom: 3px solid #003366; }
+        .step-inactive { color: #737780; }
+        .glass-card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(226, 232, 240, 0.5);
+        }
+    </style>
+</head>
+<body class="bg-background text-on-surface min-h-screen flex flex-col">
+<!-- TopNavBar -->
+<header class="h-16 flex justify-between items-center w-full px-4 md:px-margin-desktop sticky top-0 bg-white border-b border-outline-variant z-40">
+<div class="flex items-center gap-4">
+<button class="md:hidden p-2">
+<span class="material-symbols-outlined text-primary">menu</span>
+</button>
+<div class="flex flex-col">
+<h2 class="text-lg font-bold text-primary-container leading-tight">Renovación de Beca</h2>
+<p class="text-xs text-on-surface-variant">SGBE - CUC</p>
+</div>
+</div>
+<div class="flex items-center gap-4">
+<div class="hidden md:flex gap-6 mr-4">
+<a class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors" href="#">Inicio</a>
+<a class="text-sm font-bold text-primary border-b-2 border-primary pb-1" href="#">Renovación</a>
+<a class="text-sm font-bold text-on-surface-variant hover:text-primary transition-colors" href="#">Expediente</a>
+</div>
+<button class="relative p-2 text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-2 right-2 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<div class="flex items-center gap-3 ml-2 border-l border-outline-variant pl-4">
+<div class="text-right hidden sm:block">
+<p class="text-sm font-bold text-on-surface">Juan Diego Pérez</p>
+<p class="text-xs text-on-surface-variant">Estudiante (2022010452)</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">JD</div>
+</div>
+</div>
+</header>
+<main class="flex-grow max-w-container-max mx-auto w-full px-margin-mobile md:px-margin-desktop py-12">
+<!-- Header Section -->
+<header class="mb-12">
+<h1 class="text-headline-lg font-headline-lg text-primary mb-2">Proceso de Renovación de Beca</h1>
+<p class="text-body-lg font-body-lg text-on-surface-variant max-w-2xl">
+                Bienvenido, Juan Diego. Mantén tu beneficio académico actualizado. Por favor revisa tus datos precargados y completa la información requerida para el periodo 2024-II.
+            </p>
+</header>
+<!-- Multi-Step Progress Tracker -->
+<div class="w-full max-w-4xl mx-auto mb-12">
+<div class="relative flex justify-between">
+<div class="absolute top-5 left-0 w-full h-[2px] bg-surface-container-highest -z-10">
+<div class="h-full bg-primary-container transition-all duration-500 w-[0%]"></div>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-container text-white transition-all duration-300">
+<span class="text-sm font-bold">1</span>
+</div>
+<span class="text-xs font-bold text-primary-container">Datos Personales</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant transition-all duration-300">
+<span class="text-sm font-bold">2</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Socioeconómico</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant transition-all duration-300">
+<span class="text-sm font-bold">3</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Rendimiento</span>
+</div>
+<div class="flex flex-col items-center gap-2">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant transition-all duration-300">
+<span class="text-sm font-bold">4</span>
+</div>
+<span class="text-xs font-medium text-on-surface-variant">Declaración</span>
+</div>
+</div>
+</div>
+<div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+<!-- Main Form Canvas -->
+<section class="lg:col-span-8">
+<div class="bg-surface-container-lowest rounded-xl shadow-[0_4px_12px_rgba(0,51,102,0.05)] p-8 border border-outline-variant/30">
+<form class="space-y-10" id="renewalForm">
+<!-- Section: Preloaded Data -->
+<div>
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-fixed rounded-lg">person</span>
+<h2 class="text-headline-sm font-headline-sm text-primary">Información del Expediente</h2>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="space-y-1">
+<label class="text-label-sm font-label-sm text-outline">Nombre Completo</label>
+<div class="p-3 bg-surface-container-low border border-outline-variant rounded-lg text-body-md font-medium text-on-surface">
+                                        Juan Diego Pérez Arguedas
+                                    </div>
+</div>
+<div class="space-y-1">
+<label class="text-label-sm font-label-sm text-outline">Carné Estudiantil</label>
+<div class="p-3 bg-surface-container-low border border-outline-variant rounded-lg text-body-md font-medium text-on-surface">
+                                        2022010452
+                                    </div>
+</div>
+<div class="space-y-1">
+<label class="text-label-sm font-label-sm text-outline">Carrera</label>
+<div class="p-3 bg-surface-container-low border border-outline-variant rounded-lg text-body-md font-medium text-on-surface">
+                                        Diplomado en Tecnologías de Información
+                                    </div>
+</div>
+<div class="space-y-1">
+<label class="text-label-sm font-label-sm text-outline">Tipo de Beca Actual</label>
+<div class="p-3 bg-surface-container-low border border-outline-variant rounded-lg text-body-md font-medium text-on-surface flex items-center gap-2">
+<span class="w-2 h-2 rounded-full bg-emerald-500"></span>
+                                        Beca Socioeconómica Tipo A
+                                    </div>
+</div>
+</div>
+</div>
+<!-- Section: Update Socioeconomic -->
+<div class="pt-8 border-t border-outline-variant/30">
+<div class="flex items-center gap-3 mb-6">
+<span class="material-symbols-outlined text-primary p-2 bg-primary-fixed rounded-lg">account_balance_wallet</span>
+<h2 class="text-headline-sm font-headline-sm text-primary">Actualización Socioeconómica</h2>
+</div>
+<p class="text-body-sm text-on-surface-variant mb-6 italic">¿Ha habido algún cambio significativo en los ingresos de su núcleo familiar en los últimos 6 meses?</p>
+<div class="space-y-6">
+<div class="flex gap-4">
+<label class="flex items-center gap-2 cursor-pointer">
+<input checked="" class="w-4 h-4 text-primary focus:ring-primary border-outline" name="change_income" type="radio"/>
+<span class="text-body-md">No, mi situación se mantiene igual</span>
+</label>
+<label class="flex items-center gap-2 cursor-pointer">
+<input class="w-4 h-4 text-primary focus:ring-primary border-outline" name="change_income" type="radio"/>
+<span class="text-body-md">Sí, deseo reportar cambios</span>
+</label>
+</div>
+<div class="space-y-1">
+<label class="text-label-sm font-label-sm text-outline">Comprobante de Ingresos Actual (PDF)</label>
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-8 text-center hover:border-primary-container transition-colors group cursor-pointer">
+<span class="material-symbols-outlined text-4xl text-outline group-hover:text-primary-container transition-colors">cloud_upload</span>
+<p class="mt-4 text-sm font-bold text-on-surface">Sube un archivo o arrastra y suelta</p>
+<p class="text-xs text-on-surface-variant mt-2">PDF hasta 5MB</p>
+<input class="hidden" type="file"/>
+</div>
+</div>
+</div>
+</div>
+<!-- Navigation Actions -->
+<div class="pt-8 flex justify-between items-center">
+<button class="px-8 py-3 rounded-lg border border-primary text-primary font-bold hover:bg-primary-fixed transition-all" type="button">
+                                Guardar Borrador
+                            </button>
+<button class="px-10 py-3 rounded-lg bg-primary-container text-white font-bold hover:bg-primary transition-all shadow-md" type="button">
+                                Siguiente Paso
+                            </button>
+</div>
+</form>
+</div>
+</section>
+<!-- Sidebar Info/Help -->
+<aside class="lg:col-span-4 space-y-6">
+<!-- Status Card -->
+<div class="bg-surface-container-high rounded-xl p-6 border border-primary-fixed">
+<h3 class="text-label-md font-bold text-primary mb-4 uppercase">Estado del Trámite</h3>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-12 h-12 rounded-full bg-primary-container flex items-center justify-center text-white">
+<span class="material-symbols-outlined">edit_note</span>
+</div>
+<div>
+<p class="text-body-md font-bold">En Proceso</p>
+<p class="text-label-sm text-on-surface-variant">Iniciado: 15 Oct 2024</p>
+</div>
+</div>
+<div class="w-full bg-white rounded-full h-2 mb-2">
+<div class="bg-primary-container h-2 rounded-full" style="width: 25%"></div>
+</div>
+<p class="text-label-sm text-primary font-medium">25% completado</p>
+</div>
+<!-- Guidance Card -->
+<div class="bg-surface-container-lowest rounded-xl p-6 border border-outline-variant/30 shadow-sm">
+<h3 class="text-label-md font-bold text-on-surface mb-4">¿Necesitas ayuda?</h3>
+<ul class="space-y-4">
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-primary text-sm">info</span>
+<p class="text-body-sm text-on-surface-variant">Recuerda que el promedio ponderado mínimo para renovar es de 8.0.</p>
+</li>
+<li class="flex gap-3">
+<span class="material-symbols-outlined text-primary text-sm">attach_file</span>
+<p class="text-body-sm text-on-surface-variant">Todos los documentos deben ser legibles y estar en formato PDF.</p>
+</li>
+</ul>
+<button class="mt-6 w-full py-2 text-label-md font-bold text-primary border border-primary rounded-lg hover:bg-primary-container/5 transition-colors">
+                        Ver Guía de Renovación
+                    </button>
+</div>
+<!-- Abstract Decorative Card -->
+<div class="relative overflow-hidden rounded-xl h-48 group">
+<img class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" data-alt="A clean, minimalist university library interior with large windows letting in soft, natural daylight. The space features white architectural lines and students studying peacefully at modern wooden desks. The mood is focused, serene, and academic, using a professional institutional blue and crisp white palette for a light-mode aesthetic." src="https://lh3.googleusercontent.com/aida-public/AB6AXuB0Fj9k-l8WWzzauZzwFGoenNNqH2RtIUMGk6PXH2VxAlAZFxzfEi63LhU-nZVwRTr-TI-mqII6Att2gpbRdqxbFnj9LlU-6DaxaeKJRdgL7QvlgGqYjexT5HTVY8rNhtcGT8GY6lBTANcXSgCOw7V7C1YrEtX4YJ5byIP3jU10kllghLxsXwVk184kO9LVRpvQl7lz_CklvwQg-iuPPRuW8YoneYbWxZ9RY3AcaTBLQLs3sPJFIdF3PZ1oEzKG3Tr909f2JAYGgjc"/>
+<div class="absolute inset-0 bg-gradient-to-t from-primary/80 to-transparent flex items-end p-6">
+<p class="text-white text-label-md font-medium">Comprometidos con tu futuro académico.</p>
+</div>
+</div>
+</aside>
+</div>
+</main>
+<!-- Footer -->
+<footer class="w-full py-8 px-margin-desktop flex flex-col md:flex-row justify-between items-center gap-4 border-t border-outline-variant bg-surface-container-lowest mt-auto">
+<div class="text-center md:text-left">
+<p class="font-label-md text-label-md font-bold text-on-surface">SGBE - CUC</p>
+<p class="text-xs text-on-surface-variant mt-1">© 2024 Colegio Universitario de Cartago - Departamento de Bienestar Estudiantil</p>
+</div>
+<div class="flex gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacidad</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Términos</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contacto</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Ayuda</a>
+</div>
+</footer>
+<script>
+        // Micro-interactions and step logic could go here
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', (e) => {
+                // Future implementation: Toggle sub-forms based on selection
+                console.log('Selection changed:', e.target.value);
+            });
+        });
+    </script>
+</body></html>

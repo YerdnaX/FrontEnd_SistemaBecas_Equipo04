@@ -1,0 +1,409 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Gestión de Noticias - SGBE CUC</title>
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#d8e3fa",
+                    "outline-variant": "#c3c6d1",
+                    "on-tertiary-fixed": "#410007",
+                    "secondary": "#5c5f60",
+                    "on-surface": "#111c2c",
+                    "primary-fixed": "#d5e3ff",
+                    "inverse-on-surface": "#ebf1ff",
+                    "secondary-fixed": "#e1e3e4",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#d8e3fa",
+                    "surface-bright": "#f9f9ff",
+                    "inverse-surface": "#263142",
+                    "secondary-container": "#e1e3e4",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#191c1d",
+                    "tertiary-fixed-dim": "#ffb3b1",
+                    "on-tertiary-fixed-variant": "#92001c",
+                    "surface-container-high": "#dee8ff",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f0f3ff",
+                    "outline": "#737780",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#c5c7c8",
+                    "on-background": "#111c2c",
+                    "on-primary-fixed-variant": "#1f477b",
+                    "primary-container": "#003366",
+                    "on-surface-variant": "#43474f",
+                    "background": "#f9f9ff",
+                    "surface-tint": "#3a5f94",
+                    "primary": "#001e40",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#a7c8ff",
+                    "tertiary-container": "#6d0013",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#ffdad8",
+                    "on-secondary-fixed-variant": "#454748",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-container": "#e7eeff",
+                    "on-primary-container": "#799dd6",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f9f9ff",
+                    "tertiary": "#450008",
+                    "on-tertiary-container": "#ff6b6e",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#626566",
+                    "surface-dim": "#cfdaf1",
+                    "primary-fixed-dim": "#a7c8ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "48px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-md": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .bento-grid {
+            display: grid;
+            grid-template-columns: repeat(12, 1fr);
+            gap: 24px;
+        }
+        .shadow-soft {
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.05);
+        }
+        /* Custom scrollbar */
+        ::-webkit-scrollbar { width: 8px; }
+        ::-webkit-scrollbar-track { background: #f0f3ff; }
+        ::-webkit-scrollbar-thumb { background: #c3c6d1; border-radius: 4px; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- Sidebar Navigation -->
+<aside class="fixed left-0 top-0 h-full w-64 bg-surface-container-low border-r border-outline-variant flex flex-col py-base px-4 z-50">
+<div class="mb-8 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">Gestión de Becas</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">SGBE v1.0</p>
+</div>
+<nav class="flex-1 space-y-1">
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">dashboard</span> Dashboard
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">description</span> Mis Solicitudes
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 bg-primary-container text-on-primary-container font-semibold rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">campaign</span> Gestión de Noticias
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">school</span> Becas Disponibles
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">folder_open</span> Documentación
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">event</span> Calendario
+            </a>
+<a class="flex items-center gap-3 px-3 py-2 text-on-surface-variant hover:bg-surface-container-high transition-all rounded-lg font-label-md text-label-md" href="#">
+<span class="material-symbols-outlined">settings</span> Ajustes
+            </a>
+</nav>
+<div class="mt-auto border-t border-outline-variant pt-4">
+<button class="flex items-center gap-3 px-3 py-2 w-full text-on-surface-variant hover:text-primary transition-all font-label-md text-label-md">
+<span class="material-symbols-outlined">logout</span> Cerrar Sesión
+            </button>
+</div>
+</aside>
+<!-- Main Content Area -->
+<main class="ml-64 min-h-screen flex flex-col">
+<!-- Top Bar -->
+<header class="h-16 sticky top-0 bg-surface-container-lowest shadow-sm px-gutter flex justify-between items-center z-40">
+<div class="flex items-center gap-4">
+<span class="font-headline-sm text-headline-sm font-bold text-primary">SGBE - CUC</span>
+</div>
+<div class="flex items-center gap-4">
+<button class="p-2 rounded-full hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-on-surface-variant">notifications</span>
+</button>
+<div class="flex items-center gap-3 pl-4 border-l border-outline-variant">
+<div class="text-right">
+<p class="font-label-md text-label-md font-bold text-on-surface">Admin Institucional</p>
+<p class="text-[10px] uppercase tracking-wider text-on-surface-variant">Bienestar Estudiantil</p>
+</div>
+<div class="w-10 h-10 rounded-full bg-primary-container flex items-center justify-center text-on-primary-container font-bold">
+                        AD
+                    </div>
+</div>
+</div>
+</header>
+<!-- Content Body -->
+<div class="p-gutter flex-1 space-y-8 max-w-container-max mx-auto w-full">
+<!-- Page Header -->
+<div class="flex justify-between items-end">
+<div>
+<h2 class="font-headline-lg text-headline-lg text-primary">Comunicación Institucional</h2>
+<p class="font-body-md text-body-md text-on-surface-variant">Crea y administra avisos, periodos de becas y reglamentaciones para la comunidad estudiantil.</p>
+</div>
+<button class="bg-primary-container text-white px-6 py-2 rounded-lg font-label-md text-label-md flex items-center gap-2 hover:opacity-90 transition-opacity" onclick="document.getElementById('editor-modal').classList.remove('hidden')">
+<span class="material-symbols-outlined text-sm">add</span> Nueva Noticia
+                </button>
+</div>
+<!-- Bento Dashboard Stats -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6">
+<div class="md:col-span-1 bg-surface-container-lowest p-6 rounded-xl shadow-soft border border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Total Noticias</p>
+<h3 class="font-headline-lg text-headline-lg text-primary">124</h3>
+<p class="text-xs text-on-surface-variant mt-2 flex items-center gap-1"><span class="material-symbols-outlined text-xs text-emerald-600">trending_up</span> +5 este mes</p>
+</div>
+<div class="md:col-span-1 bg-surface-container-lowest p-6 rounded-xl shadow-soft border border-outline-variant">
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Activas</p>
+<h3 class="font-headline-lg text-headline-lg text-primary">12</h3>
+<div class="h-1 bg-surface-container-low rounded-full mt-4 overflow-hidden">
+<div class="h-full bg-primary-container w-[70%]"></div>
+</div>
+</div>
+<div class="md:col-span-2 bg-surface-container-lowest p-6 rounded-xl shadow-soft border border-outline-variant flex justify-between items-center">
+<div>
+<p class="font-label-sm text-label-sm text-on-surface-variant uppercase tracking-widest mb-2">Próximos Resultados</p>
+<p class="font-body-md text-body-md font-semibold">Beca de Comedor 2024-2</p>
+<p class="text-xs text-on-surface-variant">Publicación programada para: 15 Oct, 2024</p>
+</div>
+<div class="w-12 h-12 rounded-full bg-surface-container-low flex items-center justify-center">
+<span class="material-symbols-outlined text-primary">schedule</span>
+</div>
+</div>
+</div>
+<!-- List of News -->
+<section class="bg-surface-container-lowest rounded-xl shadow-soft border border-outline-variant overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant flex justify-between items-center bg-surface-container-low/30">
+<h4 class="font-headline-sm text-headline-sm">Noticias Recientes</h4>
+<div class="flex gap-2">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-sm">search</span>
+<input class="pl-10 pr-4 py-2 bg-white border border-outline-variant rounded-lg text-sm focus:ring-2 focus:ring-primary-container focus:border-transparent outline-none" placeholder="Buscar por título..." type="text"/>
+</div>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead>
+<tr class="bg-surface-container-low font-label-md text-label-md text-on-surface-variant">
+<th class="px-6 py-3 font-semibold">Noticia</th>
+<th class="px-6 py-3 font-semibold">Público</th>
+<th class="px-6 py-3 font-semibold">Estado</th>
+<th class="px-6 py-3 font-semibold">Fecha</th>
+<th class="px-6 py-3 font-semibold text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<!-- News Row 1 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded bg-surface-container-low overflow-hidden">
+<img alt="Graduation cap" class="w-full h-full object-cover" data-alt="A professional high-angle photograph of a university graduation ceremony with an focus on academic caps and gowns. The image features soft, corporate lighting in a bright hall, with a minimalist aesthetic dominated by institutional blue and clean white backgrounds, reflecting a prestigious and celebratory academic environment." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIynXvt87CeKFCXFlAsjRTTa9Kxwbbr6UvEiiUFVZztRC2IrVc5SoLqi8orL9dzX8V0ZV7PGda4kaQBdpN7BlTyqBEw9cCfyoI-r5qzGY4ytZniLKEIEFrlfYOMX7DLZU3UHUoTK7Qj2M1YhP3BSma17dEVA9czSmaF1UjgjzJ9tQfMjJUHin91kXye73AKwUGziKRS8EAF6v5s_xA5J2gxS-RywNVt63pig6fNiYi25Pj2-RRJD8uO0f1z3Nktv2vAgOlBXtyn1c"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Resultados Becas Socioeconómicas 2024</p>
+<p class="text-xs text-on-surface-variant">Actualización de listados finales...</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-primary-container/10 text-primary-container text-[10px] font-bold uppercase tracking-wider">Becados</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-emerald-100 text-emerald-700 text-[10px] font-bold uppercase tracking-wider">Publicado</span>
+</td>
+<td class="px-6 py-4">
+<p class="text-xs text-on-surface font-semibold">12 Sep, 2024</p>
+<p class="text-[10px] text-on-surface-variant">09:00 AM</p>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container-high rounded transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-sm">edit</span></button>
+<button class="p-2 hover:bg-error/10 rounded transition-colors"><span class="material-symbols-outlined text-error text-sm">delete</span></button>
+</td>
+</tr>
+<!-- News Row 2 -->
+<tr class="hover:bg-primary/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-4">
+<div class="w-12 h-12 rounded bg-surface-container-low overflow-hidden">
+<img alt="Writing" class="w-full h-full object-cover" data-alt="A minimalist and high-contrast desk setup featuring a person's hands writing on a clean document with a modern fountain pen. The lighting is bright and airy, using soft shadows to create a clean corporate look. The color palette is restricted to whites, greys, and deep institutional blue, evoking an atmosphere of administrative precision and transparency." src="https://lh3.googleusercontent.com/aida-public/AB6AXuChrNsRiHGrZRqpHvwi6MV1gnjLMlXCawJuc5kgVoYWVkhNGrVL6ywMzW9hU09wvp9snCq6rDtOxzOjsdlxflAIai2qAF3U_RursJyKtf3sLYtLgdHHnZpVvi22Bsxnk7CXmbcffU3U_fUuhc84V8_AnWDxZHISiHjbRlQLdVXM707GfkWDusy_xkJllqP7Lv_yrjaljjjFJ_jQs9rOmTEbh6se7f_47mGmzw2asnJo6R3VD7zDdiRNA-u7ltQImb8wvFSIzFrdulY"/>
+</div>
+<div>
+<p class="font-label-md text-label-md font-bold text-on-surface">Apertura Beca de Transporte</p>
+<p class="text-xs text-on-surface-variant">Inicio de recepción de documentos...</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant text-[10px] font-bold uppercase tracking-wider">Aspirantes</span>
+</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-amber-100 text-amber-700 text-[10px] font-bold uppercase tracking-wider">Pendiente</span>
+</td>
+<td class="px-6 py-4">
+<p class="text-xs text-on-surface font-semibold">20 Sep, 2024</p>
+<p class="text-[10px] text-on-surface-variant">Programado</p>
+</td>
+<td class="px-6 py-4 text-right">
+<button class="p-2 hover:bg-surface-container-high rounded transition-colors"><span class="material-symbols-outlined text-on-surface-variant text-sm">edit</span></button>
+<button class="p-2 hover:bg-error/10 rounded transition-colors"><span class="material-symbols-outlined text-error text-sm">delete</span></button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+</div>
+<!-- Footer -->
+<footer class="w-full py-8 px-gutter flex flex-col md:flex-row justify-between items-center gap-4 border-t border-outline-variant bg-surface-container-lowest mt-auto">
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Colegio Universitario de Cartago - Departamento de Bienestar Estudiantil</p>
+<div class="flex gap-6">
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Privacidad</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Términos</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Contacto</a>
+<a class="font-label-md text-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Ayuda</a>
+</div>
+</footer>
+</main>
+<!-- NEWS EDITOR MODAL (Overlay) -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-[100] flex items-center justify-center p-4 hidden" id="editor-modal">
+<div class="bg-surface-container-lowest w-full max-w-4xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+<div class="px-gutter py-6 border-b border-outline-variant flex justify-between items-center bg-white">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-primary">Editor de Noticias</h3>
+<p class="text-xs text-on-surface-variant">Configure los detalles de la publicación institucional.</p>
+</div>
+<button class="p-2 rounded-full hover:bg-surface-container-low" onclick="document.getElementById('editor-modal').classList.add('hidden')">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="p-gutter grid grid-cols-1 md:grid-cols-3 gap-8">
+<!-- Left: Form Fields -->
+<div class="md:col-span-2 space-y-6">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface font-bold">Título de la Noticia</label>
+<input class="w-full px-4 py-3 border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary focus:border-transparent outline-none text-body-md" placeholder="Ej: Periodo de recepción de becas 2025" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface font-bold">Contenido del Aviso</label>
+<div class="border border-outline-variant rounded-lg overflow-hidden">
+<div class="bg-surface-container-low px-4 py-2 border-b border-outline-variant flex gap-4">
+<button class="material-symbols-outlined text-sm hover:text-primary">format_bold</button>
+<button class="material-symbols-outlined text-sm hover:text-primary">format_italic</button>
+<button class="material-symbols-outlined text-sm hover:text-primary">list</button>
+<button class="material-symbols-outlined text-sm hover:text-primary">link</button>
+</div>
+<textarea class="w-full px-4 py-3 border-none focus:ring-0 outline-none text-body-md resize-none" placeholder="Escriba el cuerpo de la noticia aquí..." rows="6"></textarea>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface font-bold">Fecha de Publicación</label>
+<input class="w-full px-4 py-2 border border-outline-variant rounded-lg outline-none text-sm" type="date"/>
+</div>
+<div class="space-y-2">
+<label class="font-label-md text-label-md text-on-surface font-bold">Tipo de Noticia</label>
+<select class="w-full px-4 py-2 border border-outline-variant rounded-lg outline-none text-sm">
+<option>Aviso General</option>
+<option>Resultados</option>
+<option>Cambio de Reglamento</option>
+<option>Recordatorio</option>
+</select>
+</div>
+</div>
+</div>
+<!-- Right: Settings & Image -->
+<div class="space-y-8">
+<div class="space-y-4">
+<label class="font-label-md text-label-md text-on-surface font-bold">Público Destino</label>
+<div class="space-y-3">
+<label class="flex items-center gap-3 cursor-pointer group">
+<input checked="" class="w-4 h-4 text-primary-container border-outline-variant rounded focus:ring-primary" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Público General</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 text-primary-container border-outline-variant rounded focus:ring-primary" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Aspirantes</span>
+</label>
+<label class="flex items-center gap-3 cursor-pointer group">
+<input class="w-4 h-4 text-primary-container border-outline-variant rounded focus:ring-primary" type="checkbox"/>
+<span class="text-sm group-hover:text-primary transition-colors">Becados Actuales</span>
+</label>
+</div>
+</div>
+<div class="space-y-4">
+<label class="font-label-md text-label-md text-on-surface font-bold">Imagen de Portada</label>
+<div class="relative w-full aspect-video bg-surface-container-low rounded-xl border-2 border-dashed border-outline-variant flex flex-col items-center justify-center gap-2 group hover:border-primary-container transition-all cursor-pointer">
+<span class="material-symbols-outlined text-3xl text-on-surface-variant group-hover:scale-110 transition-transform">add_a_photo</span>
+<p class="text-[10px] text-on-surface-variant font-bold uppercase tracking-widest">Cargar imagen</p>
+</div>
+<p class="text-[10px] text-on-surface-variant leading-relaxed text-center">Dimensiones recomendadas: 1200x630px. Máx: 2MB.</p>
+</div>
+<div class="p-4 bg-tertiary-container/5 rounded-xl border border-tertiary-container/20">
+<div class="flex gap-2 items-start">
+<span class="material-symbols-outlined text-tertiary-fixed-dim text-sm">info</span>
+<p class="text-[11px] text-on-surface-variant leading-tight">Al publicar como 'Público General', la noticia aparecerá en el portal principal sin requerir inicio de sesión.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="px-gutter py-6 bg-surface-container-low flex justify-end gap-4 border-t border-outline-variant">
+<button class="px-6 py-2 rounded-lg font-label-md text-label-md text-on-surface hover:bg-surface-container-high transition-colors" onclick="document.getElementById('editor-modal').classList.add('hidden')">Cancelar</button>
+<button class="px-6 py-2 rounded-lg font-label-md text-label-md border border-primary text-primary hover:bg-primary/5 transition-colors">Guardar Borrador</button>
+<button class="px-6 py-2 rounded-lg font-label-md text-label-md bg-primary text-white hover:opacity-90 transition-opacity">Publicar Ahora</button>
+</div>
+</div>
+</div>
+<!-- Simple Micro-interactions -->
+<script>
+        // Modal escape key close
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.getElementById('editor-modal').classList.add('hidden');
+            }
+        });
+
+        // Hover effect on rows logic (Tailwind handled)
+        // Click outside modal to close
+        document.getElementById('editor-modal').addEventListener('click', (e) => {
+            if (e.target.id === 'editor-modal') {
+                document.getElementById('editor-modal').classList.add('hidden');
+            }
+        });
+    </script>
+</body></html>

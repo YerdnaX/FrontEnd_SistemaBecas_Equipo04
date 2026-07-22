@@ -1,0 +1,392 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SGBE - Formulario de Solicitud de Beca</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 300, 'GRAD' 0, 'opsz' 24;
+            vertical-align: middle;
+        }
+        
+        .step-transition {
+            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.3s ease;
+        }
+        
+        .form-card {
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.05);
+        }
+
+        input:focus, select:focus, textarea:focus {
+            outline: none;
+            border-color: #003366 !important;
+            ring: 2px solid #003366;
+        }
+
+        .input-error {
+            border-color: #ba1a1a !important;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "primary": "#001e40",
+                        "primary-container": "#003366",
+                        "on-primary": "#ffffff",
+                        "on-primary-container": "#799dd6",
+                        "secondary": "#5c5f60",
+                        "secondary-container": "#e1e3e4",
+                        "surface": "#f9f9ff",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-container": "#e7eeff",
+                        "surface-container-high": "#dee8ff",
+                        "surface-container-highest": "#d8e3fa",
+                        "outline": "#737780",
+                        "outline-variant": "#c3c6d1",
+                        "error": "#ba1a1a",
+                        "on-surface": "#111c2c",
+                        "on-surface-variant": "#43474f",
+                        "background": "#f9f9ff"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar (Administrative Style as per JSON) -->
+<header class="bg-surface sticky top-0 z-50 border-b border-outline-variant h-16 flex justify-between items-center w-full px-margin-desktop">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-primary text-2xl">school</span>
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary">SGBE - CUC</h1>
+</div>
+<div class="hidden md:flex items-center gap-6">
+<span class="text-label-md font-label-md text-on-surface-variant">Bienvenido, Estudiante</span>
+<div class="flex gap-2">
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:text-primary transition-colors">notifications</button>
+<button class="material-symbols-outlined p-2 text-on-surface-variant hover:text-primary transition-colors">help_outline</button>
+</div>
+<img alt="Foto de perfil del usuario" class="w-10 h-10 rounded-full border-2 border-surface-container-highest object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8sJ0KQwwz2FXZEX8EGoVHbkqdFNUg3QYK5Qp6RxYSXg41pTEdcXdcYo_E77dVFiPBVqBKI5dzT_UOQJikB8cL2RzJ8ZOO2kHaheLOsbgaumJw41zJYILWqbTzsxGTmeEokhGM06clwq2h5Jl2An-XouKrQl2C31wbzbGwV7QuKHvzmasOIAnUDXgriKn32smaWs6PmNI438uBkqj24R3ErfHsNYKDxX8VUdwJo5WXoaEJ0-71dHMrUtx0YivocTATI8Srioku70M"/>
+</div>
+</header>
+<main class="flex-grow flex flex-col items-center py-12 px-margin-mobile md:px-margin-desktop">
+<!-- Stepper -->
+<div class="w-full max-w-4xl mb-12">
+<div class="relative flex justify-between">
+<!-- Progress Line -->
+<div class="absolute top-5 left-0 w-full h-[2px] bg-surface-container-highest -z-10">
+<div class="h-full bg-primary-container transition-all duration-500 w-[0%]" id="progress-bar"></div>
+</div>
+<!-- Step 1 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-primary-container text-on-primary transition-all duration-300" id="step-icon-1">
+<span class="text-label-md">1</span>
+</div>
+<span class="text-label-sm font-label-sm text-primary font-bold">Personales</span>
+</div>
+<!-- Step 2 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant transition-all duration-300" id="step-icon-2">
+<span class="text-label-md">2</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Académicos</span>
+</div>
+<!-- Step 3 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant transition-all duration-300" id="step-icon-3">
+<span class="text-label-md">3</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Socioeconómicos</span>
+</div>
+<!-- Step 4 -->
+<div class="flex flex-col items-center gap-2 group">
+<div class="w-10 h-10 rounded-full flex items-center justify-center bg-surface-container-highest text-on-surface-variant transition-all duration-300" id="step-icon-4">
+<span class="text-label-md">4</span>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant">Resumen</span>
+</div>
+</div>
+</div>
+<!-- Form Container -->
+<div class="w-full max-w-4xl bg-surface-container-lowest rounded-xl form-card p-8 md:p-12 relative overflow-hidden">
+<form id="scholarship-form">
+<!-- Step 1: Datos Personales -->
+<section class="step-transition" id="step-content-1">
+<div class="mb-8">
+<h2 class="text-headline-md font-headline-md text-primary mb-2">Información Personal</h2>
+<p class="text-body-md text-on-surface-variant">Por favor, verifique sus datos de identidad y contacto para el proceso de beca.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Nombre Completo</label>
+<input class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" placeholder="Ej. Juan Pérez" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Cédula de Identidad</label>
+<input class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" placeholder="1-0000-0000" required="" type="text"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Correo Electrónico</label>
+<input class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" placeholder="usuario@cuc.ac.cr" required="" type="email"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Teléfono de Contacto</label>
+<input class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" placeholder="8888-8888" required="" type="tel"/>
+</div>
+</div>
+</section>
+<!-- Step 2: Datos Académicos (Hidden by default) -->
+<section class="step-transition hidden" id="step-content-2">
+<div class="mb-8">
+<h2 class="text-headline-md font-headline-md text-primary mb-2">Información Académica</h2>
+<p class="text-body-md text-on-surface-variant">Detalle su situación académica actual en el CUC.</p>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Carrera</label>
+<select class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container">
+<option>Diplomado en Tecnologías de Información</option>
+<option>Diplomado en Contabilidad</option>
+<option>Diplomado en Turismo</option>
+<option>Diplomado en Secretariado</option>
+</select>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Promedio Ponderado</label>
+<input class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" placeholder="90.00" step="0.01" type="number"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Cantidad de Créditos Matriculados</label>
+<input class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" placeholder="12" type="number"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Año de Ingreso</label>
+<input class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" type="month"/>
+</div>
+</div>
+</section>
+<!-- Step 3: Datos Socioeconómicos (Hidden by default) -->
+<section class="step-transition hidden" id="step-content-3">
+<div class="mb-8">
+<h2 class="text-headline-md font-headline-md text-primary mb-2">Situación Socioeconómica</h2>
+<p class="text-body-md text-on-surface-variant">Esta información es vital para determinar la asignación de la beca.</p>
+</div>
+<div class="space-y-6">
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Ingreso Total Mensual del Hogar</label>
+<div class="relative">
+<span class="absolute left-3 top-3 text-on-surface-variant">₡</span>
+<input class="w-full pl-8 p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" placeholder="450000" type="number"/>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Número de Dependientes</label>
+<input class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" placeholder="3" type="number"/>
+</div>
+<div class="flex flex-col gap-2">
+<label class="text-label-md font-label-md text-on-surface">Descripción de Situación Especial (Opcional)</label>
+<textarea class="p-3 border border-outline-variant rounded-lg bg-surface focus:border-primary-container" placeholder="Indique si hay alguna condición de salud o desempleo en su núcleo familiar..." rows="4"></textarea>
+</div>
+</div>
+</section>
+<!-- Step 4: Resumen y Envío (Hidden by default) -->
+<section class="step-transition hidden" id="step-content-4">
+<div class="mb-8">
+<h2 class="text-headline-md font-headline-md text-primary mb-2">Resumen de Solicitud</h2>
+<p class="text-body-md text-on-surface-variant">Revise que todos los datos sean correctos antes de enviar su solicitud formal.</p>
+</div>
+<div class="bg-surface-container-low p-6 rounded-lg space-y-4 border border-outline-variant">
+<div class="flex justify-between border-b border-outline-variant pb-2">
+<span class="font-bold text-primary">Categoría</span>
+<span class="font-bold text-primary">Detalle</span>
+</div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Identidad</span>
+<span class="text-on-surface font-medium" id="summary-name">Juan Pérez</span>
+</div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Académico</span>
+<span class="text-on-surface font-medium" id="summary-career">Diplomado en TI</span>
+</div>
+<div class="flex justify-between text-body-sm">
+<span class="text-on-surface-variant">Ingresos declarados</span>
+<span class="text-on-surface font-medium" id="summary-income">₡450,000.00</span>
+</div>
+<div class="mt-4 flex items-start gap-3 p-4 bg-primary-container/5 rounded">
+<input class="mt-1 accent-primary-container" id="terms" type="checkbox"/>
+<label class="text-label-sm text-on-surface" for="terms">Declaro bajo juramento que toda la información suministrada es verídica y autorizo al CUC para su verificación.</label>
+</div>
+</div>
+</section>
+<!-- Actions Container -->
+<div class="flex flex-col sm:flex-row justify-between items-center gap-4 mt-12 pt-8 border-t border-outline-variant">
+<button class="hidden flex items-center gap-2 px-6 py-3 border border-primary-container text-primary-container font-label-md rounded-lg hover:bg-primary-container/5 transition-all" id="prev-btn" type="button">
+<span class="material-symbols-outlined">arrow_back</span>
+                        Anterior
+                    </button>
+<div class="flex gap-4 w-full sm:w-auto">
+<button class="flex-1 sm:flex-none px-6 py-3 border border-outline text-on-surface-variant font-label-md rounded-lg hover:bg-surface-container transition-all" type="button">
+                            Guardar borrador
+                        </button>
+<button class="flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3 bg-primary-container text-on-primary font-label-md rounded-lg hover:opacity-90 transition-all shadow-md" id="next-btn" type="button">
+                            Siguiente
+                            <span class="material-symbols-outlined">arrow_forward</span>
+</button>
+<button class="hidden flex-1 sm:flex-none flex items-center justify-center gap-2 px-8 py-3 bg-primary text-on-primary font-label-md rounded-lg hover:opacity-90 transition-all shadow-md" id="submit-btn" type="button">
+                            Enviar Solicitud
+                            <span class="material-symbols-outlined">send</span>
+</button>
+</div>
+</div>
+</form>
+</div>
+<!-- Success Toast (Hidden) -->
+<div class="fixed bottom-8 left-1/2 -translate-x-1/2 bg-on-surface text-surface px-6 py-4 rounded-full shadow-2xl flex items-center gap-3 transition-all duration-500 translate-y-20 opacity-0 pointer-events-none" id="success-toast">
+<span class="material-symbols-outlined text-green-400">check_circle</span>
+<span class="text-label-md">Solicitud enviada exitosamente. El CUC procesará su información.</span>
+</div>
+</main>
+<!-- Footer as per JSON -->
+<footer class="bg-surface-container-highest flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full mt-auto border-t border-outline-variant">
+<div class="flex flex-col md:items-start items-center gap-2 mb-4 md:mb-0">
+<span class="text-label-md font-label-md font-bold text-on-surface">SGBE - CUC</span>
+<span class="text-body-sm font-body-sm text-on-surface-variant text-center md:text-left">© 2024 Colegio Universitario de Cartago. Departamento de Bienestar Estudiantil.</span>
+</div>
+<div class="flex gap-6">
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm hover:underline" href="#">Contacto</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm hover:underline" href="#">Transparencia</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm hover:underline" href="#">Privacidad</a>
+<a class="text-on-surface-variant hover:text-primary transition-colors text-body-sm hover:underline" href="#">Ayuda</a>
+</div>
+</footer>
+<script>
+        let currentStep = 1;
+        const totalSteps = 4;
+        
+        const nextBtn = document.getElementById('next-btn');
+        const prevBtn = document.getElementById('prev-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const progressBar = document.getElementById('progress-bar');
+        const successToast = document.getElementById('success-toast');
+
+        function updateUI() {
+            // Update step content visibility
+            for (let i = 1; i <= totalSteps; i++) {
+                const content = document.getElementById(`step-content-${i}`);
+                if (i === currentStep) {
+                    content.classList.remove('hidden');
+                    content.classList.add('block');
+                } else {
+                    content.classList.add('hidden');
+                    content.classList.remove('block');
+                }
+
+                // Update Stepper Icons
+                const icon = document.getElementById(`step-icon-${i}`);
+                const label = icon.nextElementSibling;
+                if (i < currentStep) {
+                    icon.innerHTML = `<span class="material-symbols-outlined text-on-primary">check</span>`;
+                    icon.classList.remove('bg-surface-container-highest', 'text-on-surface-variant', 'bg-primary-container');
+                    icon.classList.add('bg-primary-container', 'text-on-primary');
+                    label.classList.add('text-primary', 'font-bold');
+                } else if (i === currentStep) {
+                    icon.innerHTML = `<span class="text-label-md">${i}</span>`;
+                    icon.classList.remove('bg-surface-container-highest', 'text-on-surface-variant');
+                    icon.classList.add('bg-primary-container', 'text-on-primary');
+                    label.classList.add('text-primary', 'font-bold');
+                } else {
+                    icon.innerHTML = `<span class="text-label-md">${i}</span>`;
+                    icon.classList.add('bg-surface-container-highest', 'text-on-surface-variant');
+                    icon.classList.remove('bg-primary-container', 'text-on-primary');
+                    label.classList.remove('text-primary', 'font-bold');
+                    label.classList.add('text-on-surface-variant');
+                }
+            }
+
+            // Progress bar width
+            const progress = ((currentStep - 1) / (totalSteps - 1)) * 100;
+            progressBar.style.width = `${progress}%`;
+
+            // Buttons logic
+            if (currentStep === 1) {
+                prevBtn.classList.add('hidden');
+            } else {
+                prevBtn.classList.remove('hidden');
+            }
+
+            if (currentStep === totalSteps) {
+                nextBtn.classList.add('hidden');
+                submitBtn.classList.remove('hidden');
+            } else {
+                nextBtn.classList.remove('hidden');
+                submitBtn.classList.add('hidden');
+            }
+        }
+
+        nextBtn.addEventListener('click', () => {
+            if (currentStep < totalSteps) {
+                currentStep++;
+                updateUI();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        prevBtn.addEventListener('click', () => {
+            if (currentStep > 1) {
+                currentStep--;
+                updateUI();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        });
+
+        submitBtn.addEventListener('click', () => {
+            const terms = document.getElementById('terms');
+            if(!terms.checked) {
+                alert("Debe aceptar los términos y juramento para continuar.");
+                return;
+            }
+
+            successToast.classList.remove('translate-y-20', 'opacity-0');
+            successToast.classList.add('translate-y-0', 'opacity-100');
+            
+            setTimeout(() => {
+                successToast.classList.add('translate-y-20', 'opacity-0');
+                successToast.classList.remove('translate-y-0', 'opacity-100');
+            }, 5000);
+        });
+
+        // Initialize
+        updateUI();
+    </script>
+</body></html>

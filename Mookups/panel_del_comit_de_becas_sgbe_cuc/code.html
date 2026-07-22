@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Panel del Comité de Becas | SGBE - CUC</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .decision-card:hover {
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.08);
+        }
+    </style>
+<!-- Include Tailwind Config -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container": "#e7eeff",
+                    "on-tertiary-container": "#ff6b6e",
+                    "surface-container-highest": "#d8e3fa",
+                    "on-primary": "#ffffff",
+                    "outline": "#737780",
+                    "inverse-on-surface": "#ebf1ff",
+                    "outline-variant": "#c3c6d1",
+                    "on-primary-fixed": "#001b3c",
+                    "on-background": "#111c2c",
+                    "on-surface": "#111c2c",
+                    "secondary": "#5c5f60",
+                    "background": "#f9f9ff",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-tint": "#3a5f94",
+                    "inverse-primary": "#a7c8ff",
+                    "primary-container": "#003366",
+                    "error": "#ba1a1a",
+                    "on-error-container": "#93000a",
+                    "surface-variant": "#d8e3fa",
+                    "on-error": "#ffffff",
+                    "inverse-surface": "#263142",
+                    "primary-fixed": "#d5e3ff",
+                    "secondary-fixed": "#e1e3e4",
+                    "secondary-container": "#e1e3e4",
+                    "tertiary-container": "#6d0013",
+                    "on-secondary-container": "#626566",
+                    "surface-bright": "#f9f9ff",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "on-primary-container": "#799dd6",
+                    "error-container": "#ffdad6",
+                    "primary": "#001e40",
+                    "surface-container-low": "#f0f3ff",
+                    "on-secondary": "#ffffff",
+                    "tertiary": "#450008",
+                    "on-surface-variant": "#43474f",
+                    "surface": "#f9f9ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "margin-mobile": "16px",
+                    "base": "8px",
+                    "margin-desktop": "48px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "headline-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "label-md": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"]
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-background text-on-surface font-body-md">
+<!-- TopNavBar -->
+<nav class="flex justify-between items-center w-full pl-72 pr-margin-desktop h-16 bg-surface border-b border-outline-variant sticky top-0 z-50">
+<div class="flex items-center gap-4">
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-xl text-label-sm focus:ring-2 focus:ring-primary-container transition-all outline-none w-64" placeholder="Buscar expediente..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex gap-4">
+<button class="text-on-surface-variant hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">notifications</span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-all cursor-pointer">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+<div class="h-8 w-8 rounded-full bg-primary-fixed overflow-hidden border border-outline-variant">
+<img alt="Foto de perfil del usuario" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIIkWHAAEQHx596TfY4KYDibGH_egAoDkSU4ofqK0aGoaCZ9UVOGqSkkf3seWzk3ZNqfI8lMTGW7aTOR52ikWh5In-lA22zbiFZ79fEeFThDipfe736G2s9pZOvPnH2fAYwJ0lOJIcpOFvs8Dv1-D5MEl_1k4jFGXfA2wujhXZMf_Sd28xFchXL08RhSYh0QgKSi9rHg5StSD2ll1JVR91QWjFH0pzK1KBZwQwlOGsSMhgIAR-DvAAhQdxPx-siQBFCTEb_DHCRUc"/>
+</div>
+</div>
+</nav>
+<!-- SideNavBar -->
+<aside class="h-screen w-64 fixed left-0 top-0 flex flex-col p-4 gap-2 bg-surface-container-low border-r border-outline-variant">
+<div class="mb-8 px-2">
+<h1 class="text-headline-sm font-bold text-primary">SGBE</h1>
+<p class="text-label-sm text-on-surface-variant">Colegio Universitario de Cartago</p>
+</div>
+<div class="flex flex-col gap-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-md font-label-md">Solicitudes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="text-label-md font-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Configuración</span>
+</a>
+</div>
+<div class="mt-8 px-2">
+<button class="w-full py-3 bg-primary text-on-primary font-bold rounded-xl flex items-center justify-center gap-2 shadow-md hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined">add</span>
+<span class="text-label-md">Nueva Convocatoria</span>
+</button>
+</div>
+<div class="mt-auto border-t border-outline-variant pt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-error-container/20 rounded-lg transition-all duration-150" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="ml-64 p-margin-desktop min-h-screen flex flex-col gap-gutter">
+<!-- Header Section -->
+<header class="flex justify-between items-end">
+<div class="space-y-1">
+<div class="flex items-center gap-2 text-primary">
+<span class="material-symbols-outlined">groups</span>
+<span class="text-label-md uppercase tracking-wider font-bold">Sesión Colegiada de Comité</span>
+</div>
+<h2 class="font-headline-lg text-headline-lg text-on-surface">Revisión de Expedientes Priorizados</h2>
+<p class="text-body-md text-on-surface-variant">Convocatoria Ordinaria I Cuatrimestre 2024</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-primary text-primary font-bold rounded-xl flex items-center gap-2 hover:bg-surface-container transition-all">
+<span class="material-symbols-outlined">print</span>
+<span class="text-label-md">Imprimir Acta Temporal</span>
+</button>
+<button class="px-6 py-2 bg-primary text-on-primary font-bold rounded-xl flex items-center gap-2 shadow-lg hover:bg-primary-container transition-all">
+<span class="material-symbols-outlined">task_alt</span>
+<span class="text-label-md">Finalizar Sesión</span>
+</button>
+</div>
+</header>
+<!-- Stats Grid (Bento Style) -->
+<div class="grid grid-cols-12 gap-6 h-[400px]">
+<!-- Main Chart Placeholder -->
+<div class="col-span-8 bg-surface-container-low rounded-3xl p-8 border border-outline-variant relative overflow-hidden flex flex-col">
+<div class="flex justify-between items-center mb-6">
+<div>
+<h3 class="font-headline-sm text-headline-sm text-on-surface">Matriz Socio-Académica</h3>
+<p class="text-body-sm text-on-surface-variant">Correlación entre vulnerabilidad y rendimiento</p>
+</div>
+<div class="flex gap-2">
+<span class="flex items-center gap-1 text-label-sm text-on-surface-variant">
+<span class="w-3 h-3 rounded-full bg-primary-container"></span> Socioeconómico
+                        </span>
+<span class="flex items-center gap-1 text-label-sm text-on-surface-variant">
+<span class="w-3 h-3 rounded-full bg-on-tertiary-container"></span> Académico
+                        </span>
+</div>
+</div>
+<!-- Visual Data Visualization Placeholder -->
+<div class="flex-1 w-full bg-white rounded-2xl flex items-end justify-around p-6 gap-4 border border-outline-variant/30">
+<div class="w-12 bg-primary-container h-[80%] rounded-t-lg relative group">
+<div class="absolute -top-10 left-1/2 -translate-x-1/2 bg-on-surface text-white text-label-sm px-2 py-1 rounded opacity-0 group-hover:opacity-100 transition-opacity">92%</div>
+</div>
+<div class="w-12 bg-on-tertiary-container h-[65%] rounded-t-lg"></div>
+<div class="w-12 bg-primary-container h-[70%] rounded-t-lg"></div>
+<div class="w-12 bg-on-tertiary-container h-[85%] rounded-t-lg"></div>
+<div class="w-12 bg-primary-container h-[95%] rounded-t-lg"></div>
+<div class="w-12 bg-on-tertiary-container h-[75%] rounded-t-lg"></div>
+<div class="w-12 bg-primary-container h-[50%] rounded-t-lg"></div>
+<div class="w-12 bg-on-tertiary-container h-[90%] rounded-t-lg"></div>
+</div>
+<div class="absolute top-0 right-0 p-8 opacity-5">
+<span class="material-symbols-outlined text-[120px]">analytics</span>
+</div>
+</div>
+<!-- Summary Card -->
+<div class="col-span-4 grid grid-rows-2 gap-6">
+<div class="bg-surface-container-highest rounded-3xl p-6 flex flex-col justify-between border border-outline-variant">
+<span class="material-symbols-outlined text-primary text-3xl">priority_high</span>
+<div>
+<div class="text-headline-md font-bold text-primary">24</div>
+<div class="text-body-sm font-semibold text-on-surface-variant">Expedientes Críticos</div>
+<div class="mt-2 w-full bg-outline-variant h-1 rounded-full overflow-hidden">
+<div class="bg-primary w-3/4 h-full"></div>
+</div>
+</div>
+</div>
+<div class="bg-primary-container rounded-3xl p-6 flex flex-col justify-between text-on-primary border border-primary">
+<span class="material-symbols-outlined text-white text-3xl">account_balance_wallet</span>
+<div>
+<div class="text-headline-md font-bold text-white">₡4.2M</div>
+<div class="text-body-sm text-on-primary-container">Presupuesto Remanente</div>
+<p class="text-[10px] mt-1 opacity-70 italic">*Sujeto a disponibilidad institucional</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Prioritized Records Table -->
+<section class="flex flex-col gap-4">
+<div class="flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm flex items-center gap-2">
+<span class="material-symbols-outlined">list_alt</span>
+                    Ranking de Prioridad
+                </h3>
+<div class="flex gap-2">
+<span class="px-3 py-1 bg-surface-container rounded-full text-label-sm font-bold text-primary border border-outline-variant">Filtrar por Carrera</span>
+<span class="px-3 py-1 bg-surface-container rounded-full text-label-sm font-bold text-primary border border-outline-variant">Ordenar por Puntaje</span>
+</div>
+</div>
+<div class="bg-white rounded-3xl border border-outline-variant overflow-hidden shadow-sm">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low">
+<tr class="text-label-md text-on-surface-variant border-b border-outline-variant">
+<th class="px-6 py-4 font-bold">Estudiante</th>
+<th class="px-6 py-4 font-bold">Condición Socioeconómica</th>
+<th class="px-6 py-4 font-bold text-center">Puntaje Académico</th>
+<th class="px-6 py-4 font-bold">Estado Social</th>
+<th class="px-6 py-4 font-bold">Acción Requerida</th>
+<th class="px-6 py-4 font-bold text-right">Decisión</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant/30">
+<!-- Row 1 -->
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary">MA</div>
+<div>
+<div class="text-label-md font-bold">Miranda Alvarado, Elena</div>
+<div class="text-body-sm text-on-surface-variant">Ingeniería en Electrónica</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-label-md font-bold text-primary">Grupo 1 (Vulnerabilidad Alta)</span>
+<span class="text-body-sm text-on-surface-variant">Puntaje: 98/100</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 bg-surface-container rounded text-label-md font-bold text-primary">9.45</span>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-primary-fixed text-primary font-bold rounded-full text-[10px] uppercase tracking-tighter">Prioridad 1</span>
+</td>
+<td class="px-6 py-5">
+<p class="text-body-sm italic text-on-surface-variant truncate w-48">Recomendada para Beca Total por Trabajadora Social.</p>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary-container/20 rounded-lg transition-all" onclick="openDecisionModal('Elena Miranda')" title="Registrar Decisión">
+<span class="material-symbols-outlined">gavel</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary rounded-lg transition-all" title="Ver Expediente">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+<!-- Row 2 -->
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-5">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-lg bg-surface-container flex items-center justify-center font-bold text-primary">CH</div>
+<div>
+<div class="text-label-md font-bold">Castillo Hernández, Julián</div>
+<div class="text-body-sm text-on-surface-variant">Tecnologías de Información</div>
+</div>
+</div>
+</td>
+<td class="px-6 py-5">
+<div class="flex flex-col">
+<span class="text-label-md font-bold text-primary">Grupo 2 (Vulnerabilidad Media)</span>
+<span class="text-body-sm text-on-surface-variant">Puntaje: 82/100</span>
+</div>
+</td>
+<td class="px-6 py-5 text-center">
+<span class="px-3 py-1 bg-surface-container rounded text-label-md font-bold text-primary">8.90</span>
+</td>
+<td class="px-6 py-5">
+<span class="px-3 py-1 bg-secondary-container text-on-secondary-container font-bold rounded-full text-[10px] uppercase tracking-tighter">Prioridad 2</span>
+</td>
+<td class="px-6 py-5">
+<p class="text-body-sm italic text-on-surface-variant truncate w-48">Requiere revisión por doble núcleo familiar.</p>
+</td>
+<td class="px-6 py-5 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-primary hover:bg-primary-container/20 rounded-lg transition-all" onclick="openDecisionModal('Julián Castillo')" title="Registrar Decisión">
+<span class="material-symbols-outlined">gavel</span>
+</button>
+<button class="p-2 text-on-surface-variant hover:text-primary rounded-lg transition-all" title="Ver Expediente">
+<span class="material-symbols-outlined">visibility</span>
+</button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</section>
+<!-- Final Decision Section -->
+<div class="grid grid-cols-2 gap-gutter">
+<div class="bg-surface-container-low rounded-3xl p-8 border border-outline-variant flex flex-col gap-4">
+<div class="flex items-center gap-3 mb-2">
+<span class="material-symbols-outlined text-primary">edit_note</span>
+<h4 class="text-headline-sm">Registro de Acta de Sesión</h4>
+</div>
+<div class="space-y-4">
+<div>
+<label class="text-label-sm font-bold text-on-surface-variant mb-1 block">Número de Acta
+<input class="w-full bg-surface-container-highest border-none rounded-xl text-body-md p-3" disabled="" type="text" value="ACTA-COMITE-2024-001"/>
+</label></div>
+<div>
+<label class="text-label-sm font-bold text-on-surface-variant mb-1 block">Considerandos de la Sesión
+<textarea class="w-full h-32 border border-outline-variant rounded-xl p-4 focus:ring-2 focus:ring-primary outline-none transition-all" placeholder="Ingrese los puntos clave discutidos y justificaciones generales..."></textarea>
+</label></div>
+<div class="flex gap-4">
+<button class="flex-1 py-3 border border-outline text-on-surface-variant font-bold rounded-xl hover:bg-surface-container transition-all">Guardar Borrador</button>
+<button class="flex-1 py-3 bg-primary text-on-primary font-bold rounded-xl hover:bg-primary-container transition-all">Firmar Digitalmente</button>
+</div>
+</div>
+</div>
+<div class="bg-white rounded-3xl p-8 border border-outline-variant flex flex-col justify-between overflow-hidden relative">
+<div>
+<h4 class="text-headline-sm mb-4">Generación de Resoluciones</h4>
+<p class="text-body-md text-on-surface-variant mb-6">Genere los documentos oficiales PDF para cada decisión tomada en firme durante esta sesión colegiada.</p>
+<div class="space-y-3">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error">picture_as_pdf</span>
+<div class="text-label-md">Resolución de Aprobación (Masiva)</div>
+</div>
+<button class="text-primary font-bold text-label-sm hover:underline">Generar</button>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error">picture_as_pdf</span>
+<div class="text-label-md">Resolución de Denegatoria (Masiva)</div>
+</div>
+<button class="text-primary font-bold text-label-sm hover:underline">Generar</button>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-2xl border border-outline-variant/50">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-error">picture_as_pdf</span>
+<div class="text-label-md">Formato de Acta de Cierre</div>
+</div>
+<button class="text-primary font-bold text-label-sm hover:underline">Generar</button>
+</div>
+</div>
+</div>
+<div class="mt-6 flex items-center gap-2 text-body-sm text-on-surface-variant">
+<span class="material-symbols-outlined text-sm">info</span>
+                    Los documentos generados se enviarán automáticamente a los correos institucionales de los estudiantes.
+                </div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full mt-auto border-t border-outline-variant bg-surface-container-highest">
+<div class="text-label-md font-bold text-on-surface mb-4 md:mb-0">SGBE - CUC</div>
+<div class="text-body-sm text-on-surface-variant text-center md:text-left">
+            © 2024 Colegio Universitario de Cartago. Departamento de Bienestar Estudiantil.
+        </div>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="text-on-surface-variant hover:text-primary transition-all text-body-sm hover:underline" href="#">Contacto</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-body-sm hover:underline" href="#">Transparencia</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-body-sm hover:underline" href="#">Privacidad</a>
+<a class="text-on-surface-variant hover:text-primary transition-all text-body-sm hover:underline" href="#">Ayuda</a>
+</div>
+</footer>
+<!-- Decision Modal (Hidden by default) -->
+<div class="fixed inset-0 bg-primary/40 backdrop-blur-sm z-[60] flex items-center justify-center opacity-0 pointer-events-none transition-opacity duration-300" id="decisionModal">
+<div class="bg-white rounded-3xl w-full max-w-lg p-8 shadow-2xl scale-95 transition-transform duration-300" id="modalContent">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-headline-md font-bold text-on-surface">Registrar Voto: <span id="studentName"></span></h3>
+<button class="text-on-surface-variant hover:text-primary" onclick="closeDecisionModal()">
+<span class="material-symbols-outlined">close</span>
+</button>
+</div>
+<div class="space-y-6">
+<div class="grid grid-cols-3 gap-4">
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl border-2 border-outline-variant hover:border-primary hover:bg-primary/5 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined text-3xl">check_circle</span>
+<span class="text-label-md font-bold">Aprobar</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl border-2 border-outline-variant hover:border-on-tertiary-container hover:bg-on-tertiary-container/5 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined text-3xl">cancel</span>
+<span class="text-label-md font-bold">Denegar</span>
+</button>
+<button class="flex flex-col items-center gap-2 p-4 rounded-2xl border-2 border-outline-variant hover:border-amber-500 hover:bg-amber-50 transition-all text-on-surface-variant">
+<span class="material-symbols-outlined text-3xl">pending_actions</span>
+<span class="text-label-md font-bold">Prevenir</span>
+</button>
+</div>
+<div>
+<label class="text-label-sm font-bold mb-2 block">Justificación Técnica del Comité</label>
+<textarea class="w-full h-24 border border-outline-variant rounded-xl p-3 outline-none focus:ring-2 focus:ring-primary" placeholder="Indique el razonamiento colegiado..."></textarea>
+</div>
+<div class="flex gap-4">
+<button class="flex-1 py-3 border border-outline text-on-surface-variant font-bold rounded-xl" onclick="closeDecisionModal()">Cancelar</button>
+<button class="flex-1 py-3 bg-primary text-on-primary font-bold rounded-xl shadow-lg" onclick="closeDecisionModal()">Confirmar Decisión</button>
+</div>
+</div>
+</div>
+</div>
+<script>
+        function openDecisionModal(name) {
+            const modal = document.getElementById('decisionModal');
+            const content = document.getElementById('modalContent');
+            const nameSpan = document.getElementById('studentName');
+            
+            nameSpan.innerText = name;
+            modal.classList.remove('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-95');
+            content.classList.add('scale-100');
+        }
+
+        function closeDecisionModal() {
+            const modal = document.getElementById('decisionModal');
+            const content = document.getElementById('modalContent');
+            
+            modal.classList.add('opacity-0', 'pointer-events-none');
+            content.classList.remove('scale-100');
+            content.classList.add('scale-95');
+        }
+    </script>
+</body></html>

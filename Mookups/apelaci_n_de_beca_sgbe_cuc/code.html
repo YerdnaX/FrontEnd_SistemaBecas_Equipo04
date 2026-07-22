@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Apelación de Beca | SGBE - CUC</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-highest": "#d8e3fa",
+                      "outline-variant": "#c3c6d1",
+                      "on-tertiary-fixed": "#410007",
+                      "secondary": "#5c5f60",
+                      "on-surface": "#111c2c",
+                      "primary-fixed": "#d5e3ff",
+                      "inverse-on-surface": "#ebf1ff",
+                      "secondary-container": "#e1e3e4",
+                      "on-tertiary": "#ffffff",
+                      "on-secondary-fixed": "#191c1d",
+                      "tertiary-fixed-dim": "#ffb3b1",
+                      "on-tertiary-fixed-variant": "#92001c",
+                      "surface-container-high": "#dee8ff",
+                      "on-error": "#ffffff",
+                      "surface-container-low": "#f0f3ff",
+                      "outline": "#737780",
+                      "on-error-container": "#93000a",
+                      "secondary-fixed-dim": "#c5c7c8",
+                      "on-background": "#111c2c",
+                      "on-primary-fixed-variant": "#1f477b",
+                      "primary-container": "#003366",
+                      "on-surface-variant": "#43474f",
+                      "background": "#f9f9ff",
+                      "surface-tint": "#3a5f94",
+                      "primary": "#001e40",
+                      "on-secondary": "#ffffff",
+                      "inverse-primary": "#a7c8ff",
+                      "tertiary-container": "#6d0013",
+                      "error": "#ba1a1a",
+                      "tertiary-fixed": "#ffdad8",
+                      "on-secondary-fixed-variant": "#454748",
+                      "on-primary-fixed": "#001b3c",
+                      "surface-container": "#e7eeff",
+                      "on-primary-container": "#799dd6",
+                      "surface-container-lowest": "#ffffff",
+                      "surface": "#f9f9ff",
+                      "tertiary": "#450008",
+                      "on-tertiary-container": "#ff6b6e",
+                      "error-container": "#ffdad6",
+                      "on-secondary-container": "#626566",
+                      "surface-dim": "#cfdaf1",
+                      "primary-fixed-dim": "#a7c8ff"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "gutter": "24px",
+                      "base": "8px",
+                      "margin-mobile": "16px",
+                      "margin-desktop": "48px",
+                      "container-max": "1280px"
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .step-active .step-line { background-color: #003366; }
+        .step-active .step-dot { border-color: #003366; background-color: #003366; }
+    </style>
+</head>
+<body class="bg-surface text-on-surface">
+<!-- TopNavBar (Administrative Variant for Details Screen) -->
+<header class="flex justify-between items-center w-full pl-72 pr-margin-desktop h-16 bg-surface border-b border-outline-variant sticky top-0 z-50">
+<div class="flex items-center gap-4 flex-1">
+<div class="relative w-full max-w-md">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-body-sm">search</span>
+<input class="w-full bg-surface-container-low border border-outline-variant rounded-xl pl-10 pr-4 py-2 text-body-sm focus:outline-none focus:ring-2 focus:ring-primary-container/20" placeholder="Buscar mi solicitud..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:text-primary transition-all">help_outline</span>
+<div class="h-8 w-8 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Foto de perfil del usuario" class="w-full h-full object-cover" data-alt="A professional studio portrait of a young adult student looking confident and friendly, captured with soft natural side lighting. The background is a clean, minimalist off-white office setting. The overall aesthetic is professional, modern, and trustworthy, perfectly aligning with an institutional academic dashboard." src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmbWVoMbxstI85qN7WMstnndqA2QQg2FFICzYNsyxHe3HNxGnTrxFtjmmZnMaPnGQeQfEUQMwYSCkq_oh8yB7hK8vJlGA-A4YbTYj6DfUULLVzJjwNPNGTwJq4KGtSuV0EvqST0BcSr8zz4uEldMcJ-iPI3vqGbFzYH1Rm5I8Hbr9yaWLFEFApwfwlLTCSjSeLJm7lVQGb3Qk4uPV_P3mKeTybQuSVhtz_vpQJAmPgqfc3VjGl-JSeE5Ij4cq_4pATEkWZ9tmdQYk"/>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low flex flex-col p-4 gap-2 z-50">
+<div class="px-2 py-4 mb-4">
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary">SGBE</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Gestión de Becas CUC</p>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-md font-label-md">Solicitudes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="text-label-md font-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md font-label-md">Configuración</span>
+</a>
+</div>
+<button class="mb-4 bg-primary text-on-primary py-3 px-4 rounded-xl text-label-md font-bold flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">add</span>
+            Nueva Convocatoria
+        </button>
+<div class="border-t border-outline-variant pt-4">
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md font-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</nav>
+<!-- Main Content Canvas -->
+<main class="pl-72 pr-margin-desktop py-8 bg-surface min-h-screen">
+<div class="max-w-4xl mx-auto">
+<!-- Breadcrumbs -->
+<nav class="flex items-center gap-2 text-body-sm text-on-surface-variant mb-6">
+<a class="hover:text-primary" href="#">Mis Solicitudes</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<a class="hover:text-primary" href="#">Solicitud #BEC-2024-089</a>
+<span class="material-symbols-outlined text-[16px]">chevron_right</span>
+<span class="text-primary font-bold">Nueva Apelación</span>
+</nav>
+<!-- Header Section -->
+<header class="mb-10">
+<h2 class="text-headline-lg font-headline-lg text-on-surface mb-2">Formulario de Apelación</h2>
+<p class="text-body-md font-body-md text-on-surface-variant">Usted está iniciando un proceso formal de apelación tras la resolución del 15 de Mayo, 2024.</p>
+</header>
+<div class="grid grid-cols-1 lg:grid-cols-3 gap-8 items-start">
+<!-- Left Column: Forms and Details -->
+<div class="lg:col-span-2 space-y-8">
+<!-- Resumen de Resolución (Negative State) -->
+<section class="bg-white p-6 rounded-xl shadow-[0_4px_12px_rgba(0,51,102,0.05)] border-l-4 border-error">
+<div class="flex items-start gap-4">
+<span class="material-symbols-outlined text-error text-[32px]">cancel</span>
+<div>
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-2">Resolución: Denegada</h3>
+<p class="text-body-sm font-body-sm text-on-surface-variant mb-4">
+                                    "Se deniega la solicitud de Beca de Socioeconomía debido a inconsistencias en la declaración de ingresos del núcleo familiar y falta de comprobante de residencia actual."
+                                </p>
+<div class="flex gap-2">
+<span class="bg-error-container text-on-error-container px-3 py-1 rounded-full text-label-sm font-bold">Código: R-882</span>
+<span class="bg-surface-container-highest text-on-surface-variant px-3 py-1 rounded-full text-label-sm">Fecha: 15/05/2024</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Formulario de Motivos -->
+<section class="bg-white p-8 rounded-xl shadow-[0_4px_12px_rgba(0,51,102,0.05)]">
+<h3 class="text-headline-sm font-headline-sm text-on-surface mb-6">Exposición de Motivos</h3>
+<form class="space-y-6">
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-2">Asunto de la Apelación</label>
+<input class="w-full border border-outline rounded-lg px-4 py-3 text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/10 transition-all" type="text" value="Corrección de datos socioeconómicos y entrega de documentos faltantes"/>
+</div>
+<div>
+<label class="block text-label-md font-label-md text-on-surface mb-2">Justificación detallada</label>
+<textarea class="w-full border border-outline rounded-lg px-4 py-3 text-body-md focus:border-primary-container focus:ring-2 focus:ring-primary-container/10 transition-all" placeholder="Explique detalladamente por qué considera que la resolución debe ser revisada..." rows="6"></textarea>
+<p class="mt-2 text-body-sm text-on-surface-variant">Mínimo 200 caracteres. Sea lo más específico posible.</p>
+</div>
+</form>
+</section>
+<!-- Carga de Documentos -->
+<section class="bg-white p-8 rounded-xl shadow-[0_4px_12px_rgba(0,51,102,0.05)]">
+<div class="flex justify-between items-center mb-6">
+<h3 class="text-headline-sm font-headline-sm text-on-surface">Documentación Probatoria</h3>
+<span class="text-body-sm text-on-surface-variant italic">Formatos: PDF, JPG, PNG (Max 5MB)</span>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-6 flex flex-col items-center text-center hover:border-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary mb-2 text-[40px]">upload_file</span>
+<p class="text-label-md font-bold text-on-surface">Comprobante de Ingresos Actualizado</p>
+<p class="text-body-sm text-on-surface-variant">Click para subir o arrastrar archivo</p>
+</div>
+<div class="border-2 border-dashed border-outline-variant rounded-xl p-6 flex flex-col items-center text-center hover:border-primary transition-colors cursor-pointer group">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary mb-2 text-[40px]">home_pin</span>
+<p class="text-label-md font-bold text-on-surface">Certificación de Residencia</p>
+<p class="text-body-sm text-on-surface-variant">Recibo de luz, agua o contrato</p>
+</div>
+</div>
+<!-- Lista de archivos cargados (Static Mockup) -->
+<div class="space-y-2">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg border border-outline-variant">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-primary">picture_as_pdf</span>
+<span class="text-body-sm font-medium">Carta_Patrono_Actualizada.pdf</span>
+</div>
+<span class="material-symbols-outlined text-error cursor-pointer">delete</span>
+</div>
+</div>
+</section>
+<!-- Action Buttons -->
+<div class="flex items-center justify-end gap-4 py-4">
+<button class="px-6 py-3 text-primary font-bold hover:bg-primary-container/5 rounded-xl transition-all">Guardar Borrador</button>
+<button class="px-8 py-3 bg-primary text-on-primary font-bold rounded-xl shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5">Enviar Apelación</button>
+</div>
+</div>
+<!-- Right Column: Process Timeline & Tips -->
+<aside class="space-y-8">
+<!-- Timeline Section -->
+<div class="bg-white p-6 rounded-xl shadow-[0_4px_12px_rgba(0,51,102,0.05)]">
+<h4 class="text-label-md font-bold text-on-surface mb-6 uppercase tracking-wider">Línea de Tiempo del Proceso</h4>
+<div class="relative pl-8 space-y-8">
+<!-- Vertical Line -->
+<div class="absolute left-[11px] top-2 bottom-2 w-0.5 bg-outline-variant"></div>
+<!-- Steps -->
+<div class="relative">
+<div class="absolute -left-8 h-6 w-6 rounded-full border-4 border-surface bg-primary-container z-10"></div>
+<p class="text-label-md font-bold text-primary">Inicio de Apelación</p>
+<p class="text-body-sm text-on-surface-variant">Usted está aquí</p>
+</div>
+<div class="relative opacity-50">
+<div class="absolute -left-8 h-6 w-6 rounded-full border-4 border-surface bg-outline-variant z-10"></div>
+<p class="text-label-md font-bold text-on-surface">Revisión Técnica</p>
+<p class="text-body-sm text-on-surface-variant">Plazo: 5 días hábiles</p>
+</div>
+<div class="relative opacity-50">
+<div class="absolute -left-8 h-6 w-6 rounded-full border-4 border-surface bg-outline-variant z-10"></div>
+<p class="text-label-md font-bold text-on-surface">Comité de Becas</p>
+<p class="text-body-sm text-on-surface-variant">Sesión extraordinaria</p>
+</div>
+<div class="relative opacity-50">
+<div class="absolute -left-8 h-6 w-6 rounded-full border-4 border-surface bg-outline-variant z-10"></div>
+<p class="text-label-md font-bold text-on-surface">Veredicto Final</p>
+<p class="text-body-sm text-on-surface-variant">Notificación por correo</p>
+</div>
+</div>
+</div>
+<!-- Informational Card -->
+<div class="bg-primary-container p-6 rounded-xl text-on-primary-container relative overflow-hidden">
+<!-- Decorative Pattern -->
+<div class="absolute top-0 right-0 opacity-10">
+<span class="material-symbols-outlined text-[120px] translate-x-10 -translate-y-10">info</span>
+</div>
+<h4 class="text-headline-sm font-headline-sm mb-4 relative z-10">Recomendación</h4>
+<p class="text-body-sm relative z-10 opacity-90 leading-relaxed mb-4">
+                            Asegúrese de que todos los documentos sean legibles. Las apelaciones sin nueva evidencia probatoria rara vez logran un cambio en la resolución inicial.
+                        </p>
+<a class="inline-flex items-center gap-2 text-label-md font-bold hover:underline relative z-10" href="#">
+                            Ver Guía de Apelación
+                            <span class="material-symbols-outlined text-[18px]">open_in_new</span>
+</a>
+</div>
+<!-- Illustration -->
+<div class="rounded-xl overflow-hidden shadow-sm">
+<img alt="Ambiente de estudio y gestión" class="w-full h-48 object-cover" data-alt="A minimalist and bright workspace with a clean wooden desk, a sleek modern laptop showing professional graphs, and a warm cup of coffee. The environment is illuminated by soft, natural morning light through a large window, creating a focused, serene, and academic atmosphere. The color palette is dominated by soft whites, light grays, and natural wood tones, reflecting institutional clarity and student productivity." src="https://lh3.googleusercontent.com/aida-public/AB6AXuA8uI4Hu8xBSfSjn4D73KJxnlLFRwwzspU7tx5HS6yMoRxHwzFVQBnMEbqaXb5wxb3J_rln4Yi_Q_acrz-IbZSF-U5wJyT9m-4YQMocP61jzsqubOucgfxy7NDh3CzNQ1DtZFTW5NC-ZU8UhV--uuf9l6jrmpbb6y6bT7PoEE8oZFmTvqN1sPVT_M2jFV0KoRiMDmgBclVgd3uBy1roVJjOX5JCHlLjsFV3K4zMX4nMXyo7k45E1qKfAY7nZ3FC3movf9cHLBufWa4"/>
+</div>
+</aside>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full mt-auto bg-surface-container-highest border-t border-outline-variant">
+<div class="mb-4 md:mb-0">
+<p class="text-label-md font-label-md font-bold text-on-surface mb-1">SGBE - Departamento de Bienestar Estudiantil</p>
+<p class="text-body-sm font-body-sm text-on-surface-variant">© 2024 Colegio Universitario de Cartago. Todos los derechos reservados.</p>
+</div>
+<div class="flex gap-6">
+<a class="text-body-sm font-body-sm text-on-surface-variant hover:text-primary transition-all" href="#">Contacto</a>
+<a class="text-body-sm font-body-sm text-on-surface-variant hover:text-primary transition-all" href="#">Transparencia</a>
+<a class="text-body-sm font-body-sm text-on-surface-variant hover:text-primary transition-all" href="#">Privacidad</a>
+<a class="text-body-sm font-body-sm text-on-surface-variant hover:text-primary transition-all" href="#">Ayuda</a>
+</div>
+</footer>
+<script>
+        // Micro-interaction for the file upload area
+        const dropZones = document.querySelectorAll('.border-dashed');
+        dropZones.forEach(zone => {
+            zone.addEventListener('mouseenter', () => {
+                zone.classList.add('bg-primary-container/5');
+            });
+            zone.addEventListener('mouseleave', () => {
+                zone.classList.remove('bg-primary-container/5');
+            });
+        });
+
+        // Simple form validation visual feedback
+        const textarea = document.querySelector('textarea');
+        textarea.addEventListener('input', (e) => {
+            if (e.target.value.length > 0 && e.target.value.length < 200) {
+                e.target.classList.add('border-tertiary-container');
+                e.target.classList.remove('border-outline');
+            } else if (e.target.value.length >= 200) {
+                e.target.classList.add('border-primary');
+                e.target.classList.remove('border-tertiary-container');
+            } else {
+                e.target.classList.add('border-outline');
+                e.target.classList.remove('border-tertiary-container', 'border-primary');
+            }
+        });
+    </script>
+</body></html>

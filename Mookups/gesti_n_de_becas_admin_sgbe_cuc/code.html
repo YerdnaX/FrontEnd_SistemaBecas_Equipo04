@@ -1,0 +1,454 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SGBE - Panel de Gestión Social</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .active-nav-item {
+            font-variation-settings: 'FILL' 1;
+        }
+        body {
+            font-family: 'Hanken Grotesk', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+    </style>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "secondary-fixed": "#e1e3e4",
+                        "primary-container": "#003366",
+                        "on-tertiary": "#ffffff",
+                        "tertiary-fixed-dim": "#ffb3b1",
+                        "on-secondary": "#ffffff",
+                        "on-primary": "#ffffff",
+                        "inverse-on-surface": "#ebf1ff",
+                        "secondary": "#5c5f60",
+                        "on-background": "#111c2c",
+                        "inverse-primary": "#a7c8ff",
+                        "on-secondary-container": "#626566",
+                        "surface-bright": "#f9f9ff",
+                        "surface-container-high": "#dee8ff",
+                        "on-tertiary-fixed": "#410007",
+                        "primary-fixed": "#d5e3ff",
+                        "tertiary-fixed": "#ffdad8",
+                        "error": "#ba1a1a",
+                        "on-surface": "#111c2c",
+                        "on-secondary-fixed-variant": "#454748",
+                        "surface-container-highest": "#d8e3fa",
+                        "on-tertiary-fixed-variant": "#92001c",
+                        "on-primary-fixed": "#001b3c",
+                        "on-error": "#ffffff",
+                        "on-surface-variant": "#43474f",
+                        "tertiary-container": "#6d0013",
+                        "on-primary-fixed-variant": "#1f477b",
+                        "surface-container-low": "#f0f3ff",
+                        "surface-variant": "#d8e3fa",
+                        "secondary-fixed-dim": "#c5c7c8",
+                        "on-tertiary-container": "#ff6b6e",
+                        "surface-container-lowest": "#ffffff",
+                        "tertiary": "#450008",
+                        "secondary-container": "#e1e3e4",
+                        "outline": "#737780",
+                        "on-primary-container": "#799dd6",
+                        "inverse-surface": "#263142",
+                        "surface-tint": "#3a5f94",
+                        "surface-dim": "#cfdaf1",
+                        "outline-variant": "#c3c6d1",
+                        "error-container": "#ffdad6",
+                        "on-secondary-fixed": "#191c1d",
+                        "primary-fixed-dim": "#a7c8ff",
+                        "surface-container": "#e7eeff",
+                        "on-error-container": "#93000a",
+                        "background": "#f9f9ff",
+                        "surface": "#f9f9ff",
+                        "primary": "#001e40"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "spacing": {
+                        "margin-mobile": "16px",
+                        "margin-desktop": "48px",
+                        "container-max": "1280px",
+                        "gutter": "24px",
+                        "base": "8px"
+                    },
+                    "fontFamily": {
+                        "headline-sm": ["Hanken Grotesk"],
+                        "headline-md": ["Hanken Grotesk"],
+                        "body-sm": ["Hanken Grotesk"],
+                        "body-lg": ["Hanken Grotesk"],
+                        "headline-lg": ["Hanken Grotesk"],
+                        "label-sm": ["Hanken Grotesk"],
+                        "label-md": ["Hanken Grotesk"],
+                        "body-md": ["Hanken Grotesk"],
+                        "headline-lg-mobile": ["Hanken Grotesk"]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-surface flex min-h-screen">
+<!-- SideNavBar Component -->
+<aside class="bg-surface-container-low dark:bg-surface-container h-screen w-64 fixed left-0 top-0 flex flex-col p-4 gap-2 border-r border-outline-variant z-50">
+<div class="mb-8 px-2">
+<h1 class="text-headline-sm font-headline-sm font-bold text-primary dark:text-on-surface">Gestión de Becas</h1>
+<p class="text-label-sm font-label-sm text-on-surface-variant">Administración Central</p>
+</div>
+<nav class="flex-grow flex flex-col gap-1">
+<a class="bg-primary-container text-on-primary-container font-bold rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150" href="#">
+<span class="material-symbols-outlined active-nav-item">dashboard</span>
+<span class="text-label-md font-label-md">Dashboard</span>
+</a>
+<a class="text-on-surface-variant hover:bg-secondary-container/50 rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">description</span>
+<span class="text-label-md font-label-md">Solicitudes</span>
+</a>
+<a class="text-on-surface-variant hover:bg-secondary-container/50 rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">folder_shared</span>
+<span class="text-label-md font-label-md">Documentos</span>
+</a>
+<a class="text-on-surface-variant hover:bg-secondary-container/50 rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-primary">settings</span>
+<span class="text-label-md font-label-md">Configuración</span>
+</a>
+</nav>
+<div class="mt-auto flex flex-col gap-4 border-t border-outline-variant pt-4">
+<button class="bg-primary text-on-primary font-bold py-3 px-4 rounded-lg flex items-center justify-center gap-2 hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+<span class="text-label-md">Nueva Convocatoria</span>
+</button>
+<div class="flex items-center gap-3 px-2 py-2">
+<img alt="Usuario SGBE" class="w-10 h-10 rounded-full border-2 border-primary-container" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBBEJbAzqkXslOXlM-lGTAQ0eAMcSiK8c5NSpkQegQ_JJkRowkfG5RD_C5DJdgOAKis8u0qFaFdhhv7jjENbv2aowhCFbx6nJ8weF8VRAG-gpMz6jS0mV5A6jcLwcRHXhLDnN6ehZxRDJq1BMimqVJwDRyHmilKJ4vgFcwUjn03coDLF7j0mEIeF-QZ3f8bVG8W-7cxqGYRbyWvpJB4UU2G1xD_0BYMUl8nGxGlK69z04WyDKpMLJQPoQvXUE1--bZhjZhf55nVp8c"/>
+<div class="flex flex-col">
+<span class="text-label-md font-bold text-on-surface">Trabajadora Social</span>
+<span class="text-[10px] text-on-surface-variant uppercase tracking-wider">CUC Admin</span>
+</div>
+</div>
+<a class="text-on-surface-variant hover:bg-error-container/20 hover:text-error rounded-lg flex items-center gap-3 px-4 py-3 transition-all duration-150 group" href="#">
+<span class="material-symbols-outlined group-hover:text-error">logout</span>
+<span class="text-label-md font-label-md">Cerrar Sesión</span>
+</a>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-grow pl-64 min-h-screen flex flex-col">
+<!-- TopNavBar Component -->
+<header class="bg-surface dark:bg-surface-dim border-b border-outline-variant sticky top-0 z-40 flex justify-between items-center w-full px-margin-desktop h-16">
+<div class="flex items-center gap-4 flex-grow max-w-xl">
+<div class="relative w-full">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant text-[20px]">search</span>
+<input class="w-full bg-surface-container-low border-none rounded-full pl-10 pr-4 py-2 text-body-sm focus:ring-2 focus:ring-primary transition-all" placeholder="Buscar estudiante o número de carné..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<div class="flex items-center gap-4">
+<button class="relative text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full border-2 border-surface"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Dashboard Content -->
+<div class="p-margin-desktop flex flex-col gap-8 max-w-container-max mx-auto w-full">
+<!-- Welcome Header -->
+<section class="flex flex-col md:flex-row md:items-end justify-between gap-4">
+<div>
+<h2 class="text-headline-lg font-headline-lg text-primary">Panel de Gestión de Trabajo Social</h2>
+<p class="text-body-md text-on-surface-variant">Bienvenida. Tienes 24 solicitudes nuevas que requieren tu atención hoy.</p>
+</div>
+<div class="flex items-center gap-3 bg-surface-container-high px-4 py-2 rounded-xl">
+<span class="material-symbols-outlined text-primary">calendar_today</span>
+<span class="text-label-md font-bold text-primary">Lunes, 20 Mayo 2024</span>
+</div>
+</section>
+<!-- KPI Cards Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-gutter">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-primary-fixed rounded-lg text-on-primary-fixed">
+<span class="material-symbols-outlined">article</span>
+</div>
+<span class="text-label-sm font-bold text-primary px-2 py-1 bg-primary-fixed/30 rounded">+12%</span>
+</div>
+<p class="text-label-md text-on-surface-variant uppercase tracking-tight">Total Solicitudes</p>
+<h3 class="text-headline-md font-headline-md text-primary mt-1">1,248</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-tertiary-fixed rounded-lg text-on-tertiary-fixed">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+<span class="text-label-sm font-bold text-error px-2 py-1 bg-error-container/30 rounded">Crítico</span>
+</div>
+<p class="text-label-md text-on-surface-variant uppercase tracking-tight">Pendientes Revisión</p>
+<h3 class="text-headline-md font-headline-md text-primary mt-1">42</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-secondary-fixed rounded-lg text-on-secondary-fixed-variant">
+<span class="material-symbols-outlined">verified</span>
+</div>
+<span class="text-label-sm font-bold text-secondary px-2 py-1 bg-secondary-fixed/50 rounded">85% completado</span>
+</div>
+<p class="text-label-md text-on-surface-variant uppercase tracking-tight">Docs. por Validar</p>
+<h3 class="text-headline-md font-headline-md text-primary mt-1">156</h3>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex justify-between items-start mb-4">
+<div class="p-3 bg-surface-container-high rounded-lg text-primary">
+<span class="material-symbols-outlined">event_available</span>
+</div>
+<span class="text-label-sm font-bold text-primary-container px-2 py-1 bg-primary-fixed/30 rounded">Hoy</span>
+</div>
+<p class="text-label-md text-on-surface-variant uppercase tracking-tight">Visitas Programadas</p>
+<h3 class="text-headline-md font-headline-md text-primary mt-1">5</h3>
+</div>
+</section>
+<!-- Main Interactive Section -->
+<section class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+<!-- Recent Applications Table -->
+<div class="lg:col-span-2 bg-surface-container-lowest rounded-xl border border-outline-variant overflow-hidden flex flex-col">
+<div class="p-6 border-b border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+<h4 class="text-headline-sm font-headline-sm text-primary">Solicitudes Recientes</h4>
+<div class="flex gap-2">
+<select class="bg-surface border border-outline-variant text-label-md rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-primary">
+<option>Tipo de Beca</option>
+<option>Socioeconómica</option>
+<option>Estímulo</option>
+<option>Honor</option>
+</select>
+<select class="bg-surface border border-outline-variant text-label-md rounded-lg px-3 py-2 outline-none focus:ring-2 focus:ring-primary">
+<option>Estado</option>
+<option>Pendiente</option>
+<option>En Revisión</option>
+<option>Aprobada</option>
+</select>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low text-label-md text-on-surface-variant uppercase tracking-wider">
+<th class="px-6 py-4 font-semibold">Estudiante</th>
+<th class="px-6 py-4 font-semibold">Tipo</th>
+<th class="px-6 py-4 font-semibold">Fecha</th>
+<th class="px-6 py-4 font-semibold">Estado</th>
+<th class="px-6 py-4 font-semibold">Acción</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center text-label-sm font-bold">
+                                                MA
+                                            </div>
+<div>
+<p class="text-body-md font-bold text-on-surface">María Alfaro</p>
+<p class="text-label-sm text-on-surface-variant">2023-0451</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm">Socioeconómica</td>
+<td class="px-6 py-4 text-body-sm">18 May 2024</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-tertiary-fixed text-on-tertiary-fixed text-label-sm font-bold">Pendiente</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:underline font-bold text-label-md">Ver Expediente</button>
+</td>
+</tr>
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center text-label-sm font-bold">
+                                                JR
+                                            </div>
+<div>
+<p class="text-body-md font-bold text-on-surface">José Rodríguez</p>
+<p class="text-label-sm text-on-surface-variant">2022-0912</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm">Estímulo Cultural</td>
+<td class="px-6 py-4 text-body-sm">15 May 2024</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-primary-fixed text-primary text-label-sm font-bold">En Revisión</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:underline font-bold text-label-md">Ver Expediente</button>
+</td>
+</tr>
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-surface-container-high text-primary flex items-center justify-center text-label-sm font-bold">
+                                                LG
+                                            </div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Laura Guillén</p>
+<p class="text-label-sm text-on-surface-variant">2024-0015</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm">Socioeconómica</td>
+<td class="px-6 py-4 text-body-sm">12 May 2024</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-green-100 text-green-700 text-label-sm font-bold">Aprobada</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:underline font-bold text-label-md">Ver Expediente</button>
+</td>
+</tr>
+<tr class="hover:bg-primary-container/5 transition-colors group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<div class="w-8 h-8 rounded-full bg-tertiary-fixed text-on-tertiary-fixed flex items-center justify-center text-label-sm font-bold">
+                                                CC
+                                            </div>
+<div>
+<p class="text-body-md font-bold text-on-surface">Carlos Castillo</p>
+<p class="text-label-sm text-on-surface-variant">2021-1288</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4 text-body-sm">Honor Estudiantil</td>
+<td class="px-6 py-4 text-body-sm">10 May 2024</td>
+<td class="px-6 py-4">
+<span class="px-3 py-1 rounded-full bg-error-container text-on-error-container text-label-sm font-bold">Rechazada</span>
+</td>
+<td class="px-6 py-4">
+<button class="text-primary hover:underline font-bold text-label-md">Ver Expediente</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface-container-low flex justify-between items-center mt-auto">
+<span class="text-label-sm text-on-surface-variant">Mostrando 4 de 1,248 resultados</span>
+<div class="flex gap-2">
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_left</span>
+</button>
+<button class="p-2 rounded-lg border border-outline-variant hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</div>
+</div>
+<!-- Right Column: Visits & Alerts -->
+<div class="flex flex-col gap-8">
+<!-- Visitas Programadas -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant p-6 shadow-sm">
+<div class="flex items-center justify-between mb-6">
+<h4 class="text-headline-sm font-headline-sm text-primary">Visitas de Hoy</h4>
+<span class="bg-primary text-on-primary text-[10px] px-2 py-0.5 rounded-full font-bold">5 TOTAL</span>
+</div>
+<div class="space-y-4">
+<div class="flex gap-4 p-3 bg-surface-container-low rounded-lg border-l-4 border-primary">
+<div class="text-center min-w-[50px]">
+<p class="text-label-sm font-bold text-primary">09:00</p>
+<p class="text-[10px] text-on-surface-variant uppercase">AM</p>
+</div>
+<div>
+<p class="text-body-sm font-bold text-on-surface leading-tight">Fam. Arias Rojas</p>
+<p class="text-label-sm text-on-surface-variant">Cartago Centro, Calle 4</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 bg-surface-container-low rounded-lg border-l-4 border-secondary">
+<div class="text-center min-w-[50px]">
+<p class="text-label-sm font-bold text-on-surface">11:30</p>
+<p class="text-[10px] text-on-surface-variant uppercase">AM</p>
+</div>
+<div>
+<p class="text-body-sm font-bold text-on-surface leading-tight">Fam. Méndez Mora</p>
+<p class="text-label-sm text-on-surface-variant">Paraíso, Valle del Sol</p>
+</div>
+</div>
+<div class="flex gap-4 p-3 bg-surface-container-low rounded-lg border-l-4 border-secondary opacity-60">
+<div class="text-center min-w-[50px]">
+<p class="text-label-sm font-bold text-on-surface">02:00</p>
+<p class="text-[10px] text-on-surface-variant uppercase">PM</p>
+</div>
+<div>
+<p class="text-body-sm font-bold text-on-surface leading-tight">Fam. Solano Vega</p>
+<p class="text-label-sm text-on-surface-variant">El Tejar, Urb. El Guarco</p>
+</div>
+</div>
+</div>
+<button class="w-full mt-6 py-3 border border-primary text-primary font-bold text-label-md rounded-lg hover:bg-primary/5 transition-colors">Ver Agenda Completa</button>
+</div>
+<!-- Alerts/Action Items -->
+<div class="bg-primary-container text-on-primary-container rounded-xl p-6 relative overflow-hidden">
+<div class="relative z-10">
+<h4 class="text-headline-sm font-headline-sm mb-2">Próximo Cierre</h4>
+<p class="text-body-sm opacity-90 mb-4">La convocatoria ordinaria de primer ingreso finaliza en 3 días.</p>
+<div class="flex items-center gap-2 mb-6">
+<span class="material-symbols-outlined text-[18px]">priority_high</span>
+<span class="text-label-sm font-bold uppercase tracking-widest">248 expedientes sin asignar</span>
+</div>
+<button class="w-full py-3 bg-on-primary-container text-primary-container font-bold text-label-md rounded-lg hover:bg-white transition-colors">Generar Reporte de Estado</button>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-10">
+<span class="material-symbols-outlined text-[120px]">assignment_late</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Institutional Footer -->
+<footer class="bg-surface-container-highest dark:bg-surface-container-lowest border-t border-outline-variant flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full mt-12 rounded-t-3xl">
+<div class="flex flex-col items-center md:items-start gap-2">
+<span class="text-label-md font-label-md font-bold text-on-surface">SGBE | Colegio Universitario de Cartago</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">© 2024 Departamento de Bienestar Estudiantil.</p>
+</div>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="text-on-surface-variant hover:text-primary hover:underline transition-all text-body-sm font-body-sm" href="#">Contacto</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline transition-all text-body-sm font-body-sm" href="#">Transparencia</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline transition-all text-body-sm font-body-sm" href="#">Privacidad</a>
+<a class="text-on-surface-variant hover:text-primary hover:underline transition-all text-body-sm font-body-sm" href="#">Ayuda</a>
+</div>
+</footer>
+</div>
+</main>
+<script>
+        // Simple logic for interactive elements
+        document.querySelectorAll('tr').forEach(row => {
+            row.addEventListener('click', () => {
+                if (row.querySelector('td')) {
+                    const name = row.querySelector('p.font-bold').innerText;
+                    console.log('Abriendo expediente de: ' + name);
+                    // Mock interaction
+                }
+            });
+        });
+
+        // Search bar focus effect
+        const searchInput = document.querySelector('input[type="text"]');
+        searchInput.addEventListener('focus', () => {
+            searchInput.parentElement.classList.add('ring-2', 'ring-primary/50');
+        });
+        searchInput.addEventListener('blur', () => {
+            searchInput.parentElement.classList.remove('ring-2', 'ring-primary/50');
+        });
+    </script>
+</body></html>

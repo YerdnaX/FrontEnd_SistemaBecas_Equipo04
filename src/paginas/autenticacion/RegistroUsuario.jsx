@@ -1,0 +1,108 @@
+import { useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
+import EncabezadoPublico from '../../componentes/navegacion/EncabezadoPublico.jsx';
+import PiePagina from '../../componentes/navegacion/PiePagina.jsx';
+import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
+import Boton from '../../componentes/comunes/Boton.jsx';
+import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
+import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
+import { registrarUsuario } from '../../servicios/servicioAutenticacion.js';
+import { contrasenaEsSegura } from '../../utilidades/validaciones.js';
+
+const FORMULARIO_INICIAL = {
+  nombre: '', primerApellido: '', segundoApellido: '', correo: '', contrasena: '', confirmacion: '', aceptaTerminos: false
+};
+
+export default function RegistroUsuario() {
+  const navegar = useNavigate();
+  const [formulario, setFormulario] = useState(FORMULARIO_INICIAL);
+  const [errores, setErrores] = useState({});
+  const [errorGeneral, setErrorGeneral] = useState(null);
+  const [exito, setExito] = useState(false);
+  const [enviando, setEnviando] = useState(false);
+
+  function actualizarCampo(campo, valor) {
+    setFormulario((actual) => ({ ...actual, [campo]: valor }));
+  }
+
+  function validar() {
+    const nuevosErrores = {};
+    if (!formulario.nombre.trim()) nuevosErrores.nombre = 'El nombre es obligatorio.';
+    if (!formulario.primerApellido.trim()) nuevosErrores.primerApellido = 'El primer apellido es obligatorio.';
+    if (!formulario.correo.trim()) nuevosErrores.correo = 'El correo es obligatorio.';
+    if (!contrasenaEsSegura(formulario.contrasena)) {
+      nuevosErrores.contrasena = 'Debe tener 8+ caracteres, una mayúscula, un número y un carácter especial.';
+    }
+    if (formulario.contrasena !== formulario.confirmacion) nuevosErrores.confirmacion = 'Las contraseñas no coinciden.';
+    if (!formulario.aceptaTerminos) nuevosErrores.aceptaTerminos = 'Debe aceptar los términos.';
+    setErrores(nuevosErrores);
+    return Object.keys(nuevosErrores).length === 0;
+  }
+
+  async function manejarEnvio(evento) {
+    evento.preventDefault();
+    setErrorGeneral(null);
+    if (!validar()) return;
+
+    setEnviando(true);
+    try {
+      await registrarUsuario(formulario);
+      setExito(true);
+    } catch (error) {
+      setErrorGeneral(error.mensaje);
+      const erroresApi = {};
+      (error.errores || []).forEach((item) => { erroresApi[item.campo] = item.mensaje; });
+      setErrores(erroresApi);
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  return (
+    <div>
+      <EncabezadoPublico />
+      <main className="mx-auto max-w-2xl px-4 py-12 md:px-12">
+        <Tarjeta>
+          <h1 className="text-headline-md font-semibold text-primary">Crear cuenta</h1>
+
+          {exito ? (
+            <AlertaMensaje tipo="exito" titulo="Cuenta creada">
+              Revise su correo para activar la cuenta antes de iniciar sesión.
+              <Link to="/login" className="mt-2 block font-semibold underline">Ir a iniciar sesión</Link>
+            </AlertaMensaje>
+          ) : (
+            <form className="mt-6 flex flex-col gap-4" onSubmit={manejarEnvio}>
+              {errorGeneral && <AlertaMensaje tipo="error">{errorGeneral}</AlertaMensaje>}
+              <div className="grid gap-4 sm:grid-cols-2">
+                <CampoTexto etiqueta="Nombre" value={formulario.nombre} error={errores.nombre}
+                  onChange={(e) => actualizarCampo('nombre', e.target.value)} />
+                <CampoTexto etiqueta="Primer apellido" value={formulario.primerApellido} error={errores.primerApellido}
+                  onChange={(e) => actualizarCampo('primerApellido', e.target.value)} />
+              </div>
+              <CampoTexto etiqueta="Segundo apellido (opcional)" value={formulario.segundoApellido}
+                onChange={(e) => actualizarCampo('segundoApellido', e.target.value)} />
+              <CampoTexto etiqueta="Correo" type="email" value={formulario.correo} error={errores.correo}
+                onChange={(e) => actualizarCampo('correo', e.target.value)} />
+              <CampoTexto etiqueta="Contraseña" type="password" value={formulario.contrasena} error={errores.contrasena}
+                onChange={(e) => actualizarCampo('contrasena', e.target.value)} />
+              <CampoTexto etiqueta="Confirmar contraseña" type="password" value={formulario.confirmacion} error={errores.confirmacion}
+                onChange={(e) => actualizarCampo('confirmacion', e.target.value)} />
+              <label className="flex items-center gap-2 text-body-sm">
+                <input type="checkbox" checked={formulario.aceptaTerminos}
+                  onChange={(e) => actualizarCampo('aceptaTerminos', e.target.checked)} />
+                Acepto los términos y condiciones.
+              </label>
+              {errores.aceptaTerminos && <p className="text-label-sm text-error">{errores.aceptaTerminos}</p>}
+
+              <Boton type="submit" cargando={enviando}>Crear cuenta</Boton>
+              <p className="text-body-sm text-on-surface-variant">
+                ¿Ya tiene cuenta? <Link to="/login" className="font-semibold text-primary-container hover:underline">Inicie sesión</Link>
+              </p>
+            </form>
+          )}
+        </Tarjeta>
+      </main>
+      <PiePagina />
+    </div>
+  );
+}

@@ -1,0 +1,406 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Expediente del Estudiante | SGBE - CUC</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "on-tertiary-container": "#ff6b6e",
+                    "tertiary": "#450008",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f9f9ff",
+                    "surface-dim": "#cfdaf1",
+                    "primary-fixed-dim": "#a7c8ff",
+                    "on-secondary-container": "#626566",
+                    "error-container": "#ffdad6",
+                    "tertiary-container": "#6d0013",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#a7c8ff",
+                    "surface-tint": "#3a5f94",
+                    "primary": "#001e40",
+                    "on-primary-container": "#799dd6",
+                    "tertiary-fixed": "#ffdad8",
+                    "on-secondary-fixed-variant": "#454748",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-container": "#e7eeff",
+                    "error": "#ba1a1a",
+                    "surface-container-low": "#f0f3ff",
+                    "outline": "#737780",
+                    "on-error": "#ffffff",
+                    "tertiary-fixed-dim": "#ffb3b1",
+                    "on-tertiary-fixed-variant": "#92001c",
+                    "surface-container-high": "#dee8ff",
+                    "on-surface-variant": "#43474f",
+                    "background": "#f9f9ff",
+                    "primary-container": "#003366",
+                    "on-primary-fixed-variant": "#1f477b",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#c5c7c8",
+                    "on-background": "#111c2c",
+                    "inverse-on-surface": "#ebf1ff",
+                    "secondary-fixed": "#e1e3e4",
+                    "primary-fixed": "#d5e3ff",
+                    "secondary": "#5c5f60",
+                    "on-surface": "#111c2c",
+                    "surface-container-highest": "#d8e3fa",
+                    "outline-variant": "#c3c6d1",
+                    "on-tertiary-fixed": "#410007",
+                    "secondary-container": "#e1e3e4",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#191c1d",
+                    "inverse-surface": "#263142",
+                    "surface-variant": "#d8e3fa",
+                    "surface-bright": "#f9f9ff",
+                    "on-primary": "#ffffff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "margin-mobile": "16px",
+                    "margin-desktop": "48px",
+                    "container-max": "1280px",
+                    "gutter": "24px",
+                    "base": "8px"
+            },
+            "fontFamily": {
+                    "label-md": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"]
+            }
+          }
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+            display: inline-block;
+            line-height: 1;
+        }
+        .status-pill {
+            padding: 2px 12px;
+            border-radius: 9999px;
+            font-size: 12px;
+            font-weight: 600;
+        }
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(8px);
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface font-body-md min-h-screen flex flex-col">
+<!-- TopNavBar (Administrative Shell) -->
+<header class="sticky top-0 z-50 flex justify-between items-center w-full pl-72 pr-margin-desktop h-16 bg-surface border-b border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="relative w-96">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant">search</span>
+<input class="w-full pl-10 pr-4 py-2 bg-surface-container-low border border-outline-variant rounded-lg text-body-sm focus:ring-2 focus:ring-primary focus:border-primary transition-all" placeholder="Buscar en mi expediente..." type="text"/>
+</div>
+</div>
+<div class="flex items-center gap-6">
+<button class="text-on-surface-variant hover:text-primary transition-colors relative">
+<span class="material-symbols-outlined">notifications</span>
+<span class="absolute top-0 right-0 w-2 h-2 bg-error rounded-full"></span>
+</button>
+<button class="text-on-surface-variant hover:text-primary transition-colors">
+<span class="material-symbols-outlined">help_outline</span>
+</button>
+<div class="h-8 w-px bg-outline-variant"></div>
+<div class="flex items-center gap-3">
+<div class="text-right hidden md:block">
+<p class="text-label-md leading-none">Andrés Rivera</p>
+<p class="text-label-sm text-on-surface-variant">Estudiante Becado</p>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden border border-outline-variant">
+<img alt="Foto de perfil del usuario" class="w-full h-full object-cover" data-alt="A professional headshot of a young university student wearing a clean white shirt, looking directly at the camera with a confident and friendly expression. The background is a soft, out-of-focus academic library setting with natural morning light. The style is modern, corporate, and trustworthy, aligning with an institutional academic portal." src="https://lh3.googleusercontent.com/aida-public/AB6AXuARUsSms6bumWyvi9COA9Ib5rrP8WXiXCgyB1iOWGxrkHWtClSEQPa2IvXWvOmTrwVHd-M-AW0aD03cNSBIhLzvjnwsVmbXbhZ0xCd7l_oc_igaIq9vXGiesffJU2x47IO_PBcKQPnVkdoPugobEHZPIUGS4VEC-G_0uB1rIr3UmVZK5gZDb1dVS0rFZT-zfkyK2HzJvawM6pyYdMXr39-00ttt6xdEBx6-DBN5omuuKRUtjbgxe1MVpJ7A1HVLSdLjvqOVCkKGIJo"/>
+</div>
+</div>
+</div>
+</header>
+<!-- SideNavBar -->
+<nav class="h-screen w-64 fixed left-0 top-0 bg-surface-container-low flex flex-col p-4 gap-2 z-50">
+<div class="mb-8 px-2 py-4">
+<h1 class="text-headline-sm font-bold text-primary">SGBE</h1>
+<p class="text-label-sm text-on-surface-variant">Colegio Universitario de Cartago</p>
+</div>
+<div class="flex flex-col gap-1 flex-1">
+<a class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-bold rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">dashboard</span>
+<span class="text-label-md">Dashboard</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">description</span>
+<span class="text-label-md">Solicitudes</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">folder_shared</span>
+<span class="text-label-md">Documentos</span>
+</a>
+<a class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-secondary-container/50 rounded-lg transition-all" href="#">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-label-md">Configuración</span>
+</a>
+</div>
+<div class="mt-auto pt-4 border-t border-outline-variant">
+<button class="w-full flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:bg-error-container/20 hover:text-error rounded-lg transition-all">
+<span class="material-symbols-outlined">logout</span>
+<span class="text-label-md">Cerrar Sesión</span>
+</button>
+</div>
+</nav>
+<!-- Main Content Area -->
+<main class="flex-1 ml-64 p-margin-desktop bg-surface">
+<div class="max-w-container-max mx-auto space-y-gutter">
+<!-- Header Section -->
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end gap-4 border-b border-outline-variant pb-base">
+<div>
+<h2 class="text-headline-lg font-bold text-primary">Expediente Estudiantil</h2>
+<p class="text-body-md text-on-surface-variant max-w-2xl">Visualiza y gestiona tu información de beca, historial académico y carga de requisitos para el periodo I-2024.</p>
+</div>
+<div class="flex gap-3">
+<button class="px-6 py-2 border border-primary text-primary font-label-md text-label-md rounded hover:bg-primary/5 transition-colors">Descargar Constancia</button>
+<button class="px-6 py-2 bg-primary text-on-primary font-label-md text-label-md rounded hover:bg-primary-container transition-colors">Solicitar Renovación</button>
+</div>
+</div>
+<!-- Bento Grid Layout -->
+<div class="grid grid-cols-1 md:grid-cols-12 gap-gutter">
+<!-- Left Column: Personal & Academic Info -->
+<div class="md:col-span-8 space-y-gutter">
+<!-- Quick Stats Cards -->
+<div class="grid grid-cols-1 sm:grid-cols-3 gap-gutter">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(0,51,102,0.05)]">
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Beca Actual</p>
+<h3 class="text-headline-sm font-bold text-primary">Categoría A</h3>
+<div class="mt-4 flex items-center gap-2 text-emerald-600">
+<span class="material-symbols-outlined text-base">check_circle</span>
+<span class="text-label-sm">Activa hasta Dic 2024</span>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(0,51,102,0.05)]">
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Promedio General</p>
+<h3 class="text-headline-sm font-bold text-primary">9.45 / 10</h3>
+<div class="mt-4 bg-surface-container h-1 rounded-full overflow-hidden">
+<div class="bg-primary h-full w-[94.5%]"></div>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(0,51,102,0.05)]">
+<p class="text-label-sm text-on-surface-variant uppercase tracking-wider mb-1">Próximo Pago</p>
+<h3 class="text-headline-sm font-bold text-primary">₡75.000</h3>
+<p class="mt-4 text-label-sm text-on-surface-variant">Programado: 15 Oct</p>
+</div>
+</div>
+<!-- Main Information Card -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(0,51,102,0.05)] overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-container-low flex justify-between items-center">
+<h3 class="text-label-md font-bold text-primary uppercase">Datos Consolidados</h3>
+<button class="text-primary hover:underline text-label-sm flex items-center gap-1">
+<span class="material-symbols-outlined text-sm">edit</span> Editar Datos
+                            </button>
+</div>
+<div class="p-6 grid grid-cols-1 md:grid-cols-2 gap-x-12 gap-y-6">
+<div class="space-y-4">
+<div>
+<label class="text-label-sm text-on-surface-variant">Nombre Completo</label>
+<p class="text-body-md font-semibold">Andrés Felipe Rivera Castro</p>
+</div>
+<div>
+<label class="text-label-sm text-on-surface-variant">Cédula de Identidad</label>
+<p class="text-body-md font-semibold">3-0123-0456</p>
+</div>
+<div>
+<label class="text-label-sm text-on-surface-variant">Correo Institucional</label>
+<p class="text-body-md font-semibold">a.riverac@est.cuc.ac.cr</p>
+</div>
+</div>
+<div class="space-y-4">
+<div>
+<label class="text-label-sm text-on-surface-variant">Carrera</label>
+<p class="text-body-md font-semibold">Diplomado en Tecnologías de Información</p>
+</div>
+<div>
+<label class="text-label-sm text-on-surface-variant">Nivel Actual</label>
+<p class="text-body-md font-semibold">III Cuatrimestre</p>
+</div>
+<div>
+<label class="text-label-sm text-on-surface-variant">Sede</label>
+<p class="text-body-md font-semibold">Cartago Central</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Benefit History Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(0,51,102,0.05)] overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-container-low">
+<h3 class="text-label-md font-bold text-primary uppercase">Historial de Beneficios</h3>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left">
+<thead class="bg-surface-container-low/50">
+<tr>
+<th class="px-6 py-3 text-label-sm text-on-surface-variant font-semibold">Periodo</th>
+<th class="px-6 py-3 text-label-sm text-on-surface-variant font-semibold">Tipo</th>
+<th class="px-6 py-3 text-label-sm text-on-surface-variant font-semibold">Monto/Estado</th>
+<th class="px-6 py-3 text-label-sm text-on-surface-variant font-semibold">Fecha</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-primary-container/5 transition-colors">
+<td class="px-6 py-4 text-body-sm font-medium">II Cuat. 2024</td>
+<td class="px-6 py-4 text-body-sm">Desembolso Mensual</td>
+<td class="px-6 py-4"><span class="status-pill bg-emerald-100 text-emerald-800">₡75.000 Pagado</span></td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">15/09/2024</td>
+</tr>
+<tr class="hover:bg-primary-container/5 transition-colors">
+<td class="px-6 py-4 text-body-sm font-medium">II Cuat. 2024</td>
+<td class="px-6 py-4 text-body-sm">Matrícula Exenta</td>
+<td class="px-6 py-4"><span class="status-pill bg-emerald-100 text-emerald-800">100% Aplicado</span></td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">20/08/2024</td>
+</tr>
+<tr class="hover:bg-primary-container/5 transition-colors">
+<td class="px-6 py-4 text-body-sm font-medium">I Cuat. 2024</td>
+<td class="px-6 py-4 text-body-sm">Desembolso Mensual</td>
+<td class="px-6 py-4"><span class="status-pill bg-emerald-100 text-emerald-800">₡75.000 Pagado</span></td>
+<td class="px-6 py-4 text-body-sm text-on-surface-variant">15/05/2024</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+</div>
+<!-- Right Column: Document Upload & Status -->
+<div class="md:col-span-4 space-y-gutter">
+<!-- Renewal Status -->
+<div class="bg-surface-container-highest p-6 rounded-xl border border-primary/20 relative overflow-hidden">
+<div class="relative z-10">
+<h3 class="text-label-md font-bold text-primary uppercase mb-4">Estado de Renovación</h3>
+<div class="flex items-center gap-4 mb-6">
+<div class="w-16 h-16 rounded-full border-4 border-primary border-t-transparent flex items-center justify-center animate-spin" style="animation-duration: 3s">
+<span class="text-label-md font-bold text-primary animate-none">65%</span>
+</div>
+<div>
+<p class="text-body-sm font-bold">Proceso en curso</p>
+<p class="text-label-sm text-on-surface-variant">Faltan 2 documentos obligatorios</p>
+</div>
+</div>
+<div class="space-y-3">
+<div class="flex items-center gap-2 text-body-sm">
+<span class="material-symbols-outlined text-emerald-600 text-base" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span>Formulario socioeconómico</span>
+</div>
+<div class="flex items-center gap-2 text-body-sm opacity-50">
+<span class="material-symbols-outlined text-on-surface-variant text-base">radio_button_unchecked</span>
+<span>Certificación de notas actual</span>
+</div>
+<div class="flex items-center gap-2 text-body-sm opacity-50">
+<span class="material-symbols-outlined text-on-surface-variant text-base">radio_button_unchecked</span>
+<span>Comprobante de ingresos familiar</span>
+</div>
+</div>
+</div>
+<div class="absolute -right-8 -bottom-8 opacity-10">
+<span class="material-symbols-outlined text-[120px] text-primary">history_edu</span>
+</div>
+</div>
+<!-- Document Upload Zone -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(0,51,102,0.05)] overflow-hidden">
+<div class="px-6 py-4 border-b border-outline-variant bg-surface-container-low">
+<h3 class="text-label-md font-bold text-primary uppercase">Carga de Documentos</h3>
+</div>
+<div class="p-6 space-y-4">
+<p class="text-body-sm text-on-surface-variant">Sube tus atestados académicos del periodo actual para mantener la vigencia de tu beneficio.</p>
+<!-- Dropzone -->
+<div class="border-2 border-dashed border-outline-variant rounded-lg p-8 flex flex-col items-center justify-center text-center hover:border-primary transition-colors cursor-pointer group bg-surface/50">
+<span class="material-symbols-outlined text-on-surface-variant group-hover:text-primary text-4xl mb-2 transition-colors">cloud_upload</span>
+<p class="text-label-md font-semibold">Arrastra tus archivos aquí</p>
+<p class="text-label-sm text-on-surface-variant">PDF, JPG o PNG (Max 5MB)</p>
+<button class="mt-4 px-4 py-2 bg-surface-container-high text-primary text-label-sm font-bold rounded group-hover:bg-primary group-hover:text-on-primary transition-all">Seleccionar Archivos</button>
+</div>
+<div class="space-y-3 pt-4">
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">picture_as_pdf</span>
+<div>
+<p class="text-label-sm font-semibold truncate w-32">Informe_Notas_I2024.pdf</p>
+<p class="text-[10px] text-on-surface-variant uppercase">Subido hace 2 días</p>
+</div>
+</div>
+<span class="material-symbols-outlined text-emerald-600">verified</span>
+</div>
+<div class="flex items-center justify-between p-3 bg-surface-container-low rounded-lg opacity-60">
+<div class="flex items-center gap-3">
+<span class="material-symbols-outlined text-on-surface-variant">description</span>
+<p class="text-label-sm font-semibold">Pendiente: Orden Patronal</p>
+</div>
+<button class="text-primary"><span class="material-symbols-outlined">add_circle</span></button>
+</div>
+</div>
+</div>
+</div>
+<!-- Sensitive Data Update -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-[0_4px_12px_rgba(0,51,102,0.05)] overflow-hidden">
+<div class="p-6 space-y-4">
+<div class="flex items-center gap-3 text-tertiary">
+<span class="material-symbols-outlined">warning</span>
+<h3 class="text-label-md font-bold uppercase">Actualización Sensible</h3>
+</div>
+<p class="text-body-sm text-on-surface-variant">Si has cambiado de cuenta bancaria (IBAN) o situación laboral familiar, debes notificarlo de inmediato.</p>
+<button class="w-full py-3 bg-tertiary text-on-tertiary text-label-md font-bold rounded hover:opacity-90 transition-opacity">Reportar Cambios</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer -->
+<footer class="ml-64 border-t border-outline-variant bg-surface-container-highest flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-auto">
+<div class="text-center md:text-left mb-4 md:mb-0">
+<p class="text-label-md font-bold text-on-surface">SGBE - CUC</p>
+<p class="text-body-sm text-on-surface-variant">© 2024 Colegio Universitario de Cartago. Departamento de Bienestar Estudiantil.</p>
+</div>
+<div class="flex gap-6">
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Contacto</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Transparencia</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Privacidad</a>
+<a class="text-body-sm text-on-surface-variant hover:text-primary transition-colors hover:underline" href="#">Ayuda</a>
+</div>
+</footer>
+<!-- Simple Interactivity -->
+<script>
+        // Dropzone interaction simulation
+        const dropzone = document.querySelector('.border-dashed');
+        if (dropzone) {
+            dropzone.addEventListener('dragover', (e) => {
+                e.preventDefault();
+                dropzone.classList.add('border-primary', 'bg-primary/5');
+            });
+            dropzone.addEventListener('dragleave', () => {
+                dropzone.classList.remove('border-primary', 'bg-primary/5');
+            });
+            dropzone.addEventListener('drop', (e) => {
+                e.preventDefault();
+                dropzone.classList.remove('border-primary', 'bg-primary/5');
+                alert('Archivo detectado. En un entorno real, aquí comenzaría la subida.');
+            });
+        }
+    </script>
+</body></html>

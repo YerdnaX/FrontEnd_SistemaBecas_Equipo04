@@ -1,0 +1,562 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SGBE - Gestión de Empleados</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@100..900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "surface-container-highest": "#d8e3fa",
+                    "outline-variant": "#c3c6d1",
+                    "on-tertiary-fixed": "#410007",
+                    "secondary": "#5c5f60",
+                    "on-surface": "#111c2c",
+                    "primary-fixed": "#d5e3ff",
+                    "inverse-on-surface": "#ebf1ff",
+                    "secondary-fixed": "#e1e3e4",
+                    "on-primary": "#ffffff",
+                    "surface-variant": "#d8e3fa",
+                    "surface-bright": "#f9f9ff",
+                    "inverse-surface": "#263142",
+                    "secondary-container": "#e1e3e4",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed": "#191c1d",
+                    "tertiary-fixed-dim": "#ffb3b1",
+                    "on-tertiary-fixed-variant": "#92001c",
+                    "surface-container-high": "#dee8ff",
+                    "on-error": "#ffffff",
+                    "surface-container-low": "#f0f3ff",
+                    "outline": "#737780",
+                    "on-error-container": "#93000a",
+                    "secondary-fixed-dim": "#c5c7c8",
+                    "on-background": "#111c2c",
+                    "on-primary-fixed-variant": "#1f477b",
+                    "primary-container": "#003366",
+                    "on-surface-variant": "#43474f",
+                    "background": "#f9f9ff",
+                    "surface-tint": "#3a5f94",
+                    "primary": "#001e40",
+                    "on-secondary": "#ffffff",
+                    "inverse-primary": "#a7c8ff",
+                    "tertiary-container": "#6d0013",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#ffdad8",
+                    "on-secondary-fixed-variant": "#454748",
+                    "on-primary-fixed": "#001b3c",
+                    "surface-container": "#e7eeff",
+                    "on-primary-container": "#799dd6",
+                    "surface-container-lowest": "#ffffff",
+                    "surface": "#f9f9ff",
+                    "tertiary": "#450008",
+                    "on-tertiary-container": "#ff6b6e",
+                    "error-container": "#ffdad6",
+                    "on-secondary-container": "#626566",
+                    "surface-dim": "#cfdaf1",
+                    "primary-fixed-dim": "#a7c8ff"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "spacing": {
+                    "gutter": "24px",
+                    "base": "8px",
+                    "margin-mobile": "16px",
+                    "margin-desktop": "48px",
+                    "container-max": "1280px"
+            },
+            "fontFamily": {
+                    "body-lg": ["Hanken Grotesk"],
+                    "headline-lg": ["Hanken Grotesk"],
+                    "body-sm": ["Hanken Grotesk"],
+                    "label-sm": ["Hanken Grotesk"],
+                    "headline-md": ["Hanken Grotesk"],
+                    "label-md": ["Hanken Grotesk"],
+                    "body-md": ["Hanken Grotesk"],
+                    "headline-sm": ["Hanken Grotesk"],
+                    "headline-lg-mobile": ["Hanken Grotesk"]
+            },
+            "fontSize": {
+                    "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                    "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                    "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "label-sm": ["12px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                    "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                    "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                    "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                    "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                    "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+        .custom-scrollbar::-webkit-scrollbar-track { background: transparent; }
+        .custom-scrollbar::-webkit-scrollbar-thumb { background: #c3c6d1; border-radius: 10px; }
+        .glass-panel { background: rgba(255, 255, 255, 0.7); backdrop-filter: blur(10px); border: 1px solid rgba(255, 255, 255, 0.3); }
+        .status-pill { padding: 4px 12px; border-radius: 9999px; font-weight: 600; font-size: 12px; }
+    </style>
+</head>
+<body class="bg-background text-on-surface flex overflow-hidden">
+<!-- SideNavBar Anchor -->
+<aside class="hidden md:flex flex-col h-screen py-base px-4 border-r border-outline-variant dark:border-outline bg-surface-container-low dark:bg-surface-dim w-64 fixed left-0 top-0 transition-all duration-200 ease-in-out">
+<div class="mb-10 px-2">
+<h1 class="font-headline-md text-headline-md font-bold text-on-surface">Gestión de Becas</h1>
+<p class="font-label-md text-label-md text-on-surface-variant">SGBE v1.0</p>
+</div>
+<nav class="flex-1 space-y-2">
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="font-label-md text-label-md">Dashboard</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">description</span>
+<span class="font-label-md text-label-md">Mis Solicitudes</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">school</span>
+<span class="font-label-md text-label-md">Becas Disponibles</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 bg-primary-container text-on-primary-container font-semibold rounded-lg">
+<span class="material-symbols-outlined">group_add</span>
+<span class="font-label-md text-label-md">Gestión Empleados</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">event</span>
+<span class="font-label-md text-label-md">Calendario</span>
+</div>
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">settings</span>
+<span class="font-label-md text-label-md">Ajustes</span>
+</div>
+</nav>
+<div class="pt-base border-t border-outline-variant mt-4">
+<div class="flex items-center gap-3 px-4 py-3 text-on-surface-variant hover:text-primary hover:bg-surface-container-high transition-all duration-200 cursor-pointer rounded-lg">
+<span class="material-symbols-outlined">logout</span>
+<span class="font-label-md text-label-md">Cerrar Sesión</span>
+</div>
+</div>
+</aside>
+<!-- Main Content Canvas -->
+<main class="flex-1 md:ml-64 h-screen flex flex-col overflow-hidden">
+<!-- TopNavBar Anchor -->
+<header class="flex justify-between items-center w-full px-gutter h-16 bg-surface-container-lowest dark:bg-inverse-surface shadow-sm sticky top-0 z-40">
+<div class="flex items-center gap-4">
+<div class="md:hidden">
+<span class="material-symbols-outlined text-primary cursor-pointer">menu</span>
+</div>
+<h2 class="font-headline-sm text-headline-sm font-bold text-primary">SGBE - CUC</h2>
+</div>
+<div class="flex items-center gap-6">
+<div class="hidden md:flex items-center bg-surface-container-low px-4 py-1.5 rounded-full border border-outline-variant">
+<span class="material-symbols-outlined text-on-surface-variant text-[20px] mr-2">search</span>
+<input class="bg-transparent border-none focus:ring-0 text-body-sm w-64" placeholder="Buscar empleados..." type="text"/>
+</div>
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-colors">notifications</span>
+<span class="material-symbols-outlined text-on-surface-variant cursor-pointer hover:bg-surface-container-low p-2 rounded-full transition-colors">help_outline</span>
+<div class="flex items-center gap-3 ml-2 border-l pl-4 border-outline-variant">
+<div class="text-right hidden lg:block">
+<p class="font-label-md text-label-md text-on-surface leading-none">Admin Sistema</p>
+<p class="font-body-sm text-[11px] text-on-surface-variant">CUC Departamento TI</p>
+</div>
+<img alt="Perfil" class="w-10 h-10 rounded-full border-2 border-primary-fixed" data-alt="A professional headshot of a middle-aged male administrator with a confident expression, wearing a navy blue blazer and a white shirt. The background is a softly blurred office environment with institutional blue accents, matching a modern corporate and academic aesthetic. The lighting is soft, cinematic, and professional, highlighting the skin texture and friendly eyes." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDZmfD6uLtq_h8tDU3NsSGREOoM3so2ri62gATDjUzpZX4rs16UArCdUB-uKJHfa3LQ-X-tGSa7PM1hd-IBd4kikmqyWhn_Qh6WzLNPpQhrhgPW1YibaRwB_PthZxVInb0QAxCI_guMqGpUhQsmgXK3bz0QRM08yKoeRGdKGG4kbLVoJgfBDn0SA8huNvHT65LRrbHM9XOSz8M_K6FEWkcxlBm3_7qqOQ7aSYkkunkhL0rLZQ0CMxOBc8ZZRuoetws4APMZqEyP2EE"/>
+</div>
+</div>
+</div>
+</header>
+<!-- Content Area -->
+<section class="flex-1 overflow-y-auto p-gutter custom-scrollbar">
+<!-- Page Header -->
+<div class="flex flex-col md:flex-row md:items-end justify-between mb-8 gap-4">
+<div>
+<h3 class="font-headline-lg text-headline-lg text-primary">Gestión de Empleados</h3>
+<p class="font-body-md text-body-md text-on-surface-variant">Administración de personal administrativo y trabajadoras sociales para el Comité de Becas.</p>
+</div>
+<button class="bg-primary-container text-on-primary-container px-6 py-2.5 rounded-lg flex items-center gap-2 font-label-md text-label-md shadow-sm hover:opacity-90 transition-opacity">
+<span class="material-symbols-outlined">person_add</span>
+                    Vincular Nuevo Empleado
+                </button>
+</div>
+<!-- Dashboard Summary Cards (Bento Style) -->
+<div class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-8">
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-4 mb-4">
+<div class="bg-primary-container/10 p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined">group</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Total Personal</p>
+</div>
+<p class="font-headline-md text-headline-md">24</p>
+<p class="text-[12px] text-on-surface-variant mt-2 flex items-center gap-1">
+<span class="material-symbols-outlined text-[14px] text-emerald-600">trending_up</span>
+                        2 nuevos este mes
+                    </p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-4 mb-4">
+<div class="bg-primary-container/10 p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined">psychology</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Treb. Sociales</p>
+</div>
+<p class="font-headline-md text-headline-md">12</p>
+<p class="text-[12px] text-on-surface-variant mt-2">Personal activo en revisiones</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-4 mb-4">
+<div class="bg-primary-container/10 p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined">account_balance</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Comité de Becas</p>
+</div>
+<p class="font-headline-md text-headline-md">6</p>
+<p class="text-[12px] text-on-surface-variant mt-2">Miembros con voto activo</p>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-xl border border-outline-variant shadow-sm hover:shadow-md transition-shadow">
+<div class="flex items-center gap-4 mb-4">
+<div class="bg-primary-container/10 p-3 rounded-lg text-primary">
+<span class="material-symbols-outlined">pending_actions</span>
+</div>
+<p class="font-label-md text-label-md text-on-surface-variant">Invitaciones Pend.</p>
+</div>
+<p class="font-headline-md text-headline-md">3</p>
+<p class="text-[12px] text-amber-600 mt-2">Requieren vinculación IT</p>
+</div>
+</div>
+<!-- Employee Management Table -->
+<div class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm overflow-hidden mb-8">
+<div class="p-6 border-b border-outline-variant flex flex-col md:flex-row justify-between items-center gap-4">
+<h4 class="font-headline-sm text-headline-sm text-on-surface">Listado de Personal Vinculado</h4>
+<div class="flex gap-3 w-full md:w-auto">
+<select class="bg-surface-container-low border-outline-variant rounded-lg text-label-md px-4 py-2 focus:ring-primary">
+<option>Todos los Departamentos</option>
+<option>Bienestar Estudiantil</option>
+<option>Registro</option>
+<option>Administración</option>
+</select>
+<button class="bg-surface-container-low text-on-surface-variant border border-outline-variant px-4 py-2 rounded-lg flex items-center gap-2 hover:bg-surface-container-high transition-colors">
+<span class="material-symbols-outlined text-[20px]">filter_list</span>
+                            Filtros
+                        </button>
+</div>
+</div>
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="bg-surface-container-low">
+<th class="px-6 py-4 font-label-md text-on-surface-variant border-none">Empleado</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant border-none">Departamento</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant border-none">Rol Sistema</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant border-none">Comité Becas</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant border-none">Estado</th>
+<th class="px-6 py-4 font-label-md text-on-surface-variant border-none text-right">Acciones</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-outline-variant">
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Employee" class="w-10 h-10 rounded-full object-cover" data-alt="A professional and friendly headshot of a Hispanic female social worker in her late 30s. She is wearing a mustard-colored blouse and has her hair neatly tied back. The setting is a bright, modern university office with blurred books and plants in the background. The aesthetic is clean and authoritative with warm lighting." src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9SgZczCaK6oC1VmSm6jsjNapcleCAhEJ1aP5liCvhGpU2W-mvPhL002_n5bmni48MvKBsjcWzd7A5iJyiGssnMhpkYSq0mPv7oEOwe1qZSp45wgc5UbB8i_aPkqWBZRMGWJ43xzzO8E1m57ivsM6YLarcdFP9ksx3RpUBSr_cFVf9v4eqxR7_tH5N6e50qEzUW1ATHHRcQECqTkRV2Tq2POCcLYX-CcgxZBiLpRmpw018_JmCeDn4VqsYbTBkHmbqenNimbkaRi4"/>
+<div>
+<p class="font-label-md text-on-surface">Dra. María Fernández</p>
+<p class="text-[12px] text-on-surface-variant">m.fernandez@cuc.ac.cr</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-sm text-on-surface">Bienestar Estudiantil</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-sm text-on-surface-variant italic">Trabajadora Social</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-emerald-600 font-semibold text-[13px]">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">verified_user</span>
+                                        Presidenta
+                                    </div>
+</td>
+<td class="px-6 py-4">
+<span class="status-pill bg-emerald-100 text-emerald-700">Activo</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">link_off</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Employee" class="w-10 h-10 rounded-full object-cover" data-alt="A portrait of a male administrative professional in his early 40s, wearing a crisp light blue shirt and glasses. He has a polite smile. The environment is a clean, minimal workspace with soft daylight. The image has a professional and reliable tone with institucional corporate color balancing." src="https://lh3.googleusercontent.com/aida-public/AB6AXuDXp5qiHsTL_FvVN9Y8RS1Lq7T6arbMy7EtAFGta3PNVsCbXnaOIwiKYX8to_uZS6EgpvTYNc9FnxZ4QgDMJBentxB9cwmSRwakoetFY1ZMJfwIaum7Dl38-QuD-9pDsY684vwRuUnarsFvphjDVC_wcguLszjrDle1UVxWg3ntn8pb-7TBIIuG31-XUJi7t_Khay9GOkbQZRqVKhqDR2YY3B-eDLV-DDKGYys4B67ihzMh-nGcCV3r0v3--4xbCH09g7Zd5IY40d0"/>
+<div>
+<p class="font-label-md text-on-surface">Ing. Roberto Quesada</p>
+<p class="text-[12px] text-on-surface-variant">r.quesada@cuc.ac.cr</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-sm text-on-surface">Registro</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-sm text-on-surface-variant italic">Personal Administrativo</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-on-surface-variant text-[13px]">
+<span class="material-symbols-outlined text-[18px]">gavel</span>
+                                        Vocal 1
+                                    </div>
+</td>
+<td class="px-6 py-4">
+<span class="status-pill bg-emerald-100 text-emerald-700">Activo</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">link_off</span></button>
+</div>
+</td>
+</tr>
+<tr class="hover:bg-primary/5 transition-colors cursor-pointer group">
+<td class="px-6 py-4">
+<div class="flex items-center gap-3">
+<img alt="Employee" class="w-10 h-10 rounded-full object-cover" data-alt="A portrait of a young female office assistant in her 20s with a professional but approachable look. She is wearing a grey blazer over a simple white top. The background is a modern academic office, bright and clean. Soft focal depth creates a polished institutional feel." src="https://lh3.googleusercontent.com/aida-public/AB6AXuANqv69swmypSI87fe0NSrQ2O_Ff0fmw7mGYjrl7QiXnhbVmlJrVOoO3sOTFLfcttwSEOrhPoRSVw6z5yF4JXuedpZ16oUzQEpcCmBIv9OFT0oO6sqxURCPO7RNwpDckfGc3IYU3QcHYyjfZpFLjbQZBKTIEqAcPKoQ4hViKEQuara-8Sl18DuAxFgDra2uzaEODaN2K2l0qObMIN-285f0CPgIljLqCc8U2z9Yix68mBkiZS7IwKEOfA_6jRFkrLp9zECFvDDs0Vs"/>
+<div>
+<p class="font-label-md text-on-surface">Lic. Ana Lorena Brenes</p>
+<p class="text-[12px] text-on-surface-variant">a.brenes@cuc.ac.cr</p>
+</div>
+</div>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-sm text-on-surface">Bienestar Estudiantil</span>
+</td>
+<td class="px-6 py-4">
+<span class="text-body-sm text-on-surface-variant italic">Secretaría Técnica</span>
+</td>
+<td class="px-6 py-4">
+<div class="flex items-center gap-2 text-on-surface-variant text-[13px]">
+<span class="material-symbols-outlined text-[18px]">history_edu</span>
+                                        Secretaria
+                                    </div>
+</td>
+<td class="px-6 py-4">
+<span class="status-pill bg-amber-100 text-amber-700">En Trámite</span>
+</td>
+<td class="px-6 py-4 text-right">
+<div class="flex justify-end gap-2">
+<button class="p-2 text-on-surface-variant hover:text-primary transition-colors"><span class="material-symbols-outlined">edit</span></button>
+<button class="p-2 text-on-surface-variant hover:text-error transition-colors"><span class="material-symbols-outlined">link_off</span></button>
+</div>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+<div class="p-4 bg-surface-container-low flex justify-between items-center text-body-sm text-on-surface-variant">
+<span>Mostrando 1-10 de 24 empleados vinculados</span>
+<div class="flex gap-1">
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_left</span></button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-primary bg-primary text-on-primary font-bold">1</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors">2</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors">3</button>
+<button class="w-8 h-8 flex items-center justify-center rounded border border-outline-variant bg-surface-container-lowest hover:bg-surface-container-high transition-colors"><span class="material-symbols-outlined text-[18px]">chevron_right</span></button>
+</div>
+</div>
+</div>
+<!-- Management Actions Area -->
+<div class="grid grid-cols-1 lg:grid-cols-2 gap-8 mb-8">
+<!-- Role Assignment Panel -->
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant shadow-sm relative overflow-hidden">
+<div class="absolute top-0 right-0 p-4 opacity-5 pointer-events-none">
+<span class="material-symbols-outlined text-[120px]">admin_panel_settings</span>
+</div>
+<h5 class="font-headline-sm text-headline-sm text-primary mb-6">Configuración del Comité de Becas</h5>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Asigne los roles legales para el periodo académico actual. Estos roles tienen potestad de voto en las resoluciones.</p>
+<div class="space-y-4">
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg border border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="bg-primary-container text-on-primary w-10 h-10 rounded-full flex items-center justify-center font-bold">P</div>
+<div>
+<p class="font-label-md text-label-md">Presidencia</p>
+<p class="text-[12px] text-on-surface-variant">Dra. María Fernández</p>
+</div>
+</div>
+<button class="text-primary font-bold text-[13px] hover:underline">Cambiar</button>
+</div>
+<div class="flex items-center justify-between p-4 bg-surface-container-low rounded-lg border border-outline-variant">
+<div class="flex items-center gap-4">
+<div class="bg-primary-container text-on-primary w-10 h-10 rounded-full flex items-center justify-center font-bold">S</div>
+<div>
+<p class="font-label-md text-label-md">Secretaría</p>
+<p class="text-[12px] text-on-surface-variant">Lic. Ana Lorena Brenes</p>
+</div>
+</div>
+<button class="text-primary font-bold text-[13px] hover:underline">Cambiar</button>
+</div>
+<button class="w-full mt-4 py-3 border-2 border-dashed border-outline text-on-surface-variant font-label-md text-label-md rounded-lg flex items-center justify-center gap-2 hover:bg-surface-container-low transition-colors">
+<span class="material-symbols-outlined text-[20px]">add_circle</span>
+                            Agregar Vocalía Adicional
+                        </button>
+</div>
+</div>
+<!-- Integration Status -->
+<div class="bg-surface-container-lowest p-8 rounded-xl border border-outline-variant shadow-sm">
+<h5 class="font-headline-sm text-headline-sm text-primary mb-6">Integración con el Sistema</h5>
+<p class="font-body-md text-body-md text-on-surface-variant mb-6">Estado de la sincronización de cuentas de usuario del dominio @cuc.ac.cr con los perfiles del SGBE.</p>
+<div class="space-y-6">
+<div>
+<div class="flex justify-between items-center mb-2">
+<span class="font-label-md text-label-md">Cuentas Vinculadas</span>
+<span class="font-label-md text-label-md">92%</span>
+</div>
+<div class="h-2 w-full bg-surface-container-high rounded-full overflow-hidden">
+<div class="h-full bg-primary" style="width: 92%;"></div>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-4">
+<div class="p-4 bg-surface-container-low rounded-lg">
+<p class="font-label-md text-label-md text-on-surface-variant">Usuarios AD</p>
+<p class="font-headline-md text-headline-md text-primary">22/24</p>
+</div>
+<div class="p-4 bg-surface-container-low rounded-lg">
+<p class="font-label-md text-label-md text-on-surface-variant">Acceso OAuth</p>
+<p class="font-headline-md text-headline-md text-emerald-600">Activo</p>
+</div>
+</div>
+<div class="p-4 border border-error/20 bg-error-container/10 rounded-lg flex gap-4 items-start">
+<span class="material-symbols-outlined text-error">warning</span>
+<div>
+<p class="font-label-md text-label-md text-error">2 Incidentes de Seguridad</p>
+<p class="text-[12px] text-on-surface-variant mt-1">Se detectaron intentos de acceso desde IPs no autorizadas para los perfiles de Trabajadora Social.</p>
+<button class="mt-2 text-primary font-bold text-[12px] hover:underline">Ver Reporte</button>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Footer Anchor -->
+<footer class="w-full py-8 flex flex-col md:flex-row justify-between items-center gap-4 border-t border-outline-variant mt-auto">
+<p class="font-body-sm text-body-sm text-on-surface-variant">© 2024 Colegio Universitario de Cartago - Departamento de Bienestar Estudiantil</p>
+<div class="flex gap-6">
+<span class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Privacidad</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Términos</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Contacto</span>
+<span class="font-body-sm text-body-sm text-on-surface-variant hover:text-primary transition-colors cursor-pointer">Ayuda</span>
+</div>
+</footer>
+</section>
+</main>
+<!-- Mobile Navigation Anchor -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full bg-surface-container-lowest border-t border-outline-variant flex justify-around py-3 z-50">
+<div class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">dashboard</span>
+<span class="text-[10px] font-label-md">Inicio</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">description</span>
+<span class="text-[10px] font-label-md">Solicitudes</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-primary">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">group</span>
+<span class="text-[10px] font-bold">Personal</span>
+</div>
+<div class="flex flex-col items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined">settings</span>
+<span class="text-[10px] font-label-md">Ajustes</span>
+</div>
+</nav>
+<!-- Interaction Overlay (Simulated Modal) - Hidden by default -->
+<div class="hidden fixed inset-0 z-[60] bg-black/40 backdrop-blur-sm flex items-center justify-center p-4" id="new-employee-modal">
+<div class="bg-surface-container-lowest w-full max-w-2xl rounded-2xl shadow-2xl overflow-hidden animate-in fade-in zoom-in duration-300">
+<div class="p-6 bg-primary-container text-on-primary flex justify-between items-center">
+<h3 class="font-headline-sm text-headline-sm">Vincular Nuevo Empleado</h3>
+<span class="material-symbols-outlined cursor-pointer hover:rotate-90 transition-transform" onclick="toggleModal()">close</span>
+</div>
+<div class="p-8">
+<div class="space-y-6">
+<div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Buscar en el Directorio CUC</label>
+<div class="relative">
+<input class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary pl-10" placeholder="Nombre o email institucional" type="text"/>
+<span class="material-symbols-outlined absolute left-3 top-2.5 text-on-surface-variant">search</span>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-2">Departamento de Asignación</label>
+<select class="w-full rounded-lg border-outline-variant focus:border-primary focus:ring-primary">
+<option>Seleccione departamento...</option>
+<option>Bienestar Estudiantil</option>
+<option>Registro</option>
+<option>Informática</option>
+</select>
+</div>
+</div>
+<div>
+<label class="block font-label-md text-label-md text-on-surface-variant mb-4">Roles de Acceso al Sistema</label>
+<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+<label class="flex items-center gap-3 p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-colors">
+<input class="text-primary focus:ring-primary" name="sys_role" type="radio"/>
+<div>
+<p class="font-label-md text-label-md">Admin</p>
+<p class="text-[11px] text-on-surface-variant">Control total</p>
+</div>
+</label>
+<label class="flex items-center gap-3 p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-colors">
+<input class="text-primary focus:ring-primary" name="sys_role" type="radio"/>
+<div>
+<p class="font-label-md text-label-md">Revisor</p>
+<p class="text-[11px] text-on-surface-variant">Trab. Sociales</p>
+</div>
+</label>
+<label class="flex items-center gap-3 p-4 border border-outline-variant rounded-lg cursor-pointer hover:bg-surface-container-low transition-colors">
+<input class="text-primary focus:ring-primary" name="sys_role" type="radio"/>
+<div>
+<p class="font-label-md text-label-md">Consulta</p>
+<p class="text-[11px] text-on-surface-variant">Solo lectura</p>
+</div>
+</label>
+</div>
+</div>
+<div class="p-4 bg-surface-container-low rounded-lg flex gap-3">
+<span class="material-symbols-outlined text-primary">info</span>
+<p class="text-[12px] text-on-surface-variant italic">Al vincular un empleado, se enviará automáticamente una invitación a su correo @cuc.ac.cr para completar su perfil y habilitar el doble factor de autenticación (2FA).</p>
+</div>
+</div>
+</div>
+<div class="p-6 border-t border-outline-variant flex justify-end gap-4">
+<button class="px-6 py-2 rounded-lg font-label-md text-label-md text-on-surface-variant hover:bg-surface-container-high transition-colors" onclick="toggleModal()">Cancelar</button>
+<button class="px-6 py-2 bg-primary-container text-on-primary-container rounded-lg font-label-md text-label-md shadow-sm hover:opacity-90 transition-opacity">Confirmar Vinculación</button>
+</div>
+</div>
+</div>
+<script>
+        function toggleModal() {
+            const modal = document.getElementById('new-employee-modal');
+            modal.classList.toggle('hidden');
+        }
+
+        // Add event listener to the main "New Employee" button
+        document.addEventListener('DOMContentLoaded', () => {
+            const btn = document.querySelector('button.bg-primary-container');
+            if (btn && btn.textContent.includes('Vincular Nuevo Empleado')) {
+                btn.onclick = toggleModal;
+            }
+        });
+    </script>
+</body></html>

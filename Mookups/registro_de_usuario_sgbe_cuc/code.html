@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+
+<html class="light" lang="es"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Hanken+Grotesk:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "error-container": "#ffdad6",
+                      "on-surface": "#111c2c",
+                      "secondary-fixed-dim": "#c5c7c8",
+                      "on-background": "#111c2c",
+                      "on-secondary-fixed-variant": "#454748",
+                      "surface": "#f9f9ff",
+                      "tertiary-container": "#6d0013",
+                      "on-primary-container": "#799dd6",
+                      "surface-bright": "#f9f9ff",
+                      "outline-variant": "#c3c6d1",
+                      "on-tertiary-container": "#ff6b6e",
+                      "primary-fixed": "#d5e3ff",
+                      "surface-container-high": "#dee8ff",
+                      "on-tertiary-fixed-variant": "#92001c",
+                      "secondary-container": "#e1e3e4",
+                      "on-secondary": "#ffffff",
+                      "on-surface-variant": "#43474f",
+                      "on-primary-fixed": "#001b3c",
+                      "surface-container": "#e7eeff",
+                      "surface-container-lowest": "#ffffff",
+                      "secondary-fixed": "#e1e3e4",
+                      "primary": "#001e40",
+                      "background": "#f9f9ff",
+                      "surface-variant": "#d8e3fa",
+                      "primary-container": "#003366",
+                      "on-primary-fixed-variant": "#1f477b",
+                      "on-tertiary": "#ffffff",
+                      "inverse-surface": "#263142",
+                      "error": "#ba1a1a",
+                      "on-error-container": "#93000a",
+                      "inverse-primary": "#a7c8ff",
+                      "on-error": "#ffffff",
+                      "tertiary": "#450008",
+                      "on-tertiary-fixed": "#410007",
+                      "on-primary": "#ffffff",
+                      "tertiary-fixed": "#ffdad8",
+                      "surface-dim": "#cfdaf1",
+                      "outline": "#737780",
+                      "primary-fixed-dim": "#a7c8ff",
+                      "surface-container-highest": "#d8e3fa",
+                      "inverse-on-surface": "#ebf1ff",
+                      "on-secondary-fixed": "#191c1d",
+                      "secondary": "#5c5f60",
+                      "surface-tint": "#3a5f94",
+                      "surface-container-low": "#f0f3ff",
+                      "tertiary-fixed-dim": "#ffb3b1",
+                      "on-secondary-container": "#626566"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.125rem",
+                      "lg": "0.25rem",
+                      "xl": "0.5rem",
+                      "full": "0.75rem"
+              },
+              "spacing": {
+                      "base": "8px",
+                      "margin-desktop": "48px",
+                      "container-max": "1280px",
+                      "margin-mobile": "16px",
+                      "gutter": "24px"
+              },
+              "fontFamily": {
+                      "label-sm": ["Hanken Grotesk"],
+                      "body-sm": ["Hanken Grotesk"],
+                      "headline-lg": ["Hanken Grotesk"],
+                      "body-md": ["Hanken Grotesk"],
+                      "headline-sm": ["Hanken Grotesk"],
+                      "headline-md": ["Hanken Grotesk"],
+                      "headline-lg-mobile": ["Hanken Grotesk"],
+                      "body-lg": ["Hanken Grotesk"],
+                      "label-md": ["Hanken Grotesk"]
+              },
+              "fontSize": {
+                      "label-sm": ["12px", {"lineHeight": "1.0", "fontWeight": "500"}],
+                      "body-sm": ["14px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-lg": ["32px", {"lineHeight": "1.2", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "body-md": ["16px", {"lineHeight": "1.5", "fontWeight": "400"}],
+                      "headline-sm": ["20px", {"lineHeight": "1.4", "fontWeight": "600"}],
+                      "headline-md": ["24px", {"lineHeight": "1.3", "fontWeight": "600"}],
+                      "headline-lg-mobile": ["24px", {"lineHeight": "1.2", "fontWeight": "700"}],
+                      "body-lg": ["18px", {"lineHeight": "1.6", "fontWeight": "400"}],
+                      "label-md": ["14px", {"lineHeight": "1.0", "letterSpacing": "0.01em", "fontWeight": "600"}]
+              }
+            },
+          },
+        }
+    </script>
+<style>
+        body { font-family: 'Hanken Grotesk', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .form-shadow {
+            box-shadow: 0 4px 12px rgba(0, 51, 102, 0.05);
+        }
+        .strength-bar {
+            transition: width 0.3s ease, background-color 0.3s ease;
+        }
+    </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col overflow-x-hidden">
+<!-- TopNavBar (Shell Suppression: Hidden as this is a transactional page, but Institutional Branding remains) -->
+<header class="flex justify-between items-center w-full px-margin-mobile md:px-margin-desktop max-w-container-max mx-auto h-20">
+<div class="flex items-center gap-2">
+<div class="w-10 h-10 bg-primary-container flex items-center justify-center rounded">
+<span class="material-symbols-outlined text-on-primary-container" style="font-variation-settings: 'FILL' 1;">account_balance</span>
+</div>
+<span class="text-headline-sm font-headline-sm font-bold text-primary">SGBE - CUC</span>
+</div>
+<div class="hidden md:flex gap-6">
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Inicio</a>
+<a class="text-label-md font-label-md text-on-surface-variant hover:text-primary transition-colors" href="#">Ayuda</a>
+</div>
+</header>
+<main class="flex-grow flex items-center justify-center py-12 px-margin-mobile">
+<div class="w-full max-w-[1000px] grid grid-cols-1 md:grid-cols-2 bg-surface-container-lowest rounded-xl overflow-hidden form-shadow">
+<!-- Left Side: Visual/Context -->
+<div class="hidden md:block relative bg-primary-container">
+<div class="absolute inset-0 z-0">
+<img alt="CUC Campus" class="w-full h-full object-cover opacity-60" data-alt="A cinematic, wide-angle shot of a modern, minimalist university campus courtyard at dusk. The architecture features clean lines, large glass windows, and concrete textures, reflecting a professional institutional atmosphere. Soft, warm interior lights glow through the windows, contrasting with the cool blue hour sky. The composition is balanced and serene, representing academic excellence and the high-end institutional brand of Colegio Universitario de Cartago." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCy3bmUUwGJsfDgwXq2ky57359fXtlLMSWC7UqXR5BRZupUAhv_z4AuyT4agKPli0ybEJ4Ki8OgSfjkiLeKtxVCRUJf7_bLIbVby9-0Mx-8IuZvC9mlTqrHAt-u_ZKPruA-D5vMfv5XoKAEE230hlLKXsPonAYHX3oyUfQ-uIsFyzjGdlXy3WL6pcDTsF2uj_5Wtn_zfTjnd4m4iNFQ3uf0GZtnmjbB4qEMIs67Plr-hUiEUW90lOhVEC5UyvMJolJQrc3fE0Ov-kg"/>
+</div>
+<div class="relative z-10 p-12 h-full flex flex-col justify-end">
+<h1 class="text-headline-lg font-headline-lg text-white mb-4">Inicia tu futuro profesional hoy.</h1>
+<p class="text-body-lg font-body-lg text-white/80">Accede a las convocatorias de becas y beneficios estudiantiles del Colegio Universitario de Cartago.</p>
+</div>
+</div>
+<!-- Right Side: Registration Form -->
+<div class="p-8 md:p-12 lg:p-16 flex flex-col justify-center">
+<div class="mb-8">
+<h2 class="text-headline-md font-headline-md text-primary mb-2">Crear cuenta</h2>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Completa tus datos para registrarte en el Sistema de Gestión de Becas.</p>
+</div>
+<form class="space-y-6" id="registration-form">
+<!-- Full Name -->
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface" for="full_name">Nombre Completo</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">person</span>
+<input class="w-full pl-10 pr-4 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none transition-all text-body-md font-body-md" id="full_name" placeholder="Ej. Juan Pérez" required="" type="text"/>
+</div>
+</div>
+<!-- Email -->
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface" for="email">Correo Institucional</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">mail</span>
+<input class="w-full pl-10 pr-4 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none transition-all text-body-md font-body-md" id="email" placeholder="usuario@cuc.ac.cr" required="" type="email"/>
+</div>
+</div>
+<!-- Password -->
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface" for="password">Contraseña</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">lock</span>
+<input class="w-full pl-10 pr-12 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none transition-all text-body-md font-body-md" id="password" placeholder="••••••••" required="" type="password"/>
+<button class="absolute right-3 top-1/2 -translate-y-1/2 text-outline hover:text-primary transition-colors" onclick="togglePassword('password')" type="button">
+<span class="material-symbols-outlined text-[20px]" id="toggle-icon-pass">visibility</span>
+</button>
+</div>
+<!-- Strength Indicator -->
+<div class="mt-2 space-y-1">
+<div class="flex gap-1 h-1.5 w-full bg-surface-container rounded-full overflow-hidden">
+<div class="strength-bar h-full w-0 bg-error" id="strength-bar"></div>
+</div>
+<span class="text-label-sm font-label-sm text-on-surface-variant" id="strength-text">Seguridad: Baja</span>
+</div>
+</div>
+<!-- Confirm Password -->
+<div class="space-y-2">
+<label class="text-label-md font-label-md text-on-surface" for="confirm_password">Confirmar Contraseña</label>
+<div class="relative">
+<span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-outline text-[20px]">lock_reset</span>
+<input class="w-full pl-10 pr-4 py-3 bg-white border border-outline-variant rounded-lg focus:ring-2 focus:ring-primary-container focus:border-primary-container outline-none transition-all text-body-md font-body-md" id="confirm_password" placeholder="••••••••" required="" type="password"/>
+</div>
+</div>
+<div class="bg-surface-container-low p-4 rounded-lg flex items-start gap-3 border-l-4 border-primary">
+<span class="material-symbols-outlined text-primary text-[20px]">info</span>
+<p class="text-body-sm font-body-sm text-on-surface-variant">Te enviaremos un correo para activar tu cuenta inmediatamente después de completar el registro.</p>
+</div>
+<button class="w-full py-4 bg-primary-container text-white font-label-md text-label-md rounded-lg hover:bg-primary transition-all duration-300 shadow-md transform hover:-translate-y-0.5 active:translate-y-0" type="submit">
+                        Registrarse
+                    </button>
+</form>
+<div class="mt-8 text-center">
+<p class="text-body-sm font-body-sm text-on-surface-variant">
+                        ¿Ya tienes una cuenta? 
+                        <a class="text-primary font-bold hover:underline ml-1" href="#">Ingresar</a>
+</p>
+</div>
+</div>
+</div>
+</main>
+<!-- Footer (Minimal for transaction) -->
+<footer class="flex flex-col md:flex-row justify-between items-center py-8 px-margin-desktop w-full mt-auto border-t border-outline-variant bg-surface-container-highest">
+<p class="text-body-sm font-body-sm text-on-surface-variant text-center md:text-left">
+            © 2024 Colegio Universitario de Cartago. Departamento de Bienestar Estudiantil.
+        </p>
+<div class="flex gap-6 mt-4 md:mt-0">
+<a class="text-on-surface-variant hover:text-primary text-body-sm font-body-sm transition-opacity" href="#">Privacidad</a>
+<a class="text-on-surface-variant hover:text-primary text-body-sm font-body-sm transition-opacity" href="#">Ayuda</a>
+</div>
+</footer>
+<script>
+        // Password Strength Logic
+        const passwordInput = document.getElementById('password');
+        const strengthBar = document.getElementById('strength-bar');
+        const strengthText = document.getElementById('strength-text');
+
+        passwordInput.addEventListener('input', () => {
+            const val = passwordInput.value;
+            let score = 0;
+            if (val.length > 6) score++;
+            if (val.length > 10) score++;
+            if (/[A-Z]/.test(val)) score++;
+            if (/[0-9]/.test(val)) score++;
+            if (/[^A-Za-z0-9]/.test(val)) score++;
+
+            let color = 'bg-error';
+            let label = 'Seguridad: Baja';
+            let width = '20%';
+
+            if (score >= 2) {
+                color = 'bg-amber-500';
+                label = 'Seguridad: Media';
+                width = '50%';
+            }
+            if (score >= 4) {
+                color = 'bg-emerald-500';
+                label = 'Seguridad: Alta';
+                width = '100%';
+            }
+            if (val.length === 0) {
+                width = '0%';
+                label = 'Esperando contraseña...';
+            }
+
+            strengthBar.style.width = width;
+            strengthBar.className = `strength-bar h-full ${color}`;
+            strengthText.textContent = label;
+        });
+
+        // Toggle Password Visibility
+        function togglePassword(id) {
+            const input = document.getElementById(id);
+            const icon = document.getElementById('toggle-icon-pass');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.textContent = 'visibility_off';
+            } else {
+                input.type = 'password';
+                icon.textContent = 'visibility';
+            }
+        }
+
+        // Form Submission Interaction
+        document.getElementById('registration-form').addEventListener('submit', (e) => {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.textContent;
+            btn.disabled = true;
+            btn.innerHTML = '<span class="flex items-center justify-center gap-2"><svg class="animate-spin h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg> Procesando...</span>';
+            
+            setTimeout(() => {
+                alert('¡Registro iniciado! Por favor revisa tu correo electrónico para activar tu cuenta.');
+                btn.disabled = false;
+                btn.textContent = originalText;
+            }, 1500);
+        });
+    </script>
+</body></html>
