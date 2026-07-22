@@ -4,6 +4,7 @@
   "description": "Frontend React del Sistema de Gestion de Becas Estudiantiles (SGBE) - Segmento 01",
   "type": "module",
   "scripts": {
+    "start": "vite",
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview",
