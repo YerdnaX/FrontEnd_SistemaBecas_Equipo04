@@ -76,37 +76,44 @@ export default function InicioSesion() {
     <div>
       <EncabezadoPublico />
       <main className="mx-auto max-w-md px-4 py-16 md:px-12">
-        <Tarjeta>
+        <Tarjeta className="text-center">
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="mx-auto mb-3 h-48 w-48 object-contain" />
           <h1 className="text-headline-md font-semibold text-primary">
             {requiereDosFactores ? 'Verificación de seguridad' : 'Iniciar sesión'}
           </h1>
 
           {requiereDosFactores ? (
-            <form className="mt-6 flex flex-col gap-4" onSubmit={manejarCodigo}>
+            <form className="mt-6 flex flex-col items-center gap-4 text-center" onSubmit={manejarCodigo}>
               {mensaje && <AlertaMensaje tipo="info">{mensaje}</AlertaMensaje>}
               {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
               <p className="text-body-sm text-on-surface-variant">
                 Ingrese el código de 6 dígitos enviado a {correoMostrado}.
                 {expiraEnMinutos ? ` Vence en ${expiraEnMinutos} minutos.` : ''}
               </p>
-              <CampoTexto
-                etiqueta="Código de verificación"
-                value={codigo}
-                onChange={(e) => setCodigo(e.target.value.replace(/\D/g, '').slice(0, 6))}
-                required
-              />
-              <Boton type="submit" cargando={enviando}>Verificar e ingresar</Boton>
+              <div className="w-full">
+                <CampoTexto
+                  etiqueta="Código de verificación"
+                  value={codigo}
+                  onChange={(e) => setCodigo(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                  required
+                />
+              </div>
+              <Boton type="submit" className="w-full" cargando={enviando}>Verificar e ingresar</Boton>
               <button type="button" className="text-body-sm text-primary-container hover:underline" onClick={volverAlPrimerPaso}>
                 Volver al inicio de sesión
               </button>
             </form>
           ) : (
-            <form className="mt-6 flex flex-col gap-4" onSubmit={manejarCredenciales}>
+            <form className="mt-6 flex flex-col items-center gap-4 text-center" onSubmit={manejarCredenciales}>
               {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
-              <CampoTexto etiqueta="Correo" type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required />
-              <CampoTexto etiqueta="Contraseña" type="password" value={contrasena} onChange={(e) => setContrasena(e.target.value)} required />
+              <div className="w-full">
+                <CampoTexto etiqueta="Correo" type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required />
+              </div>
+              <div className="w-full">
+                <CampoTexto etiqueta="Contraseña" type="password" value={contrasena} onChange={(e) => setContrasena(e.target.value)} required />
+              </div>
               <Link to="/recuperar-contrasena" className="text-body-sm text-primary-container hover:underline">¿Olvidó su contraseña?</Link>
-              <Boton type="submit" cargando={enviando}>Continuar</Boton>
+              <Boton type="submit" className="w-full" cargando={enviando}>Continuar</Boton>
               <p className="text-body-sm text-on-surface-variant">
                 ¿No tiene cuenta? <Link to="/registro" className="font-semibold text-primary-container hover:underline">Regístrese</Link>
               </p>

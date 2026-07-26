@@ -26,6 +26,13 @@ export const cerrarSesionApi = (refreshToken) =>
 export const recuperarContrasena = (correo) =>
   peticion('/autenticacion/recuperar-contrasena', { metodo: 'POST', cuerpo: { correo }, conAutenticacion: false });
 
+export const verificarCodigoRecuperacion = (correo, codigo) =>
+  peticion('/autenticacion/verificar-codigo-recuperacion', {
+    metodo: 'POST',
+    cuerpo: { correo, codigo },
+    conAutenticacion: false
+  });
+
 export const restablecerContrasena = (datos) =>
   peticion('/autenticacion/restablecer-contrasena', { metodo: 'POST', cuerpo: datos, conAutenticacion: false });
 

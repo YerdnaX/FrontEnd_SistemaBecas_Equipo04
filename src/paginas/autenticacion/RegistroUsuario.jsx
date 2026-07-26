@@ -25,6 +25,7 @@ export default function RegistroUsuario() {
   const [expiraEnHoras, setExpiraEnHoras] = useState(null);
   const [codigoVerificacion, setCodigoVerificacion] = useState('');
   const [enviando, setEnviando] = useState(false);
+  const [mostrarTerminos, setMostrarTerminos] = useState(false);
 
   function actualizarCampo(campo, valor) {
     setFormulario((actual) => ({ ...actual, [campo]: valor }));
@@ -91,6 +92,7 @@ export default function RegistroUsuario() {
       <EncabezadoPublico />
       <main className="mx-auto max-w-2xl px-4 py-12 md:px-12">
         <Tarjeta>
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="mx-auto mb-3 h-48 w-48 object-contain" />
           <h1 className="text-headline-md font-semibold text-primary">Crear cuenta</h1>
 
           {exito ? (
@@ -137,7 +139,20 @@ export default function RegistroUsuario() {
               <label className="flex items-center gap-2 text-body-sm">
                 <input type="checkbox" checked={formulario.aceptaTerminos}
                   onChange={(e) => actualizarCampo('aceptaTerminos', e.target.checked)} />
-                Acepto los términos y condiciones.
+                <span>
+                  Acepto los{' '}
+                  <button
+                    type="button"
+                    className="font-semibold text-primary-container underline hover:text-primary"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setMostrarTerminos(true);
+                    }}
+                  >
+                    términos y condiciones
+                  </button>
+                  .
+                </span>
               </label>
               {errores.aceptaTerminos && <p className="text-label-sm text-error">{errores.aceptaTerminos}</p>}
 
@@ -149,6 +164,36 @@ export default function RegistroUsuario() {
           )}
         </Tarjeta>
       </main>
+
+      {mostrarTerminos && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" role="dialog" aria-modal="true" aria-label="Términos y condiciones">
+          <Tarjeta className="w-full max-w-xl">
+            <div className="flex items-start justify-between gap-4">
+              <h2 className="text-headline-sm font-semibold text-primary">Términos y condiciones</h2>
+              <button
+                type="button"
+                className="text-body-sm font-semibold text-primary-container hover:underline"
+                onClick={() => setMostrarTerminos(false)}
+              >
+                Cerrar
+              </button>
+            </div>
+            <div className="mt-4 space-y-3 text-body-sm text-on-surface-variant">
+              <p>
+                La información registrada en este sistema se utiliza únicamente con fines académicos y estudiantiles,
+                como parte del proceso de gestión y análisis de becas del proyecto SGBE-CUC.
+              </p>
+              <p>
+                Sus datos no serán usados para fines comerciales ni compartidos fuera del alcance educativo del proyecto :D
+              </p>
+              <p>
+                Al continuar con el registro, usted acepta el tratamiento de sus datos bajo estas condiciones :D?
+              </p>
+            </div>
+          </Tarjeta>
+        </div>
+      )}
+
       <PiePagina />
     </div>
   );
