@@ -7,22 +7,39 @@ import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import { useSesion } from '../../hooks/useSesion.js';
+import { rutaPrincipalPorRol } from '../../utilidades/rutasPorRol.js';
 
 export default function InicioSesion() {
   const navegar = useNavigate();
-  const { iniciarSesion } = useSesion();
+  const { iniciarSesion, verificarDosFactores } = useSesion();
   const [correo, setCorreo] = useState('');
   const [contrasena, setContrasena] = useState('');
+  const [codigo, setCodigo] = useState('');
+  const [retoId, setRetoId] = useState(null);
+  const [correoMostrado, setCorreoMostrado] = useState('');
+  const [expiraEnMinutos, setExpiraEnMinutos] = useState(null);
+  const [requiereDosFactores, setRequiereDosFactores] = useState(false);
   const [error, setError] = useState(null);
+  const [mensaje, setMensaje] = useState(null);
   const [enviando, setEnviando] = useState(false);
 
-  async function manejarEnvio(evento) {
+  async function manejarCredenciales(evento) {
     evento.preventDefault();
     setError(null);
+    setMensaje(null);
     setEnviando(true);
     try {
-      const usuario = await iniciarSesion(correo, contrasena);
-      redirigirSegunRol(usuario);
+      const resultado = await iniciarSesion(correo, contrasena);
+      if (resultado.requiereDosFactores) {
+        setRequiereDosFactores(true);
+        setRetoId(resultado.retoId);
+        setCorreoMostrado(resultado.correo);
+        setExpiraEnMinutos(resultado.expiraEnMinutos);
+        setMensaje('Se envió un código de verificación a su correo.');
+        return;
+      }
+
+      navegar(rutaPrincipalPorRol(resultado.usuario.roles));
     } catch (err) {
       setError(err.mensaje || 'No fue posible iniciar sesión.');
     } finally {
@@ -30,11 +47,29 @@ export default function InicioSesion() {
     }
   }
 
-  function redirigirSegunRol(usuario) {
-    if (usuario.roles.includes('ADMINISTRADOR') || usuario.roles.includes('COORDINADOR_BECAS')) return navegar('/admin');
-    if (usuario.roles.includes('TRABAJADORA_SOCIAL')) return navegar('/trabajo-social/expedientes');
-    if (usuario.roles.includes('COMITE_BECAS')) return navegar('/comite');
-    return navegar('/aspirante');
+  async function manejarCodigo(evento) {
+    evento.preventDefault();
+    setError(null);
+    setMensaje(null);
+    setEnviando(true);
+    try {
+      const usuario = await verificarDosFactores(retoId, correo, codigo);
+      navegar(rutaPrincipalPorRol(usuario.roles));
+    } catch (err) {
+      setError(err.mensaje || 'No fue posible verificar el código.');
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  function volverAlPrimerPaso() {
+    setRequiereDosFactores(false);
+    setCodigo('');
+    setRetoId(null);
+    setCorreoMostrado('');
+    setExpiraEnMinutos(null);
+    setMensaje(null);
+    setError(null);
   }
 
   return (
@@ -42,17 +77,41 @@ export default function InicioSesion() {
       <EncabezadoPublico />
       <main className="mx-auto max-w-md px-4 py-16 md:px-12">
         <Tarjeta>
-          <h1 className="text-headline-md font-semibold text-primary">Iniciar sesión</h1>
-          <form className="mt-6 flex flex-col gap-4" onSubmit={manejarEnvio}>
-            {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
-            <CampoTexto etiqueta="Correo" type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required />
-            <CampoTexto etiqueta="Contraseña" type="password" value={contrasena} onChange={(e) => setContrasena(e.target.value)} required />
-            <Link to="/recuperar-contrasena" className="text-body-sm text-primary-container hover:underline">¿Olvidó su contraseña?</Link>
-            <Boton type="submit" cargando={enviando}>Continuar</Boton>
-            <p className="text-body-sm text-on-surface-variant">
-              ¿No tiene cuenta? <Link to="/registro" className="font-semibold text-primary-container hover:underline">Regístrese</Link>
-            </p>
-          </form>
+          <h1 className="text-headline-md font-semibold text-primary">
+            {requiereDosFactores ? 'Verificación de seguridad' : 'Iniciar sesión'}
+          </h1>
+
+          {requiereDosFactores ? (
+            <form className="mt-6 flex flex-col gap-4" onSubmit={manejarCodigo}>
+              {mensaje && <AlertaMensaje tipo="info">{mensaje}</AlertaMensaje>}
+              {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
+              <p className="text-body-sm text-on-surface-variant">
+                Ingrese el código de 6 dígitos enviado a {correoMostrado}.
+                {expiraEnMinutos ? ` Vence en ${expiraEnMinutos} minutos.` : ''}
+              </p>
+              <CampoTexto
+                etiqueta="Código de verificación"
+                value={codigo}
+                onChange={(e) => setCodigo(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                required
+              />
+              <Boton type="submit" cargando={enviando}>Verificar e ingresar</Boton>
+              <button type="button" className="text-body-sm text-primary-container hover:underline" onClick={volverAlPrimerPaso}>
+                Volver al inicio de sesión
+              </button>
+            </form>
+          ) : (
+            <form className="mt-6 flex flex-col gap-4" onSubmit={manejarCredenciales}>
+              {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
+              <CampoTexto etiqueta="Correo" type="email" value={correo} onChange={(e) => setCorreo(e.target.value)} required />
+              <CampoTexto etiqueta="Contraseña" type="password" value={contrasena} onChange={(e) => setContrasena(e.target.value)} required />
+              <Link to="/recuperar-contrasena" className="text-body-sm text-primary-container hover:underline">¿Olvidó su contraseña?</Link>
+              <Boton type="submit" cargando={enviando}>Continuar</Boton>
+              <p className="text-body-sm text-on-surface-variant">
+                ¿No tiene cuenta? <Link to="/registro" className="font-semibold text-primary-container hover:underline">Regístrese</Link>
+              </p>
+            </form>
+          )}
         </Tarjeta>
       </main>
       <PiePagina />
