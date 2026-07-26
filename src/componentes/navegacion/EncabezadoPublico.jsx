@@ -5,7 +5,8 @@ import { useSesion } from '../../hooks/useSesion.js';
 const ENLACES = [
   { ruta: '/', etiqueta: 'Inicio' },
   { ruta: '/convocatorias', etiqueta: 'Convocatorias' },
-  { ruta: '/noticias', etiqueta: 'Noticias' }
+  { ruta: '/noticias', etiqueta: 'Noticias' },
+  { ruta: '/ayuda', etiqueta: 'Ayuda' }
 ];
 
 export default function EncabezadoPublico() {

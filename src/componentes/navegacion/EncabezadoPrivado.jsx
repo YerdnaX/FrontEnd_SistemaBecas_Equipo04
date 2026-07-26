@@ -5,9 +5,24 @@ import Boton from '../comunes/Boton.jsx';
 function enlacesPorRol(roles = []) {
   const enlaces = [];
   if (roles.includes('ASPIRANTE')) enlaces.push({ ruta: '/aspirante', etiqueta: 'Mi panel' });
-  if (roles.includes('ADMINISTRADOR') || roles.includes('COORDINADOR_BECAS')) enlaces.push({ ruta: '/admin', etiqueta: 'Administración' });
-  if (roles.includes('TRABAJADORA_SOCIAL')) enlaces.push({ ruta: '/trabajo-social/expedientes', etiqueta: 'Expedientes' });
+  if (roles.includes('BECADO')) enlaces.push({ ruta: '/apelaciones', etiqueta: 'Mis apelaciones' });
+  if (roles.includes('ADMINISTRADOR') || roles.includes('COORDINADOR_BECAS')) {
+    enlaces.push({ ruta: '/admin', etiqueta: 'Administración' });
+    enlaces.push({ ruta: '/admin/auditoria', etiqueta: 'Auditoría' });
+  }
+  if (roles.includes('ADMINISTRADOR')) {
+    enlaces.push({ ruta: '/admin/configuracion', etiqueta: 'Configuración' });
+  }
+  if (roles.includes('TRABAJADORA_SOCIAL')) {
+    enlaces.push({ ruta: '/trabajo-social/expedientes', etiqueta: 'Expedientes' });
+    enlaces.push({ ruta: '/trabajo-social/apelaciones', etiqueta: 'Apelaciones' });
+    enlaces.push({ ruta: '/trabajo-social/disciplinario', etiqueta: 'Disciplinario' });
+  }
+  if (roles.includes('ADMINISTRADOR') || roles.includes('TRABAJADORA_SOCIAL')) {
+    enlaces.push({ ruta: '/admin/chatbot', etiqueta: 'Chatbot' });
+  }
   if (roles.includes('COMITE_BECAS')) enlaces.push({ ruta: '/comite', etiqueta: 'Comité' });
+  enlaces.push({ ruta: '/mi-cuenta/sesiones', etiqueta: 'Mis sesiones' });
   return enlaces;
 }
 
