@@ -61,9 +61,12 @@ export default function PanelAspirante() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div>
-        <h1 className="text-headline-lg font-semibold text-primary">Panel del aspirante</h1>
-        <p className="text-body-md text-on-surface-variant">Gestione sus solicitudes de beca y consulte sus notificaciones.</p>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <div>
+          <h1 className="text-headline-lg font-semibold text-primary">Panel del aspirante</h1>
+          <p className="text-body-md text-on-surface-variant">Gestione sus solicitudes de beca y consulte sus notificaciones.</p>
+        </div>
+        <img src="/images/aspirante.png" alt="Panel de aspirante" className="imagen-ui-seccion self-center sm:self-auto" />
       </div>
 
       <Tarjeta>

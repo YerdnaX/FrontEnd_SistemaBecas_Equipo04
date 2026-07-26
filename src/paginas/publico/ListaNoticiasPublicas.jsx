@@ -24,7 +24,10 @@ export default function ListaNoticiasPublicas() {
     <div>
       <EncabezadoPublico />
       <main className="mx-auto max-w-container-max px-4 py-10 md:px-12">
-        <h1 className="text-headline-lg font-semibold text-primary">Noticias</h1>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h1 className="text-headline-lg font-semibold text-primary">Noticias</h1>
+          <img src="/images/noticias.png" alt="Noticias del sistema" className="imagen-ui-seccion self-center sm:self-auto" />
+        </div>
 
         {cargando && <EstadoCarga />}
         {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}

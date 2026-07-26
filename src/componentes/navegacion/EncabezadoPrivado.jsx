@@ -38,7 +38,10 @@ export default function EncabezadoPrivado() {
   return (
     <header className="sticky top-0 z-10 border-b border-outline-variant bg-primary-container text-on-primary">
       <div className="mx-auto flex max-w-container-max items-center justify-between px-4 py-3 md:px-12">
-        <Link to="/" className="text-headline-sm font-bold">SGBE · CUC</Link>
+        <Link to="/" className="flex items-center gap-3 text-headline-sm font-bold">
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="h-20 w-20 object-contain" />
+          <span>SGBE · CUC</span>
+        </Link>
         <nav className="flex items-center gap-4">
           {enlacesPorRol(usuario?.roles).map((enlace) => (
             <Link key={enlace.ruta} to={enlace.ruta} className="text-body-sm hover:underline">{enlace.etiqueta}</Link>

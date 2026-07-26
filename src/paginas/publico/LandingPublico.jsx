@@ -11,10 +11,10 @@ import { obtenerInicio } from '../../servicios/servicioPublico.js';
 import { formatearFecha } from '../../utilidades/formato.js';
 
 const ROLES = [
-  { titulo: 'Aspirante', descripcion: 'Postule a convocatorias de beca y dé seguimiento a su solicitud.' },
-  { titulo: 'Trabajo Social', descripcion: 'Revise documentos, resuelva elegibilidad y evalúe expedientes.' },
-  { titulo: 'Comité de Becas', descripcion: 'Analice el ranking y resuelva los casos en sesión.' },
-  { titulo: 'Administración', descripcion: 'Configure tipos de beca y gestione convocatorias.' }
+  { titulo: 'Aspirante', descripcion: 'Postule a convocatorias de beca y dé seguimiento a su solicitud.', imagen: '/images/aspirante.png' },
+  { titulo: 'Trabajo Social', descripcion: 'Revise documentos, resuelva elegibilidad y evalúe expedientes.', imagen: '/images/trabajosocial.png' },
+  { titulo: 'Comité de Becas', descripcion: 'Analice el ranking y resuelva los casos en sesión.', imagen: '/images/comitebecas.png' },
+  { titulo: 'Administración', descripcion: 'Configure tipos de beca y gestione convocatorias.', imagen: '/images/administracion.png' }
 ];
 
 export default function LandingPublico() {
@@ -53,6 +53,7 @@ export default function LandingPublico() {
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {ROLES.map((rol) => (
               <Tarjeta key={rol.titulo}>
+                <img src={rol.imagen} alt={rol.titulo} className="imagen-ui-seccion mb-3" />
                 <p className="text-headline-sm font-semibold text-primary">{rol.titulo}</p>
                 <p className="mt-2 text-body-sm text-on-surface-variant">{rol.descripcion}</p>
               </Tarjeta>

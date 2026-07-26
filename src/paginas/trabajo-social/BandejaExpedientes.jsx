@@ -34,7 +34,10 @@ export default function BandejaExpedientes() {
 
   return (
     <div>
-      <h1 className="text-headline-lg font-semibold text-primary">Bandeja de expedientes</h1>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-headline-lg font-semibold text-primary">Bandeja de expedientes</h1>
+        <img src="/images/trabajosocial.png" alt="Bandeja de trabajo social" className="imagen-ui-seccion self-center sm:self-auto" />
+      </div>
 
       <div className="mt-4 max-w-xs">
         <CampoSelect

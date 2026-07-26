@@ -83,10 +83,10 @@ function SeccionCorreo({ onError, onExito }) {
 
   return (
     <Tarjeta>
-      <AlertaMensaje tipo={estado.smtpConfigurado ? 'exito' : 'advertencia'}>
-        {estado.smtpConfigurado
-          ? `SMTP configurado. Remitente: ${estado.remitente}`
-          : 'SMTP no configurado en variables de entorno. Los correos solo quedarán registrados, sin enviarse.'}
+      <AlertaMensaje tipo={estado.correoConfigurado ? 'exito' : 'advertencia'}>
+        {estado.correoConfigurado
+          ? `Correo configurado (${estado.proveedorCorreo === 'GOOGLE_API' ? 'Google API' : 'SMTP'}). Remitente: ${estado.remitente}`
+          : 'No hay proveedor de correo configurado. Defina GOOGLE_OAUTH_* o SMTP_* en las variables de entorno.'}
       </AlertaMensaje>
 
       <div className="mt-4 flex items-end gap-3">

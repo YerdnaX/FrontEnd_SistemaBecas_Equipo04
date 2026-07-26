@@ -18,7 +18,10 @@ export default function EncabezadoPublico() {
   return (
     <header className="sticky top-0 z-10 border-b border-outline-variant bg-surface-container-lowest">
       <div className="mx-auto flex max-w-container-max items-center justify-between px-4 py-4 md:px-12">
-        <Link to="/" className="text-headline-sm font-bold text-primary-container">SGBE · CUC</Link>
+        <Link to="/" className="flex items-center gap-3 text-headline-sm font-bold text-primary-container">
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="h-20 w-20 object-contain" />
+          <span>SGBE · CUC</span>
+        </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
           {ENLACES.map((enlace) => (

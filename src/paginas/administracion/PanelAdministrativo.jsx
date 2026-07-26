@@ -9,7 +9,10 @@ const ACCESOS = [
 export default function PanelAdministrativo() {
   return (
     <div>
-      <h1 className="text-headline-lg font-semibold text-primary">Panel administrativo</h1>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-headline-lg font-semibold text-primary">Panel administrativo</h1>
+        <img src="/images/administracion.png" alt="Panel administrativo" className="imagen-ui-seccion self-center sm:self-auto" />
+      </div>
       <div className="mt-6 grid gap-4 sm:grid-cols-2">
         {ACCESOS.map((acceso) => (
           <Link key={acceso.ruta} to={acceso.ruta}>

@@ -19,6 +19,11 @@ export default function GestionTiposBeca() {
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [guardando, setGuardando] = useState(false);
 
+  const porcentajeCoberturaNumero = Number(formulario.porcentajeCobertura) || 0;
+  const sumaRubros = formulario.rubros.reduce((total, rubro) => total + (Number(rubro.porcentaje) || 0), 0);
+  const porcentajeRestante = porcentajeCoberturaNumero - sumaRubros;
+  const rubrosCompletos = Math.abs(porcentajeRestante) <= 0.009;
+
   async function cargar() {
     setCargando(true);
     try {
@@ -84,6 +89,12 @@ export default function GestionTiposBeca() {
   async function manejarEnvio(evento) {
     evento.preventDefault();
     setError(null);
+
+    if (!rubrosCompletos) {
+      setError(`Los rubros deben sumar exactamente ${porcentajeCoberturaNumero.toFixed(2)}%. Actualmente suman ${sumaRubros.toFixed(2)}%.`);
+      return;
+    }
+
     setGuardando(true);
     try {
       const datos = { ...formulario, porcentajeCobertura: Number(formulario.porcentajeCobertura) };
@@ -131,6 +142,15 @@ export default function GestionTiposBeca() {
               <div className="flex items-center justify-between">
                 <p className="font-semibold text-on-surface">Rubros de cobertura</p>
                 <Boton type="button" variante="secundario" onClick={agregarRubro}>Agregar rubro</Boton>
+              </div>
+              <div className="mt-2 rounded-md border border-outline-variant bg-surface-container px-3 py-2 text-body-sm">
+                <p>Suma de rubros: <strong>{sumaRubros.toFixed(2)}%</strong></p>
+                <p>
+                  Restante por asignar:{' '}
+                  <strong className={rubrosCompletos ? 'text-exito' : porcentajeRestante < 0 ? 'text-error' : 'text-advertencia'}>
+                    {porcentajeRestante.toFixed(2)}%
+                  </strong>
+                </p>
               </div>
               {formulario.rubros.map((rubro, indice) => (
                 <div key={indice} className="mt-2 flex gap-2">
