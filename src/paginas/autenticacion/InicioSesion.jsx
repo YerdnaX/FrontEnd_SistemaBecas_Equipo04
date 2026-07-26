@@ -21,13 +21,20 @@ export default function InicioSesion() {
     setError(null);
     setEnviando(true);
     try {
-      await iniciarSesion(correo, contrasena);
-      navegar('/verificar-2fa', { state: { correo } });
+      const usuario = await iniciarSesion(correo, contrasena);
+      redirigirSegunRol(usuario);
     } catch (err) {
       setError(err.mensaje || 'No fue posible iniciar sesión.');
     } finally {
       setEnviando(false);
     }
+  }
+
+  function redirigirSegunRol(usuario) {
+    if (usuario.roles.includes('ADMINISTRADOR') || usuario.roles.includes('COORDINADOR_BECAS')) return navegar('/admin');
+    if (usuario.roles.includes('TRABAJADORA_SOCIAL')) return navegar('/trabajo-social/expedientes');
+    if (usuario.roles.includes('COMITE_BECAS')) return navegar('/comite');
+    return navegar('/aspirante');
   }
 
   return (

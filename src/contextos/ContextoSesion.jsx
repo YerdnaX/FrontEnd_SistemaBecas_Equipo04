@@ -1,7 +1,6 @@
 import { createContext, useCallback, useEffect, useState } from 'react';
 import {
   iniciarSesion as apiIniciarSesion,
-  verificarDosFactores as apiVerificarDosFactores,
   cerrarSesionApi,
   obtenerUsuarioActual
 } from '../servicios/servicioAutenticacion.js';
@@ -38,10 +37,8 @@ export function ProveedorSesion({ children }) {
     iniciar();
   }, [cargarUsuarioActual]);
 
-  const iniciarSesion = useCallback(async (correo, contrasena) => apiIniciarSesion(correo, contrasena), []);
-
-  const verificarDosFactores = useCallback(async (correo, codigo) => {
-    const respuesta = await apiVerificarDosFactores(correo, codigo);
+  const iniciarSesion = useCallback(async (correo, contrasena) => {
+    const respuesta = await apiIniciarSesion(correo, contrasena);
     establecerTokenAcceso(respuesta.datos.tokenAcceso);
     establecerRefreshToken(respuesta.datos.refreshToken);
     setUsuario(respuesta.datos.usuario);
@@ -64,7 +61,6 @@ export function ProveedorSesion({ children }) {
     usuario,
     cargando,
     iniciarSesion,
-    verificarDosFactores,
     cerrarSesion,
     tienePermiso,
     tieneRol

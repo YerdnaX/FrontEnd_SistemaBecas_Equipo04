@@ -67,7 +67,7 @@ export default function RegistroUsuario() {
 
           {exito ? (
             <AlertaMensaje tipo="exito" titulo="Cuenta creada">
-              Revise su correo para activar la cuenta antes de iniciar sesión.
+              Su cuenta fue creada. Ya puede iniciar sesión.
               <Link to="/login" className="mt-2 block font-semibold underline">Ir a iniciar sesión</Link>
             </AlertaMensaje>
           ) : (

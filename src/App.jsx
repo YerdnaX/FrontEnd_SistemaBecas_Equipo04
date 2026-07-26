@@ -7,9 +7,7 @@ import DetalleConvocatoriaPublica from './paginas/publico/DetalleConvocatoriaPub
 import ListaNoticiasPublicas from './paginas/publico/ListaNoticiasPublicas.jsx';
 
 import RegistroUsuario from './paginas/autenticacion/RegistroUsuario.jsx';
-import ActivacionCuenta from './paginas/autenticacion/ActivacionCuenta.jsx';
 import InicioSesion from './paginas/autenticacion/InicioSesion.jsx';
-import VerificacionDosFactores from './paginas/autenticacion/VerificacionDosFactores.jsx';
 import RecuperacionContrasena from './paginas/autenticacion/RecuperacionContrasena.jsx';
 import RestablecimientoContrasena from './paginas/autenticacion/RestablecimientoContrasena.jsx';
 
@@ -51,9 +49,7 @@ export default function App() {
       <Route path="/noticias" element={<ListaNoticiasPublicas />} />
 
       <Route path="/registro" element={<RegistroUsuario />} />
-      <Route path="/activar-cuenta" element={<ActivacionCuenta />} />
       <Route path="/login" element={<InicioSesion />} />
-      <Route path="/verificar-2fa" element={<VerificacionDosFactores />} />
       <Route path="/recuperar-contrasena" element={<RecuperacionContrasena />} />
       <Route path="/restablecer-contrasena" element={<RestablecimientoContrasena />} />
 
