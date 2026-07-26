@@ -3,8 +3,22 @@ import { peticion } from './clienteHttp.js';
 export const registrarUsuario = (datos) =>
   peticion('/autenticacion/registro', { metodo: 'POST', cuerpo: datos, conAutenticacion: false });
 
+export const verificarRegistro = (correo, codigo) =>
+  peticion('/autenticacion/verificar-registro', {
+    metodo: 'POST',
+    cuerpo: { correo, codigo },
+    conAutenticacion: false
+  });
+
 export const iniciarSesion = (correo, contrasena) =>
   peticion('/autenticacion/iniciar-sesion', { metodo: 'POST', cuerpo: { correo, contrasena }, conAutenticacion: false });
+
+export const verificarDosFactores = (retoId, correo, codigo) =>
+  peticion('/autenticacion/verificar-dos-factores', {
+    metodo: 'POST',
+    cuerpo: { retoId, correo, codigo },
+    conAutenticacion: false
+  });
 
 export const cerrarSesionApi = (refreshToken) =>
   peticion('/autenticacion/cerrar-sesion', { metodo: 'POST', cuerpo: { refreshToken }, conAutenticacion: false });

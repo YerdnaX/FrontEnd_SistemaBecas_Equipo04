@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSesion } from '../../hooks/useSesion.js';
+import { rutaPrincipalPorRol } from '../../utilidades/rutasPorRol.js';
 
 const ENLACES = [
   { ruta: '/', etiqueta: 'Inicio' },
@@ -11,6 +12,7 @@ const ENLACES = [
 export default function EncabezadoPublico() {
   const { usuario } = useSesion();
   const [menuAbierto, setMenuAbierto] = useState(false);
+  const rutaMiCuenta = usuario ? rutaPrincipalPorRol(usuario.roles) : null;
 
   return (
     <header className="sticky top-0 z-10 border-b border-outline-variant bg-surface-container-lowest">
@@ -24,7 +26,7 @@ export default function EncabezadoPublico() {
             </Link>
           ))}
           {usuario ? (
-            <Link to="/aspirante" className="rounded-md bg-primary-container px-4 py-2 text-label-md text-on-primary">Mi cuenta</Link>
+            <Link to={rutaMiCuenta} className="rounded-md bg-primary-container px-4 py-2 text-label-md text-on-primary">Mi cuenta</Link>
           ) : (
             <>
               <Link to="/login" className="text-body-md text-on-surface hover:text-primary-container">Iniciar sesión</Link>
@@ -44,7 +46,7 @@ export default function EncabezadoPublico() {
             <Link key={enlace.ruta} to={enlace.ruta} onClick={() => setMenuAbierto(false)}>{enlace.etiqueta}</Link>
           ))}
           {usuario ? (
-            <Link to="/aspirante" onClick={() => setMenuAbierto(false)}>Mi cuenta</Link>
+            <Link to={rutaMiCuenta} onClick={() => setMenuAbierto(false)}>Mi cuenta</Link>
           ) : (
             <>
               <Link to="/login" onClick={() => setMenuAbierto(false)}>Iniciar sesión</Link>

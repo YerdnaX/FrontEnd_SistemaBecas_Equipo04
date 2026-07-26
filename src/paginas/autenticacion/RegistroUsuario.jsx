@@ -6,7 +6,7 @@ import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
-import { registrarUsuario } from '../../servicios/servicioAutenticacion.js';
+import { registrarUsuario, verificarRegistro } from '../../servicios/servicioAutenticacion.js';
 import { contrasenaEsSegura } from '../../utilidades/validaciones.js';
 
 const FORMULARIO_INICIAL = {
@@ -18,7 +18,12 @@ export default function RegistroUsuario() {
   const [formulario, setFormulario] = useState(FORMULARIO_INICIAL);
   const [errores, setErrores] = useState({});
   const [errorGeneral, setErrorGeneral] = useState(null);
+  const [mensaje, setMensaje] = useState(null);
   const [exito, setExito] = useState(false);
+  const [requiereVerificacion, setRequiereVerificacion] = useState(false);
+  const [correoMostrado, setCorreoMostrado] = useState('');
+  const [expiraEnHoras, setExpiraEnHoras] = useState(null);
+  const [codigoVerificacion, setCodigoVerificacion] = useState('');
   const [enviando, setEnviando] = useState(false);
 
   function actualizarCampo(campo, valor) {
@@ -42,17 +47,40 @@ export default function RegistroUsuario() {
   async function manejarEnvio(evento) {
     evento.preventDefault();
     setErrorGeneral(null);
+    setMensaje(null);
     if (!validar()) return;
 
     setEnviando(true);
     try {
-      await registrarUsuario(formulario);
-      setExito(true);
+      const respuesta = await registrarUsuario(formulario);
+      if (respuesta.datos?.requiereVerificacion) {
+        setRequiereVerificacion(true);
+        setCorreoMostrado(respuesta.datos.correo || formulario.correo);
+        setExpiraEnHoras(respuesta.datos.expiraEnHoras || null);
+        setMensaje('Le enviamos un código de activación a su correo.');
+      }
     } catch (error) {
       setErrorGeneral(error.mensaje);
       const erroresApi = {};
       (error.errores || []).forEach((item) => { erroresApi[item.campo] = item.mensaje; });
       setErrores(erroresApi);
+    } finally {
+      setEnviando(false);
+    }
+  }
+
+  async function manejarVerificacion(evento) {
+    evento.preventDefault();
+    setErrorGeneral(null);
+    setMensaje(null);
+
+    setEnviando(true);
+    try {
+      await verificarRegistro(formulario.correo, codigoVerificacion);
+      setExito(true);
+      setRequiereVerificacion(false);
+    } catch (error) {
+      setErrorGeneral(error.mensaje || 'No fue posible validar el código.');
     } finally {
       setEnviando(false);
     }
@@ -67,9 +95,28 @@ export default function RegistroUsuario() {
 
           {exito ? (
             <AlertaMensaje tipo="exito" titulo="Cuenta creada">
-              Su cuenta fue creada. Ya puede iniciar sesión.
+              Su cuenta fue activada correctamente. Ya puede iniciar sesión.
               <Link to="/login" className="mt-2 block font-semibold underline">Ir a iniciar sesión</Link>
             </AlertaMensaje>
+          ) : requiereVerificacion ? (
+            <form className="mt-6 flex flex-col gap-4" onSubmit={manejarVerificacion}>
+              {mensaje && <AlertaMensaje tipo="info">{mensaje}</AlertaMensaje>}
+              {errorGeneral && <AlertaMensaje tipo="error">{errorGeneral}</AlertaMensaje>}
+              <p className="text-body-sm text-on-surface-variant">
+                Ingrese el código de 6 dígitos enviado a {correoMostrado}.
+                {expiraEnHoras ? ` Vence en ${expiraEnHoras} horas.` : ''}
+              </p>
+              <CampoTexto
+                etiqueta="Código de activación"
+                value={codigoVerificacion}
+                onChange={(e) => setCodigoVerificacion(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                required
+              />
+              <Boton type="submit" cargando={enviando}>Activar cuenta</Boton>
+              <p className="text-body-sm text-on-surface-variant">
+                ¿Ya activó su cuenta? <Link to="/login" className="font-semibold text-primary-container hover:underline">Inicie sesión</Link>
+              </p>
+            </form>
           ) : (
             <form className="mt-6 flex flex-col gap-4" onSubmit={manejarEnvio}>
               {errorGeneral && <AlertaMensaje tipo="error">{errorGeneral}</AlertaMensaje>}
