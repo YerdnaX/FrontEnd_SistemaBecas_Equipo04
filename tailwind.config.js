@@ -43,6 +43,16 @@ export default {
       fontFamily: {
         sans: ['Hanken Grotesk', 'sans-serif']
       },
+      fontSize: {
+        'headline-lg': ['2rem', { lineHeight: '1.2', letterSpacing: '-0.02em' }],
+        'headline-md': ['1.5rem', { lineHeight: '1.3' }],
+        'headline-sm': ['1.25rem', { lineHeight: '1.4' }],
+        'body-lg': ['1.125rem', { lineHeight: '1.6' }],
+        'body-md': ['1rem', { lineHeight: '1.5' }],
+        'body-sm': ['0.875rem', { lineHeight: '1.5' }],
+        'label-md': ['0.875rem', { lineHeight: '1', letterSpacing: '0.01em' }],
+        'label-sm': ['0.75rem', { lineHeight: '1' }]
+      },
       borderRadius: {
         DEFAULT: '0.25rem',
         md: '0.375rem',

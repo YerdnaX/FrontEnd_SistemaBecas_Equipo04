@@ -2,6 +2,10 @@ import { Link, useNavigate } from 'react-router-dom';
 import { useSesion } from '../../hooks/useSesion.js';
 import Boton from '../comunes/Boton.jsx';
 
+function avatarInicial(nombre) {
+  return (nombre || '?').trim().charAt(0).toUpperCase() || '?';
+}
+
 function enlacesPorRol(roles = []) {
   const enlaces = [];
   if (roles.includes('ASPIRANTE')) enlaces.push({ ruta: '/aspirante', etiqueta: 'Mi panel' });
@@ -46,7 +50,17 @@ export default function EncabezadoPrivado() {
           {enlacesPorRol(usuario?.roles).map((enlace) => (
             <Link key={enlace.ruta} to={enlace.ruta} className="text-body-sm hover:underline">{enlace.etiqueta}</Link>
           ))}
-          <span className="hidden text-body-sm md:inline">{usuario?.nombre}</span>
+          <Link to="/mi-cuenta" className="hidden items-center gap-2 md:flex">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container-lowest text-primary-container font-semibold">
+              {avatarInicial(usuario?.nombre)}
+            </span>
+            <span className="text-body-sm font-medium">{usuario?.nombre}</span>
+          </Link>
+          <Link to="/mi-cuenta" className="flex items-center gap-2 md:hidden" aria-label="Abrir mi cuenta">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container-lowest text-primary-container font-semibold">
+              {avatarInicial(usuario?.nombre)}
+            </span>
+          </Link>
           <Boton variante="secundario" className="border-white text-white hover:bg-white/10" onClick={manejarCerrarSesion}>
             Cerrar sesión
           </Boton>

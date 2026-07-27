@@ -12,6 +12,7 @@ import RecuperacionContrasena from './paginas/autenticacion/RecuperacionContrase
 import RestablecimientoContrasena from './paginas/autenticacion/RestablecimientoContrasena.jsx';
 
 import PanelAspirante from './paginas/aspirante/PanelAspirante.jsx';
+import ContinuarSolicitud from './paginas/aspirante/ContinuarSolicitud.jsx';
 import SolicitudDatosPersonales from './paginas/aspirante/SolicitudDatosPersonales.jsx';
 import SolicitudDatosAcademicos from './paginas/aspirante/SolicitudDatosAcademicos.jsx';
 import SolicitudDatosSocioeconomicos from './paginas/aspirante/SolicitudDatosSocioeconomicos.jsx';
@@ -45,6 +46,7 @@ import Auditoria from './paginas/administracion/Auditoria.jsx';
 import ChatbotAdmin from './paginas/administracion/ChatbotAdmin.jsx';
 import ChatbotPublico from './paginas/publico/ChatbotPublico.jsx';
 import MisSesiones from './paginas/cuenta/MisSesiones.jsx';
+import MiCuenta from './paginas/cuenta/MiCuenta.jsx';
 
 import AccesoDenegado from './paginas/AccesoDenegado.jsx';
 
@@ -72,6 +74,7 @@ export default function App() {
           <Route path="/restablecer-contrasena" element={<RestablecimientoContrasena />} />
 
           <Route path="/aspirante" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><PanelAspirante /></RutaProtegida>} />
+          <Route path="/aspirante/solicitudes/:id/continuar" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><ContinuarSolicitud /></RutaProtegida>} />
           <Route path="/aspirante/solicitudes/:id/personal" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><SolicitudDatosPersonales /></RutaProtegida>} />
           <Route path="/aspirante/solicitudes/:id/academicos" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><SolicitudDatosAcademicos /></RutaProtegida>} />
           <Route path="/aspirante/solicitudes/:id/socioeconomicos" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><SolicitudDatosSocioeconomicos /></RutaProtegida>} />
@@ -97,6 +100,7 @@ export default function App() {
           <Route path="/ayuda" element={<ChatbotPublico />} />
 
           <Route path="/mi-cuenta/sesiones" element={<RutaProtegida><MisSesiones /></RutaProtegida>} />
+          <Route path="/mi-cuenta" element={<RutaProtegida><MiCuenta /></RutaProtegida>} />
 
           <Route path="/apelaciones" element={<RutaProtegida><BandejaApelaciones /></RutaProtegida>} />
           <Route path="/apelaciones/:id" element={<RutaProtegida><DetalleApelacion /></RutaProtegida>} />

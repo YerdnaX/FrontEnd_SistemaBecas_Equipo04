@@ -16,6 +16,7 @@ export default function CargaDocumental() {
   const [requisitos, setRequisitos] = useState([]);
   const [documentos, setDocumentos] = useState([]);
   const [archivosPendientes, setArchivosPendientes] = useState({});
+  const [estadoSolicitud, setEstadoSolicitud] = useState('BORRADOR');
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [subiendoRequisito, setSubiendoRequisito] = useState(null);
@@ -24,6 +25,7 @@ export default function CargaDocumental() {
     setCargando(true);
     try {
       const solicitud = await obtenerSolicitud(id);
+      setEstadoSolicitud(solicitud.datos.Estado || 'BORRADOR');
       const [convocatoria, docs] = await Promise.all([
         obtenerConvocatoria(solicitud.datos.IdConvocatoria),
         listarDocumentos(id)
@@ -63,7 +65,7 @@ export default function CargaDocumental() {
 
   return (
     <div>
-      <PasosSolicitud pasoActual="documentos" />
+      <PasosSolicitud pasoActual="documentos" estadoSolicitud={estadoSolicitud} />
       <Tarjeta>
         <h1 className="text-headline-sm font-semibold text-primary">Documentos requeridos</h1>
         {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}

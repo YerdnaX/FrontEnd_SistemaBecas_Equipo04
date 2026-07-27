@@ -81,6 +81,7 @@ export function ProveedorSesion({ children }) {
     iniciarSesion,
     verificarDosFactores,
     cerrarSesion,
+    refrescarUsuario: cargarUsuarioActual,
     tienePermiso,
     tieneRol
   };
