@@ -73,6 +73,7 @@ import MisSesiones from './paginas/cuenta/MisSesiones.jsx';
 import MiCuenta from './paginas/cuenta/MiCuenta.jsx';
 
 import AccesoDenegado from './paginas/AccesoDenegado.jsx';
+import BotonChatAsistente from './componentes/asistente/BotonChatAsistente.jsx';
 
 const ROLES_ASPIRANTE = ['ASPIRANTE'];
 const ROLES_BECADO = ['BECADO', 'ADMINISTRADOR'];
@@ -180,6 +181,8 @@ export default function App() {
           </Link>
         </div>
       </footer>
+
+      <BotonChatAsistente />
     </div>
   );
 }
