@@ -49,7 +49,10 @@ export default function PanelComite() {
 
   return (
     <div>
-      <h1 className="text-headline-lg font-semibold text-primary">Revisión de expedientes priorizados</h1>
+      <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+        <h1 className="text-headline-lg font-semibold text-primary">Revisión de expedientes priorizados</h1>
+        <img src="/images/comitebecas.png" alt="Panel de comité de becas" className="imagen-ui-seccion self-center sm:self-auto" />
+      </div>
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
 
       {expedientes.length === 0 ? (

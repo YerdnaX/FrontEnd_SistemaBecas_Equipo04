@@ -36,10 +36,12 @@ export default function PanelBecado() {
       {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
       {panel && (
         <>
-          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
             <Tarjeta><p className="text-body-sm text-on-surface-variant">Beca actual</p><p className="mt-2 text-headline-sm font-semibold">{panel.TipoBeca}</p></Tarjeta>
             <Tarjeta><p className="text-body-sm text-on-surface-variant">Cobertura</p><p className="mt-2 text-headline-sm font-semibold">{panel.Porcentaje}%</p></Tarjeta>
             <Tarjeta><p className="text-body-sm text-on-surface-variant">Periodo</p><p className="mt-2 text-headline-sm font-semibold">{panel.Periodo}</p></Tarjeta>
+            <Tarjeta><p className="text-body-sm text-on-surface-variant">Estado</p><p className="mt-2 text-headline-sm font-semibold">{panel.Estado}</p></Tarjeta>
+            <Tarjeta><p className="text-body-sm text-on-surface-variant">Promedio</p><p className="mt-2 text-headline-sm font-semibold">{panel.Promedio ?? 'Sin registro'}</p></Tarjeta>
             <Tarjeta className={panel.AlertasAbiertas ? 'border-l-4 border-advertencia' : ''}><p className="text-body-sm text-on-surface-variant">Alertas abiertas</p><p className="mt-2 text-headline-sm font-semibold">{panel.AlertasAbiertas}</p></Tarjeta>
           </div>
           <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">

@@ -6,7 +6,8 @@ import Boton from '../../componentes/comunes/Boton.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import DialogoConfirmacion from '../../componentes/comunes/DialogoConfirmacion.jsx';
-import { aceptarFormalizacion, obtenerFormalizacion } from '../../servicios/servicioSegmentoDos.js';
+import { aceptarFormalizacion, obtenerArchivoConvenio, obtenerFormalizacion } from '../../servicios/servicioSegmentoDos.js';
+import { descargarArchivo } from '../../utilidades/archivos.js';
 
 export default function FormalizacionBeneficio() {
   const { id } = useParams();
@@ -45,6 +46,15 @@ export default function FormalizacionBeneficio() {
     }
   }
 
+  async function descargarConvenio() {
+    try {
+      const respuesta = await obtenerArchivoConvenio(id);
+      descargarArchivo(respuesta.datos);
+    } catch (error) {
+      setMensaje({ tipo: 'error', texto: error.message });
+    }
+  }
+
   if (cargando) return <EstadoCarga mensaje="Preparando condiciones de la beca..." />;
   return (
     <div className="space-y-6">
@@ -64,6 +74,9 @@ export default function FormalizacionBeneficio() {
               <div><dt className="text-body-sm text-on-surface-variant">Convenio</dt><dd className="font-semibold">{formalizacion.NumeroConvenio}</dd></div>
               <div><dt className="text-body-sm text-on-surface-variant">Estado</dt><dd className="font-semibold">{formalizacion.Estado}</dd></div>
             </dl>
+            <Boton variante="secundario" className="mt-5" onClick={descargarConvenio}>
+              Descargar convenio PDF
+            </Boton>
             <h3 className="mt-7 font-semibold text-primary">Condiciones versión {formalizacion.VersionCondiciones}</h3>
             <div className="mt-3 whitespace-pre-line rounded-lg bg-surface-container-low p-4 text-body-md">
               {formalizacion.Condiciones}
@@ -95,4 +108,3 @@ export default function FormalizacionBeneficio() {
     </div>
   );
 }
-

@@ -8,7 +8,13 @@ import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
-import { evaluarRenovacion, obtenerRenovacion, resolverRenovacion } from '../../servicios/servicioSegmentoDos.js';
+import {
+  evaluarRenovacion,
+  obtenerArchivoRenovacionTrabajoSocial,
+  obtenerRenovacionTrabajoSocial,
+  resolverRenovacion
+} from '../../servicios/servicioSegmentoDos.js';
+import { abrirArchivo, descargarArchivo } from '../../utilidades/archivos.js';
 
 export default function RevisionRenovacion() {
   const { id } = useParams();
@@ -20,9 +26,14 @@ export default function RevisionRenovacion() {
 
   async function cargar() {
     try {
-      const respuesta = await obtenerRenovacion(id);
+      const respuesta = await obtenerRenovacionTrabajoSocial(id);
       setRenovacion(respuesta.datos);
       setResolucion((actual) => ({ ...actual, porcentajeNuevo: respuesta.datos.Porcentaje }));
+      setEvaluacion({
+        cumpleAcademico: respuesta.datos.CumpleAcademico ?? true,
+        cumpleSocioeconomico: respuesta.datos.CumpleSocioeconomico ?? true,
+        observaciones: respuesta.datos.ObservacionesEvaluacion || ''
+      });
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
     finally { setCargando(false); }
   }
@@ -44,6 +55,18 @@ export default function RevisionRenovacion() {
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
   }
 
+  async function manejarArchivo(documento, accion) {
+    const ventana = accion === 'abrir' ? window.open('', '_blank') : null;
+    try {
+      const respuesta = await obtenerArchivoRenovacionTrabajoSocial(id, documento.IdDocumentoRenovacion);
+      if (accion === 'abrir') abrirArchivo(respuesta.datos, ventana);
+      else descargarArchivo(respuesta.datos);
+    } catch (error) {
+      ventana?.close();
+      setMensaje({ tipo: 'error', texto: error.message });
+    }
+  }
+
   if (cargando) return <EstadoCarga />;
   return (
     <div className="space-y-6">
@@ -55,6 +78,28 @@ export default function RevisionRenovacion() {
           <p>Carrera<br /><strong>{renovacion?.Carrera}</strong></p>
           <p>Promedio<br /><strong>{renovacion?.Promedio}</strong></p>
           <p>Estado<br /><strong>{renovacion?.Estado}</strong></p>
+        </div>
+      </Tarjeta>
+      <Tarjeta>
+        <h2 className="font-semibold text-primary">Actualización socioeconómica</h2>
+        <p className="mt-3 whitespace-pre-wrap">
+          {renovacion?.datosActualizados?.actualizacionSocioeconomica || 'El estudiante no indicó cambios.'}
+        </p>
+        <p className="mt-3 text-body-sm">
+          Declaración de veracidad: <strong>{renovacion?.datosActualizados?.declaracion ? 'Aceptada' : 'No aceptada'}</strong>
+        </p>
+        <div className="mt-5 space-y-3">
+          <h3 className="font-semibold">Documentos de respaldo</h3>
+          {!renovacion?.documentos?.length && <p className="text-body-sm text-on-surface-variant">Sin documentos adjuntos.</p>}
+          {renovacion?.documentos?.map((documento) => (
+            <div key={documento.IdDocumentoRenovacion} className="flex flex-wrap items-center justify-between gap-3 rounded-md border border-outline-variant p-3">
+              <span>{documento.NombreOriginal}</span>
+              <div className="flex gap-2">
+                <Boton variante="secundario" onClick={() => manejarArchivo(documento, 'abrir')}>Ver</Boton>
+                <Boton variante="secundario" onClick={() => manejarArchivo(documento, 'descargar')}>Descargar</Boton>
+              </div>
+            </div>
+          ))}
         </div>
       </Tarjeta>
       <div className="grid gap-6 lg:grid-cols-2">
@@ -80,4 +125,3 @@ export default function RevisionRenovacion() {
     </div>
   );
 }
-

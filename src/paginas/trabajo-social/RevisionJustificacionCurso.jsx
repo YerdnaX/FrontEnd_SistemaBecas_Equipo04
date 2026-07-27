@@ -7,7 +7,8 @@ import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
-import { obtenerJustificacion, resolverJustificacion } from '../../servicios/servicioSegmentoDos.js';
+import { obtenerArchivoJustificacion, obtenerJustificacion, resolverJustificacion } from '../../servicios/servicioSegmentoDos.js';
+import { abrirArchivo, descargarArchivo } from '../../utilidades/archivos.js';
 
 export default function RevisionJustificacionCurso() {
   const { id } = useParams();
@@ -30,6 +31,18 @@ export default function RevisionJustificacionCurso() {
       setMensaje({ tipo: 'exito', texto: 'Resolución registrada y estudiante notificado.' });
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
   }
+
+  async function manejarArchivo(accion) {
+    const ventana = accion === 'abrir' ? window.open('', '_blank') : null;
+    try {
+      const respuesta = await obtenerArchivoJustificacion(id);
+      if (accion === 'abrir') abrirArchivo(respuesta.datos, ventana);
+      else descargarArchivo(respuesta.datos);
+    } catch (error) {
+      ventana?.close();
+      setMensaje({ tipo: 'error', texto: error.message });
+    }
+  }
   if (cargando) return <EstadoCarga />;
   return (
     <div className="space-y-6">
@@ -41,6 +54,12 @@ export default function RevisionJustificacionCurso() {
           <p className="mt-2 text-body-sm">Periodo: <strong>{justificacion?.Periodo}</strong></p>
           <p className="mt-4 whitespace-pre-wrap">{justificacion?.Motivo}</p>
           <p className="mt-4 text-body-sm text-on-surface-variant">Respaldo: {justificacion?.NombreOriginal || 'Sin archivo'}</p>
+          {justificacion?.NombreOriginal && (
+            <div className="mt-4 flex gap-2">
+              <Boton variante="secundario" onClick={() => manejarArchivo('abrir')}>Ver respaldo</Boton>
+              <Boton variante="secundario" onClick={() => manejarArchivo('descargar')}>Descargar</Boton>
+            </div>
+          )}
         </Tarjeta>
         <Tarjeta>
           <form className="space-y-4" onSubmit={resolver}>

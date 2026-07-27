@@ -17,6 +17,7 @@ export default function RevisionEnvioSolicitud() {
   const { id } = useParams();
   const navegar = useNavigate();
   const [validacion, setValidacion] = useState(null);
+  const [estadoSolicitud, setEstadoSolicitud] = useState('BORRADOR');
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [declaraVeracidad, setDeclaraVeracidad] = useState(false);
@@ -27,6 +28,7 @@ export default function RevisionEnvioSolicitud() {
     try {
       const respuesta = await validarSolicitud(id);
       setValidacion(respuesta.datos);
+      setEstadoSolicitud(respuesta.datos.estadoSolicitud || 'BORRADOR');
     } catch (err) {
       setError(err.mensaje || 'No fue posible validar la solicitud.');
     } finally {
@@ -53,7 +55,7 @@ export default function RevisionEnvioSolicitud() {
 
   return (
     <div>
-      <PasosSolicitud pasoActual="revision" />
+      <PasosSolicitud pasoActual="revision" estadoSolicitud={estadoSolicitud} />
       <Tarjeta>
         <h1 className="text-headline-sm font-semibold text-primary">Revisión final</h1>
 

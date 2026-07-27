@@ -130,6 +130,11 @@ export default function DetalleExpediente() {
         <Link to={`/trabajo-social/expedientes/${id}/evaluacion`} className="text-body-md font-semibold text-primary-container hover:underline">
           Evaluación integral →
         </Link>
+        {tienePermiso('VISITA_GESTIONAR') && (
+          <Link to={`/trabajo-social/expedientes/${id}/visita`} className="text-body-md font-semibold text-primary-container hover:underline">
+            Visita domiciliaria →
+          </Link>
+        )}
         {expediente.Estado === 'EVALUADA' && (
           <Boton onClick={manejarEnviarComite} cargando={procesando}>Enviar al comité</Boton>
         )}

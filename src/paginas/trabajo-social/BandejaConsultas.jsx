@@ -10,17 +10,20 @@ import { asignarConsulta, cambiarEstadoConsulta, listarBandejaConsultas, obtener
 export default function BandejaConsultas() {
   const [consultas, setConsultas] = useState([]);
   const [estado, setEstado] = useState('');
+  const [pagina, setPagina] = useState(1);
+  const [total, setTotal] = useState(0);
   const [seleccionada, setSeleccionada] = useState(null);
   const [respuesta, setRespuesta] = useState('');
   const [mensaje, setMensaje] = useState(null);
 
   async function cargar() {
     try {
-      const resultado = await listarBandejaConsultas({ estado });
-      setConsultas(resultado.datos);
+      const resultado = await listarBandejaConsultas({ estado, pagina, limite: 20 });
+      setConsultas(resultado.datos.items);
+      setTotal(resultado.datos.total);
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
   }
-  useEffect(() => { cargar(); }, [estado]);
+  useEffect(() => { cargar(); }, [estado, pagina]);
 
   async function abrir(id) {
     const resultado = await obtenerConsulta(id);
@@ -51,7 +54,7 @@ export default function BandejaConsultas() {
     <div className="space-y-6">
       <EncabezadoPagina titulo="Bandeja de consultas" descripcion="Asigne, responda y cierre conversaciones de aspirantes y becados." />
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
-      <div className="max-w-xs"><CampoSelect etiqueta="Estado" value={estado} onChange={(e) => setEstado(e.target.value)} opciones={['ABIERTA', 'RESPONDIDA', 'CERRADA'].map((valor) => ({ valor, etiqueta: valor.replaceAll('_', ' ') }))} /></div>
+      <div className="max-w-xs"><CampoSelect etiqueta="Estado" value={estado} onChange={(e) => { setEstado(e.target.value); setPagina(1); }} opciones={[{ valor: 'ABIERTA', etiqueta: 'Abierta' }, { valor: 'RESPONDIDA', etiqueta: 'En atención' }, { valor: 'CERRADA', etiqueta: 'Cerrada' }]} /></div>
       <div className="grid min-h-[540px] gap-4 lg:grid-cols-[1fr_1.8fr]">
         <div className="overflow-hidden rounded-lg border border-outline-variant bg-white">
           {consultas.map((consulta) => (
@@ -77,6 +80,13 @@ export default function BandejaConsultas() {
             </>
           )}
         </Tarjeta>
+      </div>
+      <div className="flex items-center justify-between">
+        <span className="text-body-sm text-on-surface-variant">Página {pagina} · {total} consultas</span>
+        <div className="flex gap-2">
+          <Boton variante="secundario" deshabilitado={pagina <= 1} onClick={() => setPagina((valor) => valor - 1)}>Anterior</Boton>
+          <Boton variante="secundario" deshabilitado={pagina * 20 >= total} onClick={() => setPagina((valor) => valor + 1)}>Siguiente</Boton>
+        </div>
       </div>
     </div>
   );

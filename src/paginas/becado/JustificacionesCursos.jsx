@@ -7,7 +7,13 @@ import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import SelectorArchivoBase64 from '../../componentes/formularios/SelectorArchivoBase64.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
-import { crearJustificacion, listarJustificaciones } from '../../servicios/servicioSegmentoDos.js';
+import {
+  crearJustificacion,
+  listarJustificaciones,
+  obtenerArchivoJustificacion,
+  obtenerPanelBecado
+} from '../../servicios/servicioSegmentoDos.js';
+import { abrirArchivo, descargarArchivo } from '../../utilidades/archivos.js';
 
 export default function JustificacionesCursos() {
   const [justificaciones, setJustificaciones] = useState([]);
@@ -16,7 +22,11 @@ export default function JustificacionesCursos() {
   const [procesando, setProcesando] = useState(false);
 
   async function cargar() {
-    try { setJustificaciones((await listarJustificaciones()).datos); }
+    try {
+      const [lista, panel] = await Promise.all([listarJustificaciones(), obtenerPanelBecado()]);
+      setJustificaciones(lista.datos);
+      setFormulario((actual) => ({ ...actual, periodo: panel.datos.Periodo || '' }));
+    }
     catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
   }
   useEffect(() => { cargar(); }, []);
@@ -26,11 +36,23 @@ export default function JustificacionesCursos() {
     setProcesando(true);
     try {
       await crearJustificacion(formulario);
-      setFormulario({ periodo: '', curso: '', motivo: '' });
+      setFormulario((actual) => ({ periodo: actual.periodo, curso: '', motivo: '' }));
       setMensaje({ tipo: 'exito', texto: 'Justificación enviada a revisión.' });
       cargar();
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
     finally { setProcesando(false); }
+  }
+
+  async function manejarArchivo(id, accion) {
+    const ventana = accion === 'abrir' ? window.open('', '_blank') : null;
+    try {
+      const respuesta = await obtenerArchivoJustificacion(id);
+      if (accion === 'abrir') abrirArchivo(respuesta.datos, ventana);
+      else descargarArchivo(respuesta.datos);
+    } catch (error) {
+      ventana?.close();
+      setMensaje({ tipo: 'error', texto: error.message });
+    }
   }
 
   return (
@@ -40,11 +62,11 @@ export default function JustificacionesCursos() {
       <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
         <Tarjeta>
           <form className="space-y-4" onSubmit={enviar}>
-            <CampoTexto etiqueta="Periodo" value={formulario.periodo} onChange={(e) => setFormulario({ ...formulario, periodo: e.target.value })} required />
-            <CampoTexto etiqueta="Curso" value={formulario.curso} onChange={(e) => setFormulario({ ...formulario, curso: e.target.value })} required />
+            <CampoTexto etiqueta="Periodo" value={formulario.periodo} readOnly helperText="Periodo vigente del beneficio." required />
+            <CampoTexto etiqueta="Curso" value={formulario.curso} onChange={(e) => setFormulario({ ...formulario, curso: e.target.value })} helperText="Digite el nombre o código del curso perdido." required />
             <CampoAreaTexto etiqueta="Exposición de motivos" value={formulario.motivo} onChange={(e) => setFormulario({ ...formulario, motivo: e.target.value })} maxLength="500" required />
-            <SelectorArchivoBase64 onChange={(archivo) => setFormulario({ ...formulario, ...archivo })} />
-            <Boton type="submit" cargando={procesando}>Enviar justificación</Boton>
+            <SelectorArchivoBase64 etiqueta="Documento de respaldo obligatorio" onChange={(archivo) => setFormulario({ ...formulario, ...archivo })} />
+            <Boton type="submit" cargando={procesando} deshabilitado={!formulario.contenidoBase64}>Enviar justificación</Boton>
           </form>
         </Tarjeta>
         <TablaDatos filas={justificaciones} clave="IdJustificacion" columnas={[
@@ -52,10 +74,19 @@ export default function JustificacionesCursos() {
           { clave: 'Periodo', etiqueta: 'Periodo' },
           { clave: 'Estado', etiqueta: 'Estado' },
           { clave: 'Resolucion', etiqueta: 'Resolución' },
-          { clave: 'FechaSolicitud', etiqueta: 'Fecha', render: (fila) => new Date(fila.FechaSolicitud).toLocaleDateString('es-CR') }
+          { clave: 'FechaSolicitud', etiqueta: 'Fecha', render: (fila) => new Date(fila.FechaSolicitud).toLocaleDateString('es-CR') },
+          {
+            clave: 'archivo',
+            etiqueta: 'Respaldo',
+            render: (fila) => fila.NombreOriginal ? (
+              <div className="flex gap-3">
+                <button type="button" className="font-semibold text-primary-container hover:underline" onClick={() => manejarArchivo(fila.IdJustificacion, 'abrir')}>Ver</button>
+                <button type="button" className="font-semibold text-primary-container hover:underline" onClick={() => manejarArchivo(fila.IdJustificacion, 'descargar')}>Descargar</button>
+              </div>
+            ) : 'Sin archivo'
+          }
         ]} />
       </div>
     </div>
   );
 }
-

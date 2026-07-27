@@ -2,36 +2,99 @@ import { useEffect, useState } from 'react';
 import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import TablaDatos from '../../componentes/comunes/TablaDatos.jsx';
-import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
+import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
-import { listarBecasReporte, listarRenovacionesReporte, obtenerIndicadores } from '../../servicios/servicioSegmentoDos.js';
+import {
+  listarBecasReporte,
+  listarRenovacionesReporte,
+  obtenerFiltrosReporte,
+  obtenerIndicadores
+} from '../../servicios/servicioSegmentoDos.js';
 
 export default function ReportesIndicadores() {
-  const [filtros, setFiltros] = useState({ periodo: '', facultad: '' });
+  const [filtros, setFiltros] = useState({ periodo: '', facultad: '', estado: '', idTipoBeca: '' });
   const [indicadores, setIndicadores] = useState({});
   const [becas, setBecas] = useState([]);
   const [renovaciones, setRenovaciones] = useState([]);
+  const [catalogos, setCatalogos] = useState({ periodos: [], carreras: [], estados: [], tiposBeca: [] });
   const [error, setError] = useState(null);
 
   async function cargar() {
     try {
-      const [i, b, r] = await Promise.all([obtenerIndicadores(filtros), listarBecasReporte(filtros), listarRenovacionesReporte()]);
+      const [i, b, r] = await Promise.all([obtenerIndicadores(filtros), listarBecasReporte(filtros), listarRenovacionesReporte(filtros)]);
       setIndicadores(i.datos);
       setBecas(b.datos);
       setRenovaciones(r.datos);
     } catch (err) { setError(err.message); }
   }
-  useEffect(() => { cargar(); }, []);
+  useEffect(() => {
+    cargar();
+    obtenerFiltrosReporte()
+      .then((respuesta) => setCatalogos(respuesta.datos))
+      .catch((err) => setError(err.message));
+  }, []);
+
+  function exportarCsv() {
+    const columnas = ['Carné', 'Estudiante', 'Carrera', 'Tipo de beca', 'Cobertura', 'Periodo', 'Estado'];
+    const proteger = (valor) => {
+      let texto = String(valor ?? '');
+      if (/^[=+\-@]/.test(texto)) texto = `'${texto}`;
+      return `"${texto.replaceAll('"', '""')}"`;
+    };
+    const filas = becas.map((fila) => [
+      fila.NumeroEstudiante,
+      fila.Estudiante,
+      fila.Carrera,
+      fila.TipoBeca,
+      `${fila.Porcentaje}%`,
+      fila.Periodo,
+      fila.Estado
+    ].map(proteger).join(','));
+    const blob = new Blob([`\uFEFF${columnas.map(proteger).join(',')}\n${filas.join('\n')}`], { type: 'text/csv;charset=utf-8' });
+    const url = URL.createObjectURL(blob);
+    const enlace = document.createElement('a');
+    enlace.href = url;
+    enlace.download = 'reporte-beneficiarios.csv';
+    enlace.click();
+    URL.revokeObjectURL(url);
+  }
 
   return (
     <div className="space-y-6">
       <EncabezadoPagina titulo="Reportes e indicadores" descripcion="Datos agregados directamente desde SQL Server con filtros parametrizados." />
       {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
       <div className="flex flex-wrap items-end gap-3">
-        <CampoTexto etiqueta="Periodo" value={filtros.periodo} onChange={(e) => setFiltros({ ...filtros, periodo: e.target.value })} />
-        <CampoTexto etiqueta="Facultad o carrera" value={filtros.facultad} onChange={(e) => setFiltros({ ...filtros, facultad: e.target.value })} />
+        <CampoSelect
+          etiqueta="Periodo"
+          etiquetaVacia="Todos los periodos"
+          value={filtros.periodo}
+          onChange={(e) => setFiltros({ ...filtros, periodo: e.target.value })}
+          opciones={catalogos.periodos.map((valor) => ({ valor, etiqueta: valor }))}
+        />
+        <CampoSelect
+          etiqueta="Facultad o carrera"
+          etiquetaVacia="Todas las carreras"
+          value={filtros.facultad}
+          onChange={(e) => setFiltros({ ...filtros, facultad: e.target.value })}
+          opciones={catalogos.carreras.map((valor) => ({ valor, etiqueta: valor }))}
+        />
+        <CampoSelect
+          etiqueta="Tipo de beca"
+          etiquetaVacia="Todos los tipos"
+          value={filtros.idTipoBeca}
+          onChange={(e) => setFiltros({ ...filtros, idTipoBeca: e.target.value })}
+          opciones={catalogos.tiposBeca.map((tipo) => ({ valor: tipo.IdTipoBeca, etiqueta: tipo.Nombre }))}
+        />
+        <CampoSelect
+          etiqueta="Estado"
+          etiquetaVacia="Todos los estados"
+          value={filtros.estado}
+          onChange={(e) => setFiltros({ ...filtros, estado: e.target.value })}
+          opciones={catalogos.estados.map((valor) => ({ valor, etiqueta: valor }))}
+        />
         <Boton onClick={cargar}>Aplicar filtros</Boton>
+        <Boton variante="secundario" deshabilitado={!becas.length} onClick={exportarCsv}>Exportar CSV</Boton>
       </div>
       <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
         <Tarjeta><p className="text-body-sm text-on-surface-variant">Solicitudes</p><p className="mt-2 text-headline-lg font-semibold">{indicadores.TotalSolicitudes || 0}</p></Tarjeta>
@@ -61,4 +124,3 @@ export default function ReportesIndicadores() {
     </div>
   );
 }
-

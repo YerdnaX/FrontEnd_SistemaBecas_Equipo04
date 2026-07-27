@@ -25,7 +25,10 @@ export default function ListaConvocatoriasPublicas() {
     <div>
       <EncabezadoPublico />
       <main className="mx-auto max-w-container-max px-4 py-10 md:px-12">
-        <h1 className="text-headline-lg font-semibold text-primary">Convocatorias vigentes</h1>
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <h1 className="text-headline-lg font-semibold text-primary">Convocatorias vigentes</h1>
+          <img src="/images/convocatoriasbecas.png" alt="Convocatorias de becas" className="imagen-ui-seccion self-center sm:self-auto" />
+        </div>
 
         {cargando && <EstadoCarga />}
         {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}

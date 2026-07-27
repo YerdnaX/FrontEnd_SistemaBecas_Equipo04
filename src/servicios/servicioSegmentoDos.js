@@ -10,9 +10,11 @@ const parametros = (filtros = {}) => {
 export const obtenerFormalizacion = (id) => peticion(`/solicitudes/${id}/formalizacion`);
 export const aceptarFormalizacion = (id, datos) => peticion(`/solicitudes/${id}/formalizacion/aceptar`, { metodo: 'POST', cuerpo: datos });
 export const obtenerConvenio = (id) => peticion(`/solicitudes/${id}/convenio`);
+export const obtenerArchivoConvenio = (id) => peticion(`/solicitudes/${id}/convenio/archivo`);
 export const confirmarConvenio = (id) => peticion(`/solicitudes/${id}/convenio/confirmar`, { metodo: 'POST', cuerpo: {} });
 
 export const obtenerBeneficio = (id) => peticion(`/beneficios/${id}`);
+export const listarBeneficios = () => peticion('/beneficios');
 export const validarAcademicamente = (id, datos) => peticion(`/beneficios/${id}/validacion-academica`, { metodo: 'POST', cuerpo: datos });
 export const activarFinancieramente = (id, datos) => peticion(`/beneficios/${id}/activacion-financiera`, { metodo: 'POST', cuerpo: datos });
 export const verificarAplicacion = (id) => peticion(`/beneficios/${id}/verificar-aplicacion`, { metodo: 'POST' });
@@ -51,6 +53,8 @@ export const cerrarAlerta = (id, observacion) => peticion(`/alertas/${id}/cerrar
 export const listarJustificaciones = () => peticion('/becado/justificaciones');
 export const crearJustificacion = (datos) => peticion('/becado/justificaciones', { metodo: 'POST', cuerpo: datos });
 export const obtenerJustificacion = (id) => peticion(`/justificaciones/${id}`);
+export const obtenerArchivoJustificacion = (id) => peticion(`/justificaciones/${id}/archivo`);
+export const listarJustificacionesTrabajoSocial = (filtros) => peticion(`/trabajo-social/justificaciones${parametros(filtros)}`);
 export const resolverJustificacion = (id, datos) => peticion(`/justificaciones/${id}/resolver`, { metodo: 'PUT', cuerpo: datos });
 
 export const disponibilidadRenovacion = () => peticion('/becado/renovaciones/disponibilidad');
@@ -58,16 +62,21 @@ export const obtenerRenovacion = (id) => peticion(`/becado/renovaciones/${id}`);
 export const crearRenovacion = (datos) => peticion('/becado/renovaciones', { metodo: 'POST', cuerpo: datos });
 export const actualizarRenovacion = (id, datos) => peticion(`/becado/renovaciones/${id}`, { metodo: 'PUT', cuerpo: datos });
 export const agregarDocumentoRenovacion = (id, datos) => peticion(`/becado/renovaciones/${id}/documentos`, { metodo: 'POST', cuerpo: datos });
+export const obtenerArchivoRenovacion = (id, idDocumento) => peticion(`/becado/renovaciones/${id}/documentos/${idDocumento}/archivo`);
 export const listarRenovacionesTrabajoSocial = (filtros) => peticion(`/trabajo-social/renovaciones${parametros(filtros)}`);
+export const obtenerRenovacionTrabajoSocial = (id) => peticion(`/trabajo-social/renovaciones/${id}`);
+export const obtenerArchivoRenovacionTrabajoSocial = (id, idDocumento) => peticion(`/trabajo-social/renovaciones/${id}/documentos/${idDocumento}/archivo`);
 export const evaluarRenovacion = (id, datos) => peticion(`/trabajo-social/renovaciones/${id}/evaluar`, { metodo: 'PUT', cuerpo: datos });
 export const resolverRenovacion = (id, datos) => peticion(`/trabajo-social/renovaciones/${id}/resolver`, { metodo: 'PUT', cuerpo: datos });
 
 export const obtenerIndicadores = (filtros) => peticion(`/reportes/indicadores${parametros(filtros)}`);
+export const obtenerFiltrosReporte = () => peticion('/reportes/filtros');
 export const listarBecasReporte = (filtros) => peticion(`/reportes/becas${parametros(filtros)}`);
-export const listarRenovacionesReporte = () => peticion('/reportes/renovaciones');
+export const listarRenovacionesReporte = (filtros) => peticion(`/reportes/renovaciones${parametros(filtros)}`);
 export const listarActas = () => peticion('/comite/actas');
 export const obtenerActa = (id) => peticion(`/comite/actas/${id}`);
 export const generarDocumentoActa = (id) => peticion(`/comite/actas/${id}/generar-documento`, { metodo: 'POST' });
+export const obtenerArchivoActa = (id) => peticion(`/comite/actas/${id}/archivo`);
 
 export const listarUsuarios = (filtros) => peticion(`/usuarios${parametros(filtros)}`);
 export const obtenerUsuario = (id) => peticion(`/usuarios/${id}`);
@@ -88,4 +97,3 @@ export const cambiarEstadoEmpleado = (id, activo) => peticion(`/empleados/${id}/
 export const listarMiembrosComite = () => peticion('/comite/miembros');
 export const crearMiembroComite = (datos) => peticion('/comite/miembros', { metodo: 'POST', cuerpo: datos });
 export const eliminarMiembroComite = (id) => peticion(`/comite/miembros/${id}`, { metodo: 'DELETE' });
-

@@ -7,3 +7,9 @@ body {
   background-color: theme('colors.background');
   color: theme('colors.on-background');
 }
+
+@layer components {
+  .imagen-ui-seccion {
+    @apply h-20 w-auto max-w-full object-contain;
+  }
+}

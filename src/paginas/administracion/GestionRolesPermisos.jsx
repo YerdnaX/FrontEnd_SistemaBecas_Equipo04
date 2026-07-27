@@ -4,7 +4,7 @@ import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
-import { asignarPermisosRol, crearRol, listarPermisos, listarRoles } from '../../servicios/servicioSegmentoDos.js';
+import { actualizarRol, asignarPermisosRol, crearRol, listarPermisos, listarRoles } from '../../servicios/servicioSegmentoDos.js';
 
 export default function GestionRolesPermisos() {
   const [roles, setRoles] = useState([]);
@@ -12,6 +12,7 @@ export default function GestionRolesPermisos() {
   const [seleccionado, setSeleccionado] = useState(null);
   const [idsPermisos, setIdsPermisos] = useState([]);
   const [nuevo, setNuevo] = useState({ codigo: '', nombre: '', descripcion: '' });
+  const [edicion, setEdicion] = useState({ nombre: '', descripcion: '', activo: true });
   const [mensaje, setMensaje] = useState(null);
 
   async function cargar() {
@@ -33,6 +34,19 @@ export default function GestionRolesPermisos() {
     setMensaje({ tipo: 'exito', texto: 'Permisos del rol actualizados.' });
   }
 
+  async function guardarRol(evento) {
+    evento.preventDefault();
+    await actualizarRol(seleccionado.IdRol, edicion);
+    setMensaje({ tipo: 'exito', texto: 'Datos del rol actualizados.' });
+    await cargar();
+  }
+
+  function seleccionarRol(rol) {
+    setSeleccionado(rol);
+    setIdsPermisos(rol.IdsPermisos || []);
+    setEdicion({ nombre: rol.Nombre, descripcion: rol.Descripcion || '', activo: rol.Activo !== false });
+  }
+
   return (
     <div className="space-y-6">
       <EncabezadoPagina titulo="Roles y permisos" descripcion="Matriz de permisos aplicada por la API y reflejada en la navegación." />
@@ -40,11 +54,19 @@ export default function GestionRolesPermisos() {
       <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
         <div className="space-y-4">
           <Tarjeta><form className="space-y-3" onSubmit={crear}><h2 className="font-semibold text-primary">Nuevo rol</h2><CampoTexto etiqueta="Código" value={nuevo.codigo} onChange={(e) => setNuevo({ ...nuevo, codigo: e.target.value })} required /><CampoTexto etiqueta="Nombre" value={nuevo.nombre} onChange={(e) => setNuevo({ ...nuevo, nombre: e.target.value })} required /><Boton type="submit">Crear rol</Boton></form></Tarjeta>
-          {roles.map((rol) => <button key={rol.IdRol} type="button" onClick={() => { setSeleccionado(rol); setIdsPermisos(rol.IdsPermisos || []); }} className="block w-full rounded-lg border bg-white p-4 text-left hover:bg-primary-fixed"><strong>{rol.Nombre}</strong><span className="block text-label-sm">{rol.CantidadPermisos} permisos</span></button>)}
+          {roles.map((rol) => <button key={rol.IdRol} type="button" onClick={() => seleccionarRol(rol)} className="block w-full rounded-lg border bg-white p-4 text-left hover:bg-primary-fixed"><strong>{rol.Nombre}</strong><span className="block text-label-sm">{rol.CantidadPermisos} permisos</span></button>)}
         </div>
         <Tarjeta>
           <h2 className="font-semibold text-primary">{seleccionado ? `Permisos de ${seleccionado.Nombre}` : 'Seleccione un rol'}</h2>
-          {seleccionado && <><div className="mt-4 grid max-h-[560px] gap-2 overflow-y-auto sm:grid-cols-2">{permisos.map((permiso) => <label key={permiso.IdPermiso} className="rounded-md border p-3 text-body-sm"><input className="mr-2" type="checkbox" checked={idsPermisos.includes(permiso.IdPermiso)} onChange={() => setIdsPermisos((actual) => actual.includes(permiso.IdPermiso) ? actual.filter((id) => id !== permiso.IdPermiso) : [...actual, permiso.IdPermiso])} />{permiso.Codigo}</label>)}</div><Boton className="mt-4" onClick={guardarMatriz}>Guardar matriz</Boton></>}
+          {seleccionado && <>
+            <form className="mt-4 grid gap-3 border-b pb-5 sm:grid-cols-2" onSubmit={guardarRol}>
+              <CampoTexto etiqueta="Nombre del rol" value={edicion.nombre} onChange={(e) => setEdicion({ ...edicion, nombre: e.target.value })} required />
+              <CampoTexto etiqueta="Descripción" value={edicion.descripcion} onChange={(e) => setEdicion({ ...edicion, descripcion: e.target.value })} />
+              <label className="flex items-center gap-2 text-body-sm"><input type="checkbox" checked={edicion.activo} onChange={(e) => setEdicion({ ...edicion, activo: e.target.checked })} /> Rol activo</label>
+              <Boton type="submit">Guardar datos del rol</Boton>
+            </form>
+            <div className="mt-4 grid max-h-[560px] gap-2 overflow-y-auto sm:grid-cols-2">{permisos.map((permiso) => <label key={permiso.IdPermiso} className="rounded-md border p-3 text-body-sm"><input className="mr-2" type="checkbox" checked={idsPermisos.includes(permiso.IdPermiso)} onChange={() => setIdsPermisos((actual) => actual.includes(permiso.IdPermiso) ? actual.filter((id) => id !== permiso.IdPermiso) : [...actual, permiso.IdPermiso])} />{permiso.Codigo}</label>)}</div><Boton className="mt-4" onClick={guardarMatriz}>Guardar matriz</Boton>
+          </>}
         </Tarjeta>
       </div>
     </div>

@@ -6,7 +6,7 @@ import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
-import { registrarUsuario } from '../../servicios/servicioAutenticacion.js';
+import { registrarUsuario, verificarRegistro } from '../../servicios/servicioAutenticacion.js';
 import { contrasenaEsSegura } from '../../utilidades/validaciones.js';
 
 const FORMULARIO_INICIAL = {
@@ -18,8 +18,14 @@ export default function RegistroUsuario() {
   const [formulario, setFormulario] = useState(FORMULARIO_INICIAL);
   const [errores, setErrores] = useState({});
   const [errorGeneral, setErrorGeneral] = useState(null);
+  const [mensaje, setMensaje] = useState(null);
   const [exito, setExito] = useState(false);
+  const [requiereVerificacion, setRequiereVerificacion] = useState(false);
+  const [correoMostrado, setCorreoMostrado] = useState('');
+  const [expiraEnHoras, setExpiraEnHoras] = useState(null);
+  const [codigoVerificacion, setCodigoVerificacion] = useState('');
   const [enviando, setEnviando] = useState(false);
+  const [mostrarTerminos, setMostrarTerminos] = useState(false);
 
   function actualizarCampo(campo, valor) {
     setFormulario((actual) => ({ ...actual, [campo]: valor }));
@@ -42,12 +48,18 @@ export default function RegistroUsuario() {
   async function manejarEnvio(evento) {
     evento.preventDefault();
     setErrorGeneral(null);
+    setMensaje(null);
     if (!validar()) return;
 
     setEnviando(true);
     try {
-      await registrarUsuario(formulario);
-      setExito(true);
+      const respuesta = await registrarUsuario(formulario);
+      if (respuesta.datos?.requiereVerificacion) {
+        setRequiereVerificacion(true);
+        setCorreoMostrado(respuesta.datos.correo || formulario.correo);
+        setExpiraEnHoras(respuesta.datos.expiraEnHoras || null);
+        setMensaje('Le enviamos un código de activación a su correo.');
+      }
     } catch (error) {
       setErrorGeneral(error.mensaje);
       const erroresApi = {};
@@ -58,18 +70,55 @@ export default function RegistroUsuario() {
     }
   }
 
+  async function manejarVerificacion(evento) {
+    evento.preventDefault();
+    setErrorGeneral(null);
+    setMensaje(null);
+
+    setEnviando(true);
+    try {
+      await verificarRegistro(formulario.correo, codigoVerificacion);
+      setExito(true);
+      setRequiereVerificacion(false);
+    } catch (error) {
+      setErrorGeneral(error.mensaje || 'No fue posible validar el código.');
+    } finally {
+      setEnviando(false);
+    }
+  }
+
   return (
     <div>
       <EncabezadoPublico />
       <main className="mx-auto max-w-2xl px-4 py-12 md:px-12">
         <Tarjeta>
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="mx-auto mb-3 h-48 w-48 object-contain" />
           <h1 className="text-headline-md font-semibold text-primary">Crear cuenta</h1>
 
           {exito ? (
             <AlertaMensaje tipo="exito" titulo="Cuenta creada">
-              Revise su correo para activar la cuenta antes de iniciar sesión.
+              Su cuenta fue activada correctamente. Ya puede iniciar sesión.
               <Link to="/login" className="mt-2 block font-semibold underline">Ir a iniciar sesión</Link>
             </AlertaMensaje>
+          ) : requiereVerificacion ? (
+            <form className="mt-6 flex flex-col gap-4" onSubmit={manejarVerificacion}>
+              {mensaje && <AlertaMensaje tipo="info">{mensaje}</AlertaMensaje>}
+              {errorGeneral && <AlertaMensaje tipo="error">{errorGeneral}</AlertaMensaje>}
+              <p className="text-body-sm text-on-surface-variant">
+                Ingrese el código de 6 dígitos enviado a {correoMostrado}.
+                {expiraEnHoras ? ` Vence en ${expiraEnHoras} horas.` : ''}
+              </p>
+              <CampoTexto
+                etiqueta="Código de activación"
+                value={codigoVerificacion}
+                onChange={(e) => setCodigoVerificacion(e.target.value.replace(/\D/g, '').slice(0, 6))}
+                required
+              />
+              <Boton type="submit" cargando={enviando}>Activar cuenta</Boton>
+              <p className="text-body-sm text-on-surface-variant">
+                ¿Ya activó su cuenta? <Link to="/login" className="font-semibold text-primary-container hover:underline">Inicie sesión</Link>
+              </p>
+            </form>
           ) : (
             <form className="mt-6 flex flex-col gap-4" onSubmit={manejarEnvio}>
               {errorGeneral && <AlertaMensaje tipo="error">{errorGeneral}</AlertaMensaje>}
@@ -90,7 +139,20 @@ export default function RegistroUsuario() {
               <label className="flex items-center gap-2 text-body-sm">
                 <input type="checkbox" checked={formulario.aceptaTerminos}
                   onChange={(e) => actualizarCampo('aceptaTerminos', e.target.checked)} />
-                Acepto los términos y condiciones.
+                <span>
+                  Acepto los{' '}
+                  <button
+                    type="button"
+                    className="font-semibold text-primary-container underline hover:text-primary"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setMostrarTerminos(true);
+                    }}
+                  >
+                    términos y condiciones
+                  </button>
+                  .
+                </span>
               </label>
               {errores.aceptaTerminos && <p className="text-label-sm text-error">{errores.aceptaTerminos}</p>}
 
@@ -102,6 +164,36 @@ export default function RegistroUsuario() {
           )}
         </Tarjeta>
       </main>
+
+      {mostrarTerminos && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" role="dialog" aria-modal="true" aria-label="Términos y condiciones">
+          <Tarjeta className="w-full max-w-xl">
+            <div className="flex items-start justify-between gap-4">
+              <h2 className="text-headline-sm font-semibold text-primary">Términos y condiciones</h2>
+              <button
+                type="button"
+                className="text-body-sm font-semibold text-primary-container hover:underline"
+                onClick={() => setMostrarTerminos(false)}
+              >
+                Cerrar
+              </button>
+            </div>
+            <div className="mt-4 space-y-3 text-body-sm text-on-surface-variant">
+              <p>
+                La información registrada en este sistema se utiliza únicamente con fines académicos y estudiantiles,
+                como parte del proceso de gestión y análisis de becas del proyecto SGBE-CUC.
+              </p>
+              <p>
+                Sus datos no serán usados para fines comerciales ni compartidos fuera del alcance educativo del proyecto :D
+              </p>
+              <p>
+                Al continuar con el registro, usted acepta el tratamiento de sus datos bajo estas condiciones :D?
+              </p>
+            </div>
+          </Tarjeta>
+        </div>
+      )}
+
       <PiePagina />
     </div>
   );

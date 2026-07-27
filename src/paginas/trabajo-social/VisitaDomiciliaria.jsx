@@ -7,12 +7,19 @@ import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
-import { cancelarVisita, listarVisitas, programarVisita, registrarInformeVisita } from '../../servicios/servicioSegmentoDos.js';
+import {
+  cancelarVisita,
+  listarVisitas,
+  programarVisita,
+  registrarInformeVisita,
+  reprogramarVisita
+} from '../../servicios/servicioSegmentoDos.js';
 
 export default function VisitaDomiciliaria() {
   const { id } = useParams();
   const [visitas, setVisitas] = useState([]);
   const [formulario, setFormulario] = useState({ fechaProgramada: '', direccion: '', observaciones: '' });
+  const [editandoId, setEditandoId] = useState(null);
   const [informe, setInforme] = useState({ idVisita: '', resultado: '', observaciones: '' });
   const [procesando, setProcesando] = useState(false);
   const [mensaje, setMensaje] = useState(null);
@@ -27,12 +34,26 @@ export default function VisitaDomiciliaria() {
     evento.preventDefault();
     setProcesando(true);
     try {
-      await programarVisita(id, formulario);
+      if (editandoId) await reprogramarVisita(editandoId, formulario);
+      else await programarVisita(id, formulario);
       setFormulario({ fechaProgramada: '', direccion: '', observaciones: '' });
-      setMensaje({ tipo: 'exito', texto: 'Visita programada y estudiante notificado.' });
+      setMensaje({ tipo: 'exito', texto: editandoId ? 'Visita reprogramada y estudiante notificado.' : 'Visita programada y estudiante notificado.' });
+      setEditandoId(null);
       cargar();
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
     finally { setProcesando(false); }
+  }
+
+  function editar(visita) {
+    const fechaLocal = new Date(visita.FechaProgramada);
+    fechaLocal.setMinutes(fechaLocal.getMinutes() - fechaLocal.getTimezoneOffset());
+    setEditandoId(visita.IdVisita);
+    setFormulario({
+      fechaProgramada: fechaLocal.toISOString().slice(0, 16),
+      direccion: visita.Direccion,
+      observaciones: visita.Observaciones || ''
+    });
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
   async function completar(evento) {
@@ -60,11 +81,14 @@ export default function VisitaDomiciliaria() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Tarjeta>
           <form className="space-y-4" onSubmit={programar}>
-            <h2 className="font-semibold text-primary">Programar nueva visita</h2>
+            <h2 className="font-semibold text-primary">{editandoId ? 'Reprogramar visita' : 'Programar nueva visita'}</h2>
             <CampoTexto etiqueta="Fecha y hora" type="datetime-local" value={formulario.fechaProgramada} onChange={(e) => setFormulario({ ...formulario, fechaProgramada: e.target.value })} required />
             <CampoTexto etiqueta="Dirección" value={formulario.direccion} onChange={(e) => setFormulario({ ...formulario, direccion: e.target.value })} required />
             <CampoAreaTexto etiqueta="Observaciones" value={formulario.observaciones} onChange={(e) => setFormulario({ ...formulario, observaciones: e.target.value })} />
-            <Boton type="submit" cargando={procesando}>Programar visita</Boton>
+            <div className="flex gap-2">
+              <Boton type="submit" cargando={procesando}>{editandoId ? 'Guardar reprogramación' : 'Programar visita'}</Boton>
+              {editandoId && <Boton type="button" variante="secundario" onClick={() => { setEditandoId(null); setFormulario({ fechaProgramada: '', direccion: '', observaciones: '' }); }}>Cancelar edición</Boton>}
+            </div>
           </form>
         </Tarjeta>
         <Tarjeta>
@@ -82,9 +106,8 @@ export default function VisitaDomiciliaria() {
         { clave: 'Direccion', etiqueta: 'Ubicación' },
         { clave: 'Responsable', etiqueta: 'Responsable' },
         { clave: 'Estado', etiqueta: 'Estado' },
-        { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => fila.Estado === 'PROGRAMADA' ? <Boton variante="texto" onClick={() => cancelar(fila.IdVisita)}>Cancelar</Boton> : '—' }
+        { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => fila.Estado === 'PROGRAMADA' ? <div className="flex gap-2"><Boton variante="texto" onClick={() => editar(fila)}>Reprogramar</Boton><Boton variante="texto" onClick={() => cancelar(fila.IdVisita)}>Cancelar</Boton></div> : '—' }
       ]} />
     </div>
   );
 }
-

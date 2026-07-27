@@ -38,10 +38,25 @@ export function ProveedorSesion({ children }) {
     iniciar();
   }, [cargarUsuarioActual]);
 
-  const iniciarSesion = useCallback(async (correo, contrasena) => apiIniciarSesion(correo, contrasena), []);
+  const iniciarSesion = useCallback(async (correo, contrasena) => {
+    const respuesta = await apiIniciarSesion(correo, contrasena);
+    if (respuesta.datos?.requiereDosFactores) {
+      return {
+        requiereDosFactores: true,
+        retoId: respuesta.datos.retoId,
+        correo: respuesta.datos.correo,
+        expiraEnMinutos: respuesta.datos.expiraEnMinutos
+      };
+    }
 
-  const verificarDosFactores = useCallback(async (correo, codigo) => {
-    const respuesta = await apiVerificarDosFactores(correo, codigo);
+    establecerTokenAcceso(respuesta.datos.tokenAcceso);
+    establecerRefreshToken(respuesta.datos.refreshToken);
+    setUsuario(respuesta.datos.usuario);
+    return { requiereDosFactores: false, usuario: respuesta.datos.usuario };
+  }, []);
+
+  const verificarDosFactores = useCallback(async (retoId, correo, codigo) => {
+    const respuesta = await apiVerificarDosFactores(retoId, correo, codigo);
     establecerTokenAcceso(respuesta.datos.tokenAcceso);
     establecerRefreshToken(respuesta.datos.refreshToken);
     setUsuario(respuesta.datos.usuario);
@@ -66,6 +81,7 @@ export function ProveedorSesion({ children }) {
     iniciarSesion,
     verificarDosFactores,
     cerrarSesion,
+    refrescarUsuario: cargarUsuarioActual,
     tienePermiso,
     tieneRol
   };

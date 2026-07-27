@@ -7,12 +7,13 @@ import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
-import { cambiarEstadoNoticia, crearNoticia, listarNoticias } from '../../servicios/servicioSegmentoDos.js';
+import { actualizarNoticia, cambiarEstadoNoticia, crearNoticia, listarNoticias } from '../../servicios/servicioSegmentoDos.js';
 
 export default function GestionNoticias() {
   const [noticias, setNoticias] = useState([]);
   const [buscar, setBuscar] = useState('');
   const [formulario, setFormulario] = useState({ titulo: '', contenido: '', publicoDestino: 'GENERAL' });
+  const [editandoId, setEditandoId] = useState(null);
   const [mensaje, setMensaje] = useState(null);
   const filtradas = useMemo(() => noticias.filter((n) => n.Titulo.toLowerCase().includes(buscar.toLowerCase())), [noticias, buscar]);
 
@@ -25,11 +26,22 @@ export default function GestionNoticias() {
   async function guardar(evento) {
     evento.preventDefault();
     try {
-      await crearNoticia(formulario);
+      if (editandoId) await actualizarNoticia(editandoId, formulario);
+      else await crearNoticia(formulario);
       setFormulario({ titulo: '', contenido: '', publicoDestino: 'GENERAL' });
-      setMensaje({ tipo: 'exito', texto: 'Noticia creada como borrador.' });
+      setMensaje({ tipo: 'exito', texto: editandoId ? 'Noticia actualizada.' : 'Noticia creada como borrador.' });
+      setEditandoId(null);
       cargar();
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
+  }
+
+  function editar(noticia) {
+    setEditandoId(noticia.IdNoticia);
+    setFormulario({
+      titulo: noticia.Titulo,
+      contenido: noticia.Contenido,
+      publicoDestino: noticia.PublicoDestino
+    });
   }
 
   async function estado(id, valor) {
@@ -44,11 +56,14 @@ export default function GestionNoticias() {
       <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
         <Tarjeta>
           <form className="space-y-4" onSubmit={guardar}>
-            <h2 className="font-semibold text-primary">Nueva noticia</h2>
+            <h2 className="font-semibold text-primary">{editandoId ? 'Editar noticia' : 'Nueva noticia'}</h2>
             <CampoTexto etiqueta="Título" value={formulario.titulo} onChange={(e) => setFormulario({ ...formulario, titulo: e.target.value })} required />
             <CampoAreaTexto etiqueta="Contenido" value={formulario.contenido} onChange={(e) => setFormulario({ ...formulario, contenido: e.target.value })} required />
             <CampoSelect etiqueta="Público" value={formulario.publicoDestino} onChange={(e) => setFormulario({ ...formulario, publicoDestino: e.target.value })} opciones={[{ valor: 'GENERAL', etiqueta: 'Público general y todos' }, { valor: 'ASPIRANTE', etiqueta: 'Aspirantes' }, { valor: 'BECADO', etiqueta: 'Becados' }]} />
-            <Boton type="submit">Guardar borrador</Boton>
+            <div className="flex gap-2">
+              <Boton type="submit">{editandoId ? 'Guardar cambios' : 'Guardar borrador'}</Boton>
+              {editandoId && <Boton type="button" variante="secundario" onClick={() => { setEditandoId(null); setFormulario({ titulo: '', contenido: '', publicoDestino: 'GENERAL' }); }}>Cancelar</Boton>}
+            </div>
           </form>
         </Tarjeta>
         <div>
@@ -58,7 +73,7 @@ export default function GestionNoticias() {
             { clave: 'PublicoDestino', etiqueta: 'Público' },
             { clave: 'Estado', etiqueta: 'Estado' },
             { clave: 'FechaPublicacion', etiqueta: 'Fecha', render: (fila) => fila.FechaPublicacion ? new Date(fila.FechaPublicacion).toLocaleDateString('es-CR') : 'Sin publicar' },
-            { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => <div className="flex gap-1">{fila.Estado !== 'PUBLICADA' && <Boton variante="texto" onClick={() => estado(fila.IdNoticia, 'PUBLICADA')}>Publicar</Boton>}{fila.Estado === 'PUBLICADA' && <Boton variante="texto" onClick={() => estado(fila.IdNoticia, 'DESPUBLICADA')}>Despublicar</Boton>}<Boton variante="texto" onClick={() => estado(fila.IdNoticia, 'INACTIVA')}>Desactivar</Boton></div> }
+            { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => <div className="flex flex-wrap gap-1"><Boton variante="texto" onClick={() => editar(fila)}>Editar</Boton>{fila.Estado !== 'PUBLICADA' && <Boton variante="texto" onClick={() => estado(fila.IdNoticia, 'PUBLICADA')}>Publicar</Boton>}{fila.Estado === 'PUBLICADA' && <Boton variante="texto" onClick={() => estado(fila.IdNoticia, 'DESPUBLICADA')}>Despublicar</Boton>}<Boton variante="texto" onClick={() => estado(fila.IdNoticia, 'INACTIVA')}>Desactivar</Boton></div> }
           ]} />
         </div>
       </div>
