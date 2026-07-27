@@ -50,13 +50,13 @@ export default function EncabezadoPrivado() {
           {enlacesPorRol(usuario?.roles).map((enlace) => (
             <Link key={enlace.ruta} to={enlace.ruta} className="text-body-sm hover:underline">{enlace.etiqueta}</Link>
           ))}
-          <Link to="/mi-cuenta" className="hidden items-center gap-2 md:flex">
+          <Link to="/mi-cuenta" className="hidden items-center gap-2 rounded-full px-2 py-1 transition hover:bg-white/10 md:flex">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container-lowest text-primary-container font-semibold">
               {avatarInicial(usuario?.nombre)}
             </span>
             <span className="text-body-sm font-medium">{usuario?.nombre}</span>
           </Link>
-          <Link to="/mi-cuenta" className="flex items-center gap-2 md:hidden" aria-label="Abrir mi cuenta">
+          <Link to="/mi-cuenta" className="flex items-center gap-2 rounded-full p-1 transition hover:bg-white/10 md:hidden" aria-label="Abrir mi cuenta">
             <span className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container-lowest text-primary-container font-semibold">
               {avatarInicial(usuario?.nombre)}
             </span>

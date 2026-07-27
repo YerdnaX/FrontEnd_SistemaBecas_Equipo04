@@ -8,6 +8,26 @@ import * as servicio from '../../servicios/servicioConfiguracion.js';
 
 const PESTANAS = ['Correo', 'Plantillas', 'Parámetros', 'Catálogo de documentos'];
 
+function formatearClaveParametro(clave) {
+  return String(clave ?? '')
+    .toLowerCase()
+    .split('_')
+    .filter(Boolean)
+    .map((segmento) => segmento.charAt(0).toUpperCase() + segmento.slice(1))
+    .join(' ');
+}
+
+const ETIQUETAS_TIPO_DATO = {
+  TEXTO: 'Texto',
+  NUMERO: 'Numero',
+  BOOLEANO: 'Booleano',
+  FECHA: 'Fecha'
+};
+
+function obtenerEtiquetaTipoDato(tipoDato) {
+  return ETIQUETAS_TIPO_DATO[tipoDato] || 'Texto';
+}
+
 export default function ConfiguracionSistema() {
   const [pestana, setPestana] = useState(0);
   const [error, setError] = useState(null);
@@ -195,27 +215,60 @@ function SeccionParametros({ onError, onExito }) {
     setGuardandoClave(clave);
     try {
       await servicio.actualizarParametro(clave, valor);
-      onExito(`Parámetro ${clave} actualizado.`);
+      onExito(`Parámetro ${formatearClaveParametro(clave)} actualizado.`);
     } catch (err) { onError(err); } finally { setGuardandoClave(null); }
   }
 
   if (cargando) return <EstadoCarga />;
 
+  if (!parametros.length) {
+    return (
+      <Tarjeta>
+        <p className="text-body-md text-on-surface-variant">No hay parámetros configurados en este momento.</p>
+      </Tarjeta>
+    );
+  }
+
   return (
-    <Tarjeta>
-      <div className="flex flex-col gap-4">
+    <Tarjeta className="border border-outline-variant bg-surface-container-low/40">
+      <div className="rounded-xl border border-outline-variant bg-surface px-4 py-4 sm:px-5">
+        <h2 className="text-headline-sm font-semibold text-on-surface">Parámetros del sistema</h2>
+        <p className="mt-1 text-body-sm text-on-surface-variant">
+          Ajuste valores operativos y de seguridad desde un panel centralizado.
+        </p>
+      </div>
+
+      <div className="mt-5 grid gap-4 md:grid-cols-2">
         {parametros.map((p) => (
-          <div key={p.Clave} className="flex items-end gap-3 border-b border-outline-variant pb-3 last:border-b-0">
-            <CampoTexto
-              etiqueta={`${p.Clave}${p.Descripcion ? ` — ${p.Descripcion}` : ''}`}
-              value={p.Valor}
-              onChange={(e) => actualizarValorLocal(p.Clave, e.target.value)}
-              className="max-w-md"
-            />
-            <Boton variante="secundario" onClick={() => guardar(p.Clave, p.Valor)} cargando={guardandoClave === p.Clave}>
-              Guardar
-            </Boton>
-          </div>
+          <article key={p.Clave} className="rounded-xl border border-outline-variant bg-surface px-4 py-4 shadow-elevation-l1 sm:px-5">
+            <div className="flex items-start justify-between gap-3">
+              <div>
+                <p className="text-title-md font-semibold text-on-surface">{formatearClaveParametro(p.Clave)}</p>
+                {p.Descripcion && <p className="mt-1 text-body-sm text-on-surface-variant">{p.Descripcion}</p>}
+              </div>
+              <span className="rounded-full bg-primary-container px-3 py-1 text-label-sm font-semibold text-on-primary">
+                {obtenerEtiquetaTipoDato(p.TipoDato)}
+              </span>
+            </div>
+
+            <div className="mt-4">
+              <CampoTexto
+                etiqueta="Valor"
+                value={p.Valor}
+                onChange={(e) => actualizarValorLocal(p.Clave, e.target.value)}
+                className="w-full"
+              />
+            </div>
+
+            <div className="mt-4 flex items-center justify-between gap-2">
+              <span className={`rounded-full px-2.5 py-1 text-label-sm font-medium ${p.Activo ? 'bg-tertiary-container text-on-tertiary' : 'bg-surface-container text-on-surface-variant'}`}>
+                {p.Activo ? 'Activo' : 'Inactivo'}
+              </span>
+              <Boton variante="secundario" onClick={() => guardar(p.Clave, p.Valor)} cargando={guardandoClave === p.Clave}>
+                Guardar
+              </Boton>
+            </div>
+          </article>
         ))}
       </div>
     </Tarjeta>
