@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
@@ -45,6 +45,14 @@ export default function ResultadoSolicitud() {
             <p className="mt-2 font-semibold text-primary">Porcentaje de beca asignado: {resultado.resolucion.porcentajeBeca}%</p>
           )}
           {resultado.resolucion.motivo && <p className="mt-2 text-body-sm text-on-surface-variant">Motivo: {resultado.resolucion.motivo}</p>}
+          {['APROBADA', 'CONDICIONADA'].includes(resultado.resolucion.tipoResultado) && (
+            <Link
+              to={`/aspirante/solicitudes/${id}/formalizacion`}
+              className="mt-5 inline-block rounded-md bg-primary-container px-4 py-2 font-semibold text-on-primary"
+            >
+              Consultar condiciones y formalizar
+            </Link>
+          )}
         </div>
       )}
     </Tarjeta>
