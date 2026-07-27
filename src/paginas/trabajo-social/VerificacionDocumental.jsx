@@ -33,10 +33,15 @@ export default function VerificacionDocumental() {
   useEffect(() => { cargar(); }, [id]);
 
   async function manejarRevision(idDocumento, estado) {
+    const observacion = observaciones[idDocumento] || '';
+    if (['RECHAZADO', 'REQUIERE_SUBSANACION'].includes(estado) && !observacion.trim()) {
+      setError('Debe indicar una observación al rechazar un documento o solicitar su subsanación.');
+      return;
+    }
     setProcesandoId(idDocumento);
     setError(null);
     try {
-      await revisarDocumento(id, idDocumento, { estado, observacion: observaciones[idDocumento] || '' });
+      await revisarDocumento(id, idDocumento, { estado, observacion });
       await cargar();
     } catch (err) {
       setError(err.mensaje || 'No fue posible registrar la revisión.');
@@ -80,7 +85,7 @@ export default function VerificacionDocumental() {
               <EtiquetaEstado estado={documento.Estado} />
             </div>
             <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-end">
-              <CampoTexto className="flex-1" etiqueta="Observación" value={observaciones[documento.IdDocumentoSolicitud] || ''}
+              <CampoTexto className="flex-1" etiqueta="Observación (obligatoria para rechazar o solicitar subsanación)" value={observaciones[documento.IdDocumentoSolicitud] || ''}
                 onChange={(e) => setObservaciones((actual) => ({ ...actual, [documento.IdDocumentoSolicitud]: e.target.value }))} />
               <div className="flex gap-2">
                 <Boton variante="secundario" cargando={procesandoId === documento.IdDocumentoSolicitud}
