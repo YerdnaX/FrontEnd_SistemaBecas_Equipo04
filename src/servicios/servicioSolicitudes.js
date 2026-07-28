@@ -13,6 +13,8 @@ export const listarDocumentos = (id) => peticion(`/solicitudes/${id}/documentos`
 export const cargarDocumento = (id, datos) => peticion(`/solicitudes/${id}/documentos`, { metodo: 'POST', cuerpo: datos });
 export const eliminarDocumento = (id, idDocumento) =>
   peticion(`/solicitudes/${id}/documentos/${idDocumento}`, { metodo: 'DELETE' });
+export const obtenerArchivoDocumento = (id, idDocumento) =>
+  peticion(`/solicitudes/${id}/documentos/${idDocumento}/archivo`);
 export const validarSolicitud = (id) => peticion(`/solicitudes/${id}/validacion`);
 export const enviarSolicitud = (id) => peticion(`/solicitudes/${id}/enviar`, { metodo: 'POST' });
 export const obtenerResultado = (id) => peticion(`/solicitudes/${id}/resultado`);

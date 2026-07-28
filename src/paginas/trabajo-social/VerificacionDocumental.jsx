@@ -7,6 +7,8 @@ import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
 import { obtenerExpediente, revisarDocumento, solicitarSubsanacion, resolverElegibilidad } from '../../servicios/servicioExpedientes.js';
+import { obtenerArchivoDocumento } from '../../servicios/servicioSolicitudes.js';
+import { abrirArchivo, descargarArchivo } from '../../utilidades/archivos.js';
 
 export default function VerificacionDocumental() {
   const { id } = useParams();
@@ -15,6 +17,7 @@ export default function VerificacionDocumental() {
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [procesandoId, setProcesandoId] = useState(null);
+  const [procesandoArchivoId, setProcesandoArchivoId] = useState(null);
   const [motivoSubsanacion, setMotivoSubsanacion] = useState('');
   const [motivoElegibilidad, setMotivoElegibilidad] = useState('');
 
@@ -70,6 +73,22 @@ export default function VerificacionDocumental() {
     }
   }
 
+  async function manejarArchivo(idDocumento, accion) {
+    const ventana = accion === 'abrir' ? window.open('', '_blank') : null;
+    setProcesandoArchivoId(idDocumento);
+    setError(null);
+    try {
+      const respuesta = await obtenerArchivoDocumento(expediente.IdSolicitud, idDocumento);
+      if (accion === 'abrir') abrirArchivo(respuesta.datos, ventana);
+      else descargarArchivo(respuesta.datos);
+    } catch (err) {
+      ventana?.close();
+      setError(err.mensaje || 'No fue posible obtener el archivo del documento.');
+    } finally {
+      setProcesandoArchivoId(null);
+    }
+  }
+
   if (cargando) return <EstadoCarga />;
 
   return (
@@ -83,6 +102,25 @@ export default function VerificacionDocumental() {
             <div className="flex items-center justify-between">
               <p className="font-semibold text-on-surface">{documento.NombreRequisito || 'Documento'}</p>
               <EtiquetaEstado estado={documento.Estado} />
+            </div>
+            <p className="mt-2 text-body-sm text-on-surface-variant">
+              Archivo: {documento.NombreOriginal || `Documento #${documento.IdDocumentoSolicitud}`}
+            </p>
+            <div className="mt-3 flex gap-2">
+              <Boton
+                variante="secundario"
+                cargando={procesandoArchivoId === documento.IdDocumentoSolicitud}
+                onClick={() => manejarArchivo(documento.IdDocumentoSolicitud, 'abrir')}
+              >
+                Ver archivo
+              </Boton>
+              <Boton
+                variante="secundario"
+                cargando={procesandoArchivoId === documento.IdDocumentoSolicitud}
+                onClick={() => manejarArchivo(documento.IdDocumentoSolicitud, 'descargar')}
+              >
+                Descargar
+              </Boton>
             </div>
             <div className="mt-3 flex flex-col gap-2 sm:flex-row sm:items-end">
               <CampoTexto className="flex-1" etiqueta="Observación (obligatoria para rechazar o solicitar subsanación)" value={observaciones[documento.IdDocumentoSolicitud] || ''}
