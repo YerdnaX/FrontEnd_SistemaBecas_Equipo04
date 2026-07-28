@@ -1,4 +1,8 @@
 function crearUrlTemporal(archivo) {
+  if (archivo.urlExterna) return archivo.urlExterna;
+  if (!archivo.contenidoBase64) {
+    throw new Error('El archivo no tiene contenido disponible para abrirse o descargarse.');
+  }
   const [, contenido = ''] = archivo.contenidoBase64.split(',');
   const binario = atob(contenido);
   const bytes = new Uint8Array(binario.length);
@@ -16,7 +20,9 @@ export function abrirArchivo(archivo, ventana = null) {
   }
   const url = crearUrlTemporal(archivo);
   destino.location.href = url;
-  setTimeout(() => URL.revokeObjectURL(url), 60000);
+  if (!archivo.urlExterna) {
+    setTimeout(() => URL.revokeObjectURL(url), 60000);
+  }
 }
 
 export function descargarArchivo(archivo) {
@@ -27,5 +33,7 @@ export function descargarArchivo(archivo) {
   document.body.appendChild(enlace);
   enlace.click();
   enlace.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
+  if (!archivo.urlExterna) {
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  }
 }

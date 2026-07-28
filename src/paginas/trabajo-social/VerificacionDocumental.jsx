@@ -6,7 +6,13 @@ import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
-import { obtenerExpediente, revisarDocumento, solicitarSubsanacion, resolverElegibilidad } from '../../servicios/servicioExpedientes.js';
+import {
+  obtenerExpediente,
+  revisarDocumento,
+  solicitarSubsanacion,
+  resolverElegibilidad,
+  obtenerArchivoDocumentoExpediente
+} from '../../servicios/servicioExpedientes.js';
 import { obtenerArchivoDocumento } from '../../servicios/servicioSolicitudes.js';
 import { abrirArchivo, descargarArchivo } from '../../utilidades/archivos.js';
 
@@ -78,7 +84,12 @@ export default function VerificacionDocumental() {
     setProcesandoArchivoId(idDocumento);
     setError(null);
     try {
-      const respuesta = await obtenerArchivoDocumento(expediente.IdSolicitud, idDocumento);
+      let respuesta;
+      try {
+        respuesta = await obtenerArchivoDocumentoExpediente(id, idDocumento);
+      } catch {
+        respuesta = await obtenerArchivoDocumento(expediente.IdSolicitud, idDocumento);
+      }
       if (accion === 'abrir') abrirArchivo(respuesta.datos, ventana);
       else descargarArchivo(respuesta.datos);
     } catch (err) {

@@ -9,6 +9,8 @@ export const asignarExpediente = (id, idEmpleado) =>
   peticion(`/expedientes/${id}/asignar`, { metodo: 'POST', cuerpo: { idEmpleado } });
 export const revisarDocumento = (id, idDocumento, datos) =>
   peticion(`/expedientes/${id}/documentos/${idDocumento}/revision`, { metodo: 'PUT', cuerpo: datos });
+export const obtenerArchivoDocumentoExpediente = (id, idDocumento) =>
+  peticion(`/expedientes/${id}/documentos/${idDocumento}/archivo`);
 export const solicitarSubsanacion = (id, observacion) =>
   peticion(`/expedientes/${id}/solicitar-subsanacion`, { metodo: 'POST', cuerpo: { observacion } });
 export const resolverElegibilidad = (id, datos) =>
