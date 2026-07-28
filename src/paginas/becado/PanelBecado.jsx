@@ -5,6 +5,7 @@ import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import { listarNoticias, obtenerPanelBecado } from '../../servicios/servicioSegmentoDos.js';
+import { listarInvestigaciones } from '../../servicios/servicioDisciplinario.js';
 
 const ACCESOS = [
   { ruta: '/becado/expediente', titulo: 'Mi expediente', descripcion: 'Consulte y actualice sus datos permitidos.' },
@@ -16,14 +17,16 @@ const ACCESOS = [
 export default function PanelBecado() {
   const [panel, setPanel] = useState(null);
   const [noticias, setNoticias] = useState([]);
+  const [investigacionActiva, setInvestigacionActiva] = useState(null);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    Promise.all([obtenerPanelBecado(), listarNoticias()])
-      .then(([respuestaPanel, respuestaNoticias]) => {
+    Promise.all([obtenerPanelBecado(), listarNoticias(), listarInvestigaciones({ estado: 'EN_REVISION' })])
+      .then(([respuestaPanel, respuestaNoticias, respuestaInvestigaciones]) => {
         setPanel(respuestaPanel.datos);
         setNoticias(respuestaNoticias.datos.slice(0, 3));
+        setInvestigacionActiva(respuestaInvestigaciones.datos[0] || null);
       })
       .catch((err) => setError(err.message))
       .finally(() => setCargando(false));
@@ -34,6 +37,16 @@ export default function PanelBecado() {
     <div className="space-y-6">
       <EncabezadoPagina titulo="Panel del estudiante becado" descripcion="Resumen del beneficio activo, alertas y gestiones disponibles." />
       {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
+      {investigacionActiva && (
+        <Link to={`/becado/descargos/${investigacionActiva.IdInvestigacion}`}>
+          <Tarjeta className="border-l-4 border-error bg-error-container/40 hover:bg-error-container/60">
+            <strong>Tiene un proceso de revisión de beca en trámite</strong>
+            <p className="mt-1 text-body-sm text-on-surface-variant">
+              Causal: {investigacionActiva.Causal}. Toque aquí para ver el detalle y presentar sus descargos.
+            </p>
+          </Tarjeta>
+        </Link>
+      )}
       {panel && (
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">

@@ -1,4 +1,5 @@
-import { Routes, Route, Link } from 'react-router-dom';
+import { useEffect } from 'react';
+import { Routes, Route, Link, useNavigate } from 'react-router-dom';
 import RutaProtegida from './rutas/RutaProtegida.jsx';
 
 import LandingPublico from './paginas/publico/LandingPublico.jsx';
@@ -73,10 +74,13 @@ import MisSesiones from './paginas/cuenta/MisSesiones.jsx';
 import MiCuenta from './paginas/cuenta/MiCuenta.jsx';
 
 import AccesoDenegado from './paginas/AccesoDenegado.jsx';
+import SesionExpirada from './paginas/SesionExpirada.jsx';
+import NoEncontrado from './paginas/NoEncontrado.jsx';
 import BotonChatAsistente from './componentes/asistente/BotonChatAsistente.jsx';
 
 const ROLES_ASPIRANTE = ['ASPIRANTE'];
 const ROLES_BECADO = ['BECADO', 'ADMINISTRADOR'];
+const ROLES_PUEDE_APELAR = ['ASPIRANTE', 'BECADO', 'ADMINISTRADOR'];
 const ROLES_ADMINISTRACION = ['ADMINISTRADOR', 'COORDINADOR_BECAS'];
 const ROLES_TRABAJO_SOCIAL = ['TRABAJADORA_SOCIAL', 'ADMINISTRADOR'];
 const ROLES_COMITE = ['COMITE_BECAS', 'ADMINISTRADOR'];
@@ -84,6 +88,16 @@ const ROLES_CONFIGURACION = ['ADMINISTRADOR'];
 const ROLES_CHATBOT_GESTION = ['ADMINISTRADOR', 'TRABAJADORA_SOCIAL'];
 
 export default function App() {
+  const navegar = useNavigate();
+
+  useEffect(() => {
+    function manejarSesionExpirada() {
+      navegar('/sesion-expirada');
+    }
+    window.addEventListener('sgbe:sesion-expirada', manejarSesionExpirada);
+    return () => window.removeEventListener('sgbe:sesion-expirada', manejarSesionExpirada);
+  }, [navegar]);
+
   return (
     <div className="flex min-h-screen flex-col">
       <main className="flex-1">
@@ -157,7 +171,7 @@ export default function App() {
 
           <Route path="/apelaciones" element={<RutaProtegida><BandejaApelaciones /></RutaProtegida>} />
           <Route path="/apelaciones/:id" element={<RutaProtegida><DetalleApelacion /></RutaProtegida>} />
-          <Route path="/apelaciones/resoluciones/:idResolucion" element={<RutaProtegida rolesPermitidos={ROLES_BECADO}><ApelacionEstudiante /></RutaProtegida>} />
+          <Route path="/apelaciones/resoluciones/:idResolucion" element={<RutaProtegida rolesPermitidos={ROLES_PUEDE_APELAR}><ApelacionEstudiante /></RutaProtegida>} />
 
           <Route path="/becado/descargos/:id" element={<RutaProtegida rolesPermitidos={ROLES_BECADO}><DescargosBecado /></RutaProtegida>} />
 
@@ -170,7 +184,10 @@ export default function App() {
           <Route path="/admin/auditoria" element={<RutaProtegida rolesPermitidos={ROLES_ADMINISTRACION}><Auditoria /></RutaProtegida>} />
           <Route path="/admin/chatbot" element={<RutaProtegida rolesPermitidos={ROLES_CHATBOT_GESTION}><ChatbotAdmin /></RutaProtegida>} />
 
-          <Route path="*" element={<AccesoDenegado />} />
+          <Route path="/403" element={<AccesoDenegado />} />
+          <Route path="/sesion-expirada" element={<SesionExpirada />} />
+
+          <Route path="*" element={<NoEncontrado />} />
         </Routes>
       </main>
 

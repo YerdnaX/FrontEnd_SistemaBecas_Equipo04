@@ -11,6 +11,12 @@ export class ErrorApi extends Error {
   }
 }
 
+function notificarSesionExpirada() {
+  if (typeof window !== 'undefined') {
+    window.dispatchEvent(new Event('sgbe:sesion-expirada'));
+  }
+}
+
 async function intentarRenovarSesion() {
   const refreshToken = obtenerRefreshToken();
   if (!refreshToken) return false;
@@ -23,6 +29,7 @@ async function intentarRenovarSesion() {
   const cuerpo = await respuesta.json().catch(() => null);
   if (!respuesta.ok || !cuerpo?.exito) {
     limpiarSesion();
+    notificarSesionExpirada();
     return false;
   }
 

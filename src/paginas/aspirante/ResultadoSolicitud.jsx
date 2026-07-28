@@ -53,6 +53,18 @@ export default function ResultadoSolicitud() {
               Consultar condiciones y formalizar
             </Link>
           )}
+
+          <div className="mt-4 border-t border-outline-variant pt-4">
+            <p className="text-body-sm text-on-surface-variant">
+              ¿No está de acuerdo con esta resolución? Puede presentar una apelación.
+            </p>
+            <Link
+              to={`/apelaciones/resoluciones/${resultado.resolucion.idResolucion}`}
+              className="mt-2 inline-block rounded-md border border-primary px-4 py-2 font-semibold text-primary"
+            >
+              Apelar esta resolución
+            </Link>
+          </div>
         </div>
       )}
     </Tarjeta>

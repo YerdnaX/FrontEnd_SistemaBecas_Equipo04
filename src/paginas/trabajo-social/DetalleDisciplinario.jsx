@@ -63,6 +63,9 @@ export default function DetalleDisciplinario() {
         <p className="text-body-md">{investigacion.NombreBecado} {investigacion.ApellidoBecado}</p>
         <p className="mt-3 text-body-sm text-on-surface-variant">Causal</p>
         <p className="text-body-md">{investigacion.Causal}</p>
+        {investigacion.FechaAnalisis && investigacion.Estado === 'EN_REVISION' && (
+          <p className="mt-3 text-body-sm font-medium text-advertencia">En análisis desde {new Date(investigacion.FechaAnalisis).toLocaleString()}</p>
+        )}
       </Tarjeta>
 
       <Tarjeta className="mt-6">
@@ -80,7 +83,7 @@ export default function DetalleDisciplinario() {
         </ul>
       </Tarjeta>
 
-      {investigacion.Estado === 'EN_DESCARGOS' && (
+      {investigacion.Estado === 'EN_REVISION' && !investigacion.FechaAnalisis && (
         <Tarjeta className="mt-6">
           <Boton onClick={() => ejecutar(() => pasarAAnalisis(id))} cargando={procesando}>
             Pasar a análisis
@@ -88,7 +91,7 @@ export default function DetalleDisciplinario() {
         </Tarjeta>
       )}
 
-      {['EN_DESCARGOS', 'EN_ANALISIS'].includes(investigacion.Estado) && (
+      {investigacion.Estado === 'EN_REVISION' && (
         <Tarjeta className="mt-6">
           <h2 className="text-headline-sm font-semibold text-on-surface">Resolver proceso</h2>
           <div className="mt-3 flex flex-col gap-4">

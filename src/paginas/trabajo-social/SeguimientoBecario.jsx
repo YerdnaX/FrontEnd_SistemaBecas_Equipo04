@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { Link, useParams } from 'react-router-dom';
 import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import TablaDatos from '../../componentes/comunes/TablaDatos.jsx';
@@ -16,6 +16,7 @@ import {
   obtenerBeneficio,
   registrarRendimiento
 } from '../../servicios/servicioSegmentoDos.js';
+import { abrirInvestigacion, listarInvestigaciones } from '../../servicios/servicioDisciplinario.js';
 
 export default function SeguimientoBecario() {
   const { id } = useParams();
@@ -24,18 +25,42 @@ export default function SeguimientoBecario() {
   const [formulario, setFormulario] = useState({ periodo: '', promedio: '', creditosMatriculados: '', creditosAprobados: '', cursosPerdidos: '', observaciones: '' });
   const [seguimiento, setSeguimiento] = useState({ periodo: '', estado: 'PENDIENTE', observaciones: '' });
   const [alerta, setAlerta] = useState({ tipo: '', nivel: 'ADVERTENCIA', descripcion: '' });
+  const [investigacionActiva, setInvestigacionActiva] = useState(null);
+  const [disciplinario, setDisciplinario] = useState({ causal: '', descripcion: '' });
+  const [abriendoDisciplinario, setAbriendoDisciplinario] = useState(false);
   const [mensaje, setMensaje] = useState(null);
 
   async function cargar() {
     try {
-      const [s, a, b] = await Promise.all([listarSeguimientos(id), listarAlertas(id), obtenerBeneficio(id)]);
+      const [s, a, b, inv] = await Promise.all([
+        listarSeguimientos(id),
+        listarAlertas(id),
+        obtenerBeneficio(id),
+        listarInvestigaciones({ estado: 'EN_REVISION' })
+      ]);
       setSeguimientos(s.datos);
       setAlertas(a.datos);
       setFormulario((actual) => ({ ...actual, periodo: actual.periodo || b.datos.Periodo || '' }));
       setSeguimiento((actual) => ({ ...actual, periodo: actual.periodo || b.datos.Periodo || '' }));
+      setInvestigacionActiva(inv.datos.find((i) => String(i.IdBecaActiva) === String(id)) || null);
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
   }
   useEffect(() => { cargar(); }, [id]);
+
+  async function abrirProcesoDisciplinario(evento) {
+    evento.preventDefault();
+    setAbriendoDisciplinario(true);
+    try {
+      await abrirInvestigacion(id, disciplinario);
+      setDisciplinario({ causal: '', descripcion: '' });
+      setMensaje({ tipo: 'exito', texto: 'Proceso disciplinario abierto y becado notificado.' });
+      cargar();
+    } catch (error) {
+      setMensaje({ tipo: 'error', texto: error.mensaje || error.message });
+    } finally {
+      setAbriendoDisciplinario(false);
+    }
+  }
 
   async function guardar(evento) {
     evento.preventDefault();
@@ -81,6 +106,39 @@ export default function SeguimientoBecario() {
     <div className="space-y-6">
       <EncabezadoPagina titulo="Seguimiento del becado" descripcion="Historial cronológico, rendimiento y alertas sin suspensión automática." />
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
+
+      <Tarjeta className={investigacionActiva ? 'border-l-4 border-advertencia' : ''}>
+        <h2 className="font-semibold text-primary">Proceso disciplinario</h2>
+        {investigacionActiva ? (
+          <div className="mt-3 flex items-center justify-between">
+            <p className="text-body-sm text-on-surface-variant">
+              Ya existe un proceso en trámite por: <strong>{investigacionActiva.Causal}</strong>
+            </p>
+            <Link
+              to={`/trabajo-social/disciplinario/${investigacionActiva.IdInvestigacion}`}
+              className="text-body-md font-semibold text-primary-container hover:underline"
+            >
+              Ver proceso →
+            </Link>
+          </div>
+        ) : (
+          <form className="mt-3 grid gap-4 md:grid-cols-2" onSubmit={abrirProcesoDisciplinario}>
+            <CampoTexto
+              etiqueta="Causal detectada"
+              value={disciplinario.causal}
+              onChange={(e) => setDisciplinario({ ...disciplinario, causal: e.target.value })}
+              required
+            />
+            <CampoAreaTexto
+              etiqueta="Descripción (opcional)"
+              value={disciplinario.descripcion}
+              onChange={(e) => setDisciplinario({ ...disciplinario, descripcion: e.target.value })}
+            />
+            <Boton type="submit" variante="peligro" cargando={abriendoDisciplinario}>Abrir proceso disciplinario</Boton>
+          </form>
+        )}
+      </Tarjeta>
+
       <Tarjeta>
         <form className="grid gap-4 md:grid-cols-3" onSubmit={guardar}>
           <CampoTexto etiqueta="Periodo" value={formulario.periodo} onChange={(e) => setFormulario({ ...formulario, periodo: e.target.value })} required />

@@ -68,7 +68,7 @@ export default function DescargosBecado() {
         )}
       </Tarjeta>
 
-      {investigacion.Estado === 'EN_DESCARGOS' && (
+      {investigacion.Estado === 'EN_REVISION' && (
         <Tarjeta className="mt-6">
           <h2 className="text-headline-sm font-semibold text-on-surface">Presentar descargos</h2>
           <form onSubmit={enviar} className="mt-3 flex flex-col gap-4">

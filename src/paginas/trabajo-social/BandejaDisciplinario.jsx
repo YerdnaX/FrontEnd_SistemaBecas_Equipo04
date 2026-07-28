@@ -7,7 +7,7 @@ import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
 import { listarInvestigaciones } from '../../servicios/servicioDisciplinario.js';
 
-const ESTADOS = ['ABIERTA', 'EN_DESCARGOS', 'EN_ANALISIS', 'RESUELTA', 'CERRADA'];
+const ESTADOS = ['EN_REVISION', 'CERRADA'];
 
 export default function BandejaDisciplinario() {
   const [investigaciones, setInvestigaciones] = useState([]);

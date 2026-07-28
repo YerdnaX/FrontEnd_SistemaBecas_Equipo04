@@ -138,6 +138,9 @@ export default function DetalleExpediente() {
         {expediente.Estado === 'EVALUADA' && (
           <Boton onClick={manejarEnviarComite} cargando={procesando}>Enviar al comité</Boton>
         )}
+        <Link to={`/trabajo-social/expedientes/${id}/cierre`} className="text-body-md font-semibold text-primary-container hover:underline">
+          Cierre del expediente →
+        </Link>
       </div>
 
       <Tarjeta>
