@@ -5,6 +5,7 @@ const URL_BASE = import.meta.env.VITE_API_URL || 'http://localhost:3000/api/v1';
 export class ErrorApi extends Error {
   constructor({ codigo, mensaje, errores, estadoHttp }) {
     super(mensaje);
+    this.mensaje = mensaje;
     this.codigo = codigo;
     this.errores = errores || [];
     this.estadoHttp = estadoHttp;

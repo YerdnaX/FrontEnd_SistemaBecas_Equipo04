@@ -31,6 +31,14 @@ function TarjetaResumen({ valor, etiqueta, destacar }) {
   );
 }
 
+function convocatoriaEstaVigente(convocatoria) {
+  const ahora = Date.now();
+  const inicio = convocatoria?.FechaInicio ? new Date(convocatoria.FechaInicio).getTime() : NaN;
+  const fin = convocatoria?.FechaFin ? new Date(convocatoria.FechaFin).getTime() : NaN;
+  if (!Number.isFinite(inicio) || !Number.isFinite(fin)) return false;
+  return inicio <= ahora && ahora <= fin;
+}
+
 export default function PanelAspirante() {
   const { usuario } = useSesion();
   const [panel, setPanel] = useState(null);
@@ -90,7 +98,7 @@ export default function PanelAspirante() {
   if (error) return <AlertaMensaje tipo="error">{error}</AlertaMensaje>;
 
   const convocatoriasDisponibles = convocatorias.filter(
-    (c) => !panel.solicitudes.some((s) => s.IdConvocatoria === c.IdConvocatoria)
+    (c) => convocatoriaEstaVigente(c) && !panel.solicitudes.some((s) => s.IdConvocatoria === c.IdConvocatoria)
   );
   const solicitudesBorrador = panel.solicitudes.filter((s) => s.Estado === 'BORRADOR').length;
   const solicitudesEnProceso = panel.solicitudes.filter(
