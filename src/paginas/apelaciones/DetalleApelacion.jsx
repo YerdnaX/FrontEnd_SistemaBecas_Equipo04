@@ -73,7 +73,7 @@ export default function DetalleApelacion() {
   if (cargando) return <EstadoCarga />;
   if (!apelacion) return error ? <AlertaMensaje tipo="error">{error}</AlertaMensaje> : null;
 
-  const enTramite = ['RECIBIDA', 'EN_REVISION'].includes(apelacion.Estado);
+  const enTramite = ['PRESENTADA', 'EN_REVISION'].includes(apelacion.Estado);
 
   return (
     <div className="mx-auto max-w-3xl">

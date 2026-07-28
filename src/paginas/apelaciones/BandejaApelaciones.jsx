@@ -7,7 +7,7 @@ import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
 import { listarApelaciones } from '../../servicios/servicioApelaciones.js';
 
-const ESTADOS = ['RECIBIDA', 'EN_REVISION', 'RESUELTA_A_FAVOR', 'RESUELTA_EN_CONTRA', 'RECHAZADA_POR_PLAZO'];
+const ESTADOS = ['PRESENTADA', 'EN_REVISION', 'RESUELTA'];
 
 export default function BandejaApelaciones() {
   const [apelaciones, setApelaciones] = useState([]);

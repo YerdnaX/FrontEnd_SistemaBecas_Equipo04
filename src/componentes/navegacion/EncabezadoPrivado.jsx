@@ -36,12 +36,12 @@ function estructuraMenu(roles = [], permisos = []) {
       enlace('/becado/expediente', 'Mi expediente'),
       enlace('/becado/justificaciones', 'Justificaciones'),
       enlace('/becado/renovaciones/nueva', 'Renovación'),
-      enlace('/apelaciones', 'Mis apelaciones'),
     ]);
   }
 
   if (roles.includes('ASPIRANTE') || roles.includes('BECADO')) {
     items.push(enlace('/consultas', 'Consultas'));
+    items.push(enlace('/apelaciones', 'Mis apelaciones'));
   }
 
   if (roles.includes('ADMINISTRADOR') || roles.includes('COORDINADOR_BECAS')) {

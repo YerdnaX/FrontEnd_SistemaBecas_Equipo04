@@ -80,7 +80,6 @@ import BotonChatAsistente from './componentes/asistente/BotonChatAsistente.jsx';
 
 const ROLES_ASPIRANTE = ['ASPIRANTE'];
 const ROLES_BECADO = ['BECADO', 'ADMINISTRADOR'];
-const ROLES_PUEDE_APELAR = ['ASPIRANTE', 'BECADO', 'ADMINISTRADOR'];
 const ROLES_ADMINISTRACION = ['ADMINISTRADOR', 'COORDINADOR_BECAS'];
 const ROLES_TRABAJO_SOCIAL = ['TRABAJADORA_SOCIAL', 'ADMINISTRADOR'];
 const ROLES_COMITE = ['COMITE_BECAS', 'ADMINISTRADOR'];
@@ -171,7 +170,7 @@ export default function App() {
 
           <Route path="/apelaciones" element={<RutaProtegida><BandejaApelaciones /></RutaProtegida>} />
           <Route path="/apelaciones/:id" element={<RutaProtegida><DetalleApelacion /></RutaProtegida>} />
-          <Route path="/apelaciones/resoluciones/:idResolucion" element={<RutaProtegida rolesPermitidos={ROLES_PUEDE_APELAR}><ApelacionEstudiante /></RutaProtegida>} />
+          <Route path="/apelaciones/resoluciones/:idResolucion" element={<RutaProtegida permisosRequeridos={['APELACION_CREAR_PROPIA']}><ApelacionEstudiante /></RutaProtegida>} />
 
           <Route path="/becado/descargos/:id" element={<RutaProtegida rolesPermitidos={ROLES_BECADO}><DescargosBecado /></RutaProtegida>} />
 
