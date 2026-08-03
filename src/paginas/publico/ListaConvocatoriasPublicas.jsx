@@ -5,8 +5,9 @@ import PiePagina from '../../componentes/navegacion/PiePagina.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
+import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
 import { listarConvocatoriasPublicas } from '../../servicios/servicioPublico.js';
-import { formatearFecha } from '../../utilidades/formato.js';
+import { formatearFechaHora, estadoTemporalConvocatoria } from '../../utilidades/formato.js';
 
 function diasRestantes(fechaFin) {
   const diferenciaMs = new Date(fechaFin) - new Date();
@@ -44,19 +45,22 @@ export default function ListaConvocatoriasPublicas() {
           {convocatorias.map((convocatoria) => {
             const restantes = diasRestantes(convocatoria.FechaFin);
             const cierraPronto = restantes <= 7;
+            const estadoTemporal = estadoTemporalConvocatoria(convocatoria.FechaInicio, convocatoria.FechaFin);
             return (
               <div key={convocatoria.IdConvocatoria}
                 className={`rounded-lg border-2 p-6 shadow-elevation-l2 ${cierraPronto ? 'border-categoria-urgente bg-categoria-urgente-container' : 'border-convocatoria-destacada bg-convocatoria-destacada-container'}`}>
                 <div className="flex flex-wrap items-center justify-between gap-2">
                   <span className="text-label-sm font-semibold uppercase text-primary-container">{convocatoria.NombreTipoBeca}</span>
-                  <span className={`inline-block rounded-full px-3 py-1 text-label-sm font-bold text-white ${cierraPronto ? 'bg-categoria-urgente' : 'bg-convocatoria-destacada'}`}>
-                    {cierraPronto ? `¡Cierra en ${restantes} día(s)!` : 'Convocatoria abierta'}
-                  </span>
+                  <EtiquetaEstado estado={estadoTemporal} />
                 </div>
                 <p className="mt-2 text-headline-sm font-bold text-primary">{convocatoria.Nombre}</p>
                 <p className="mt-2 text-body-sm text-on-surface-variant">{convocatoria.Descripcion}</p>
                 <p className="mt-3 text-body-sm font-semibold text-on-surface-variant">Cupos disponibles: {convocatoria.Cupos}</p>
-                <p className="text-body-sm text-on-surface-variant">Cierra: {formatearFecha(convocatoria.FechaFin)}</p>
+                <p className="text-body-sm text-on-surface-variant">Abre: {formatearFechaHora(convocatoria.FechaInicio)}</p>
+                <p className="text-body-sm text-on-surface-variant">Cierra: {formatearFechaHora(convocatoria.FechaFin)}</p>
+                {cierraPronto && estadoTemporal === 'ABIERTA' && (
+                  <p className="mt-1 text-label-sm font-bold text-categoria-urgente">¡Cierra en {restantes} día(s)!</p>
+                )}
                 <Link to={`/convocatorias/${convocatoria.IdConvocatoria}`} className="mt-3 inline-block text-body-sm font-semibold text-primary-container hover:underline">
                   Ver detalle →
                 </Link>

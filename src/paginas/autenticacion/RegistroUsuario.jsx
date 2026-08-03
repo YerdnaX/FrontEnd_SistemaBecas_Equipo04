@@ -3,14 +3,15 @@ import { Link, useNavigate } from 'react-router-dom';
 import EncabezadoPublico from '../../componentes/navegacion/EncabezadoPublico.jsx';
 import PiePagina from '../../componentes/navegacion/PiePagina.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
+import CampoCedula from '../../componentes/formularios/CampoCedula.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import { registrarUsuario, verificarRegistro } from '../../servicios/servicioAutenticacion.js';
-import { contrasenaEsSegura } from '../../utilidades/validaciones.js';
+import { contrasenaEsSegura, cedulaEsValida } from '../../utilidades/validaciones.js';
 
 const FORMULARIO_INICIAL = {
-  nombre: '', primerApellido: '', segundoApellido: '', correo: '', contrasena: '', confirmacion: '', aceptaTerminos: false
+  cedula: '', nombre: '', primerApellido: '', segundoApellido: '', correo: '', contrasena: '', confirmacion: '', aceptaTerminos: false
 };
 
 export default function RegistroUsuario() {
@@ -33,6 +34,7 @@ export default function RegistroUsuario() {
 
   function validar() {
     const nuevosErrores = {};
+    if (!cedulaEsValida(formulario.cedula)) nuevosErrores.cedula = 'La cédula debe contener exactamente 9 dígitos numéricos.';
     if (!formulario.nombre.trim()) nuevosErrores.nombre = 'El nombre es obligatorio.';
     if (!formulario.primerApellido.trim()) nuevosErrores.primerApellido = 'El primer apellido es obligatorio.';
     if (!formulario.correo.trim()) nuevosErrores.correo = 'El correo es obligatorio.';
@@ -122,6 +124,17 @@ export default function RegistroUsuario() {
           ) : (
             <form className="mt-6 flex flex-col gap-4" onSubmit={manejarEnvio}>
               {errorGeneral && <AlertaMensaje tipo="error">{errorGeneral}</AlertaMensaje>}
+              <CampoCedula
+                cedula={formulario.cedula}
+                onCedulaChange={(valor) => actualizarCampo('cedula', valor)}
+                onDatosEncontrados={(datos) => setFormulario((actual) => ({
+                  ...actual,
+                  nombre: datos.nombre || actual.nombre,
+                  primerApellido: datos.primerApellido || actual.primerApellido,
+                  segundoApellido: datos.segundoApellido || actual.segundoApellido
+                }))}
+                error={errores.cedula}
+              />
               <div className="grid gap-4 sm:grid-cols-2">
                 <CampoTexto etiqueta="Nombre" value={formulario.nombre} error={errores.nombre}
                   onChange={(e) => actualizarCampo('nombre', e.target.value)} />

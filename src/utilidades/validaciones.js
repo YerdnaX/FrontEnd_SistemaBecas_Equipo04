@@ -6,3 +6,9 @@ export function contrasenaEsSegura(contrasena) {
 export function correoEsValido(correo) {
   return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(String(correo || '').trim());
 }
+
+// Cédula física costarricense: exactamente 9 dígitos, sin guiones ni
+// espacios (normalizados antes de validar).
+export function cedulaEsValida(cedula) {
+  return /^\d{9}$/.test(String(cedula || '').replace(/[\s-]/g, ''));
+}

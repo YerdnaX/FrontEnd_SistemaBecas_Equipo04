@@ -16,6 +16,7 @@ import PanelAspirante from './paginas/aspirante/PanelAspirante.jsx';
 import ContinuarSolicitud from './paginas/aspirante/ContinuarSolicitud.jsx';
 import SolicitudDatosPersonales from './paginas/aspirante/SolicitudDatosPersonales.jsx';
 import SolicitudDatosAcademicos from './paginas/aspirante/SolicitudDatosAcademicos.jsx';
+import SolicitudNotasSimuladas from './paginas/aspirante/SolicitudNotasSimuladas.jsx';
 import SolicitudDatosSocioeconomicos from './paginas/aspirante/SolicitudDatosSocioeconomicos.jsx';
 import CargaDocumental from './paginas/aspirante/CargaDocumental.jsx';
 import RevisionEnvioSolicitud from './paginas/aspirante/RevisionEnvioSolicitud.jsx';
@@ -116,6 +117,7 @@ export default function App() {
           <Route path="/aspirante/solicitudes/:id/continuar" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><ContinuarSolicitud /></RutaProtegida>} />
       <Route path="/aspirante/solicitudes/:id/personal" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><SolicitudDatosPersonales /></RutaProtegida>} />
       <Route path="/aspirante/solicitudes/:id/academicos" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><SolicitudDatosAcademicos /></RutaProtegida>} />
+      <Route path="/aspirante/solicitudes/:id/notas" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><SolicitudNotasSimuladas /></RutaProtegida>} />
       <Route path="/aspirante/solicitudes/:id/socioeconomicos" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><SolicitudDatosSocioeconomicos /></RutaProtegida>} />
       <Route path="/aspirante/solicitudes/:id/documentos" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><CargaDocumental /></RutaProtegida>} />
       <Route path="/aspirante/solicitudes/:id/revision" element={<RutaProtegida rolesPermitidos={ROLES_ASPIRANTE}><RevisionEnvioSolicitud /></RutaProtegida>} />
@@ -134,10 +136,12 @@ export default function App() {
       <Route path="/registro-academico/expedientes/:id" element={<RutaProtegida permisosRequeridos={['VALIDACION_ACADEMICA_GESTIONAR']}><ValidacionAcademica /></RutaProtegida>} />
 
       <Route path="/admin" element={<RutaProtegida rolesPermitidos={ROLES_ADMINISTRACION}><PanelAdministrativo /></RutaProtegida>} />
-      <Route path="/admin/tipos-beca" element={<RutaProtegida rolesPermitidos={ROLES_ADMINISTRACION}><GestionTiposBeca /></RutaProtegida>} />
-      <Route path="/admin/convocatorias" element={<RutaProtegida rolesPermitidos={ROLES_ADMINISTRACION}><ListaConvocatoriasAdministrativas /></RutaProtegida>} />
-      <Route path="/admin/convocatorias/:id" element={<RutaProtegida rolesPermitidos={ROLES_ADMINISTRACION}><FormularioConvocatoria /></RutaProtegida>} />
-      <Route path="/admin/convocatorias/:id/etapas" element={<RutaProtegida rolesPermitidos={ROLES_ADMINISTRACION}><GestionEtapasConvocatoria /></RutaProtegida>} />
+      {/* Gestión operativa de becas/convocatorias es de Trabajadora Social (Segmento 05);
+          Administrador/Coordinador de Becas conservan acceso de solo lectura vía *_VER. */}
+      <Route path="/admin/tipos-beca" element={<RutaProtegida permisosRequeridos={['TIPO_BECA_VER']}><GestionTiposBeca /></RutaProtegida>} />
+      <Route path="/admin/convocatorias" element={<RutaProtegida permisosRequeridos={['CONVOCATORIA_VER']}><ListaConvocatoriasAdministrativas /></RutaProtegida>} />
+      <Route path="/admin/convocatorias/:id" element={<RutaProtegida permisosRequeridos={['CONVOCATORIA_VER']}><FormularioConvocatoria /></RutaProtegida>} />
+      <Route path="/admin/convocatorias/:id/etapas" element={<RutaProtegida permisosRequeridos={['CONVOCATORIA_VER']}><GestionEtapasConvocatoria /></RutaProtegida>} />
       <Route path="/admin/noticias" element={<RutaProtegida permisosRequeridos={['NOTICIA_GESTIONAR']}><GestionNoticias /></RutaProtegida>} />
       <Route path="/admin/usuarios" element={<RutaProtegida permisosRequeridos={['USUARIO_GESTIONAR']}><GestionUsuarios /></RutaProtegida>} />
       <Route path="/admin/usuarios/:id" element={<RutaProtegida permisosRequeridos={['USUARIO_GESTIONAR']}><FormularioUsuario /></RutaProtegida>} />

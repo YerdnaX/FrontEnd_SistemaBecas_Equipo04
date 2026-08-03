@@ -137,7 +137,7 @@ export default function SolicitudDatosAcademicos() {
         promedio: Number(formulario.promedio),
         creditosMatriculados: Number(formulario.creditosMatriculados)
       });
-      navegar(`/aspirante/solicitudes/${id}/socioeconomicos`);
+      navegar(`/aspirante/solicitudes/${id}/notas`);
     } catch (err) {
       setError(err.mensaje || 'No fue posible guardar los datos académicos.');
     } finally {

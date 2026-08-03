@@ -59,6 +59,7 @@ export default function BandejaExpedientes() {
               <tr>
                 <th className="px-4 py-3">Código</th>
                 <th className="px-4 py-3">Aspirante</th>
+                <th className="px-4 py-3">Cédula</th>
                 <th className="px-4 py-3">Convocatoria</th>
                 <th className="px-4 py-3">Estado</th>
                 <th className="px-4 py-3">Responsable</th>
@@ -70,6 +71,7 @@ export default function BandejaExpedientes() {
                 <tr key={expediente.IdExpediente} className="border-t border-outline-variant">
                   <td className="px-4 py-3">{expediente.CodigoExpediente}</td>
                   <td className="px-4 py-3">{expediente.NombreAspirante} {expediente.ApellidoAspirante}</td>
+                  <td className="px-4 py-3">{expediente.CedulaAspirante || '—'}</td>
                   <td className="px-4 py-3">{expediente.NombreConvocatoria}</td>
                   <td className="px-4 py-3"><EtiquetaEstado estado={expediente.Estado} /></td>
                   <td className="px-4 py-3">{expediente.ResponsableAsignado || 'Sin asignar'}</td>

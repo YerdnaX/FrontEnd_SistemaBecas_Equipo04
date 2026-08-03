@@ -6,8 +6,9 @@ import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
+import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
 import { obtenerConvocatoriaPublica } from '../../servicios/servicioPublico.js';
-import { formatearFecha } from '../../utilidades/formato.js';
+import { formatearFechaHora, estadoTemporalConvocatoria } from '../../utilidades/formato.js';
 import { useSesion } from '../../hooks/useSesion.js';
 
 export default function DetalleConvocatoriaPublica() {
@@ -33,15 +34,18 @@ export default function DetalleConvocatoriaPublica() {
 
         {convocatoria && (
           <Tarjeta>
-            <p className="text-label-sm font-semibold uppercase text-primary-container">{convocatoria.NombreTipoBeca}</p>
+            <div className="flex flex-wrap items-center justify-between gap-2">
+              <p className="text-label-sm font-semibold uppercase text-primary-container">{convocatoria.NombreTipoBeca}</p>
+              <EtiquetaEstado estado={estadoTemporalConvocatoria(convocatoria.FechaInicio, convocatoria.FechaFin)} />
+            </div>
             <h1 className="mt-1 text-headline-lg font-semibold text-on-surface">{convocatoria.Nombre}</h1>
             <p className="mt-4 text-body-md text-on-surface-variant">{convocatoria.Descripcion}</p>
 
             <div className="mt-6 grid gap-3 sm:grid-cols-2">
               <p><span className="font-semibold">Cupos:</span> {convocatoria.Cupos}</p>
               <p><span className="font-semibold">Cobertura:</span> {convocatoria.PorcentajeCobertura}%</p>
-              <p><span className="font-semibold">Apertura:</span> {formatearFecha(convocatoria.FechaInicio)}</p>
-              <p><span className="font-semibold">Cierre:</span> {formatearFecha(convocatoria.FechaFin)}</p>
+              <p><span className="font-semibold">Apertura:</span> {formatearFechaHora(convocatoria.FechaInicio)}</p>
+              <p><span className="font-semibold">Cierre:</span> {formatearFechaHora(convocatoria.FechaFin)}</p>
             </div>
 
             <h2 className="mt-6 text-headline-sm font-semibold text-primary">Requisitos</h2>

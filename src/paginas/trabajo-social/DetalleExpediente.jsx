@@ -8,6 +8,7 @@ import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
 import { obtenerExpediente, asignarExpediente, enviarComite } from '../../servicios/servicioExpedientes.js';
 import { obtenerSolicitud } from '../../servicios/servicioSolicitudes.js';
+import { obtenerTipoBeca } from '../../servicios/servicioTiposBeca.js';
 import { formatearFecha } from '../../utilidades/formato.js';
 import { useSesion } from '../../hooks/useSesion.js';
 
@@ -16,6 +17,7 @@ export default function DetalleExpediente() {
   const { tienePermiso } = useSesion();
   const [expediente, setExpediente] = useState(null);
   const [solicitud, setSolicitud] = useState(null);
+  const [tipoBeca, setTipoBeca] = useState(null);
   const [idEmpleado, setIdEmpleado] = useState('');
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -28,6 +30,9 @@ export default function DetalleExpediente() {
       setExpediente(respuesta.datos);
       const respuestaSolicitud = await obtenerSolicitud(respuesta.datos.IdSolicitud);
       setSolicitud(respuestaSolicitud.datos);
+      if (respuestaSolicitud.datos.IdTipoBeca) {
+        obtenerTipoBeca(respuestaSolicitud.datos.IdTipoBeca).then((r) => setTipoBeca(r.datos)).catch(() => setTipoBeca(null));
+      }
     } catch (err) {
       setError(err.mensaje);
     } finally {
@@ -108,6 +113,34 @@ export default function DetalleExpediente() {
               <li>Situación laboral: {solicitud.datosSocioeconomicos.SituacionLaboral}</li>
             </ul>
           ) : <p className="mt-2 text-body-sm text-on-surface-variant">Sin datos.</p>}
+        </Tarjeta>
+
+        <Tarjeta>
+          <h2 className="text-headline-sm font-semibold text-on-surface">Criterios de aceptación de la beca</h2>
+          {tipoBeca?.criterios?.length > 0 ? (
+            <ul className="mt-2 flex flex-col gap-1 text-body-sm text-on-surface-variant">
+              {tipoBeca.criterios.map((criterio) => (
+                <li key={criterio.IdCriterio}>
+                  {criterio.Nombre} {criterio.Obligatorio ? '(obligatorio)' : '(opcional)'}
+                </li>
+              ))}
+            </ul>
+          ) : <p className="mt-2 text-body-sm text-on-surface-variant">Esta beca no tiene criterios definidos.</p>}
+        </Tarjeta>
+
+        <Tarjeta>
+          <h2 className="text-headline-sm font-semibold text-on-surface">Notas simuladas del periodo</h2>
+          {solicitud?.notasSimuladas ? (
+            <div className="mt-2">
+              <p className="text-label-sm font-semibold uppercase text-advertencia">Información simulada, no oficial</p>
+              <ul className="mt-2 flex flex-col gap-1 text-body-sm text-on-surface-variant">
+                {solicitud.notasSimuladas.materias.map((materia) => (
+                  <li key={materia.IdMateriaNota}>{materia.NombreMateria} ({materia.Periodo}): {materia.Nota}</li>
+                ))}
+              </ul>
+              <p className="mt-2 font-semibold text-on-surface">Promedio: {solicitud.notasSimuladas.Promedio}</p>
+            </div>
+          ) : <p className="mt-2 text-body-sm text-on-surface-variant">El aspirante no registró notas simuladas.</p>}
         </Tarjeta>
 
         <Tarjeta>

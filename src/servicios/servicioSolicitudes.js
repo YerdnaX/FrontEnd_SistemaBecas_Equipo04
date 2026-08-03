@@ -9,6 +9,9 @@ export const guardarDatosAcademicos = (id, datos) =>
   peticion(`/solicitudes/${id}/datos-academicos`, { metodo: 'PUT', cuerpo: datos });
 export const guardarDatosSocioeconomicos = (id, datos) =>
   peticion(`/solicitudes/${id}/datos-socioeconomicos`, { metodo: 'PUT', cuerpo: datos });
+export const obtenerNotasSimuladas = (id) => peticion(`/solicitudes/${id}/notas-simuladas`);
+export const guardarNotasSimuladas = (id, datos) =>
+  peticion(`/solicitudes/${id}/notas-simuladas`, { metodo: 'PUT', cuerpo: datos });
 export const listarDocumentos = (id) => peticion(`/solicitudes/${id}/documentos`);
 export const cargarDocumento = (id, datos) => peticion(`/solicitudes/${id}/documentos`, { metodo: 'POST', cuerpo: datos });
 export const eliminarDocumento = (id, idDocumento) =>

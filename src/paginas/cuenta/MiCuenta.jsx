@@ -151,6 +151,8 @@ export default function MiCuenta() {
           <div className="mt-4 rounded-2xl bg-surface-container-low p-4">
             <p className="text-label-sm uppercase tracking-wide text-on-surface-variant">Nombre completo</p>
             <p className="mt-1 text-body-lg font-semibold text-on-surface">{nombresCompletos}</p>
+            <p className="mt-4 text-label-sm uppercase tracking-wide text-on-surface-variant">Cédula</p>
+            <p className="mt-1 text-body-md font-semibold text-on-surface">{perfil?.cedula || 'No registrada'}</p>
             <p className="mt-4 text-label-sm uppercase tracking-wide text-on-surface-variant">Tipo de usuario</p>
             <p className="mt-1 text-body-md font-semibold text-on-surface">{tipoUsuario}</p>
           </div>

@@ -4,3 +4,4 @@ export const obtenerInicio = () => peticion('/publico/inicio', { conAutenticacio
 export const listarConvocatoriasPublicas = () => peticion('/publico/convocatorias', { conAutenticacion: false });
 export const obtenerConvocatoriaPublica = (id) => peticion(`/publico/convocatorias/${id}`, { conAutenticacion: false });
 export const listarNoticiasPublicas = () => peticion('/publico/noticias', { conAutenticacion: false });
+export const obtenerLimitesArchivo = () => peticion('/publico/limites-archivo', { conAutenticacion: false });

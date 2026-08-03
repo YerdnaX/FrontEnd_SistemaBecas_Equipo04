@@ -3,6 +3,7 @@ import { Link, useParams } from 'react-router-dom';
 const PASOS = [
   { clave: 'personal', etiqueta: 'Datos personales' },
   { clave: 'academicos', etiqueta: 'Datos académicos' },
+  { clave: 'notas', etiqueta: 'Notas simuladas' },
   { clave: 'socioeconomicos', etiqueta: 'Datos socioeconómicos' },
   { clave: 'documentos', etiqueta: 'Documentos' },
   { clave: 'revision', etiqueta: 'Revisión y envío' }
@@ -33,8 +34,8 @@ function obtenerEstadoVisible(estadoSolicitud, pasoActual) {
   if (estadoSolicitud && ESTADOS_SOLICITUD[estadoSolicitud]) return ESTADOS_SOLICITUD[estadoSolicitud];
   const indice = obtenerIndicePasoActual(pasoActual);
   if (indice === 0) return ESTADOS_SOLICITUD.BORRADOR;
-  if (indice === 1 || indice === 2) return ESTADOS_SOLICITUD.ENVIADA;
-  if (indice === 3) return ESTADOS_SOLICITUD.EN_REVISION_DOCUMENTAL;
+  if (indice === 1 || indice === 2 || indice === 3) return ESTADOS_SOLICITUD.ENVIADA;
+  if (indice === 4) return ESTADOS_SOLICITUD.EN_REVISION_DOCUMENTAL;
   return ESTADOS_SOLICITUD.EN_COMITE;
 }
 

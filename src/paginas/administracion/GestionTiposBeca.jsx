@@ -7,10 +7,14 @@ import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
 import { listarTiposBeca, crearTipoBeca, actualizarTipoBeca, cambiarEstadoTipoBeca, obtenerTipoBeca } from '../../servicios/servicioTiposBeca.js';
+import { useSesion } from '../../hooks/useSesion.js';
 
-const FORMULARIO_INICIAL = { nombre: '', descripcion: '', porcentajeCobertura: '', rubros: [], criterios: [] };
+const FORMULARIO_INICIAL = { nombre: '', descripcion: '', porcentajeCobertura: '', rubros: [], criterios: [], requisitos: [] };
 
 export default function GestionTiposBeca() {
+  const { tienePermiso } = useSesion();
+  const puedeCrear = tienePermiso('TIPO_BECA_CREAR');
+  const puedeEditar = tienePermiso('TIPO_BECA_EDITAR');
   const [tiposBeca, setTiposBeca] = useState([]);
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
@@ -66,6 +70,18 @@ export default function GestionTiposBeca() {
     setFormulario((actual) => ({ ...actual, criterios: actual.criterios.filter((_, i) => i !== indice) }));
   }
 
+  function agregarRequisito() {
+    setFormulario((actual) => ({ ...actual, requisitos: [...actual.requisitos, { nombre: '', descripcion: '', obligatorio: true }] }));
+  }
+  function actualizarRequisito(indice, campo, valor) {
+    setFormulario((actual) => ({
+      ...actual, requisitos: actual.requisitos.map((r, i) => (i === indice ? { ...r, [campo]: valor } : r))
+    }));
+  }
+  function quitarRequisito(indice) {
+    setFormulario((actual) => ({ ...actual, requisitos: actual.requisitos.filter((_, i) => i !== indice) }));
+  }
+
   function nuevoTipoBeca() {
     setFormulario(FORMULARIO_INICIAL);
     setIdEnEdicion(null);
@@ -80,7 +96,8 @@ export default function GestionTiposBeca() {
       descripcion: tipoBeca.Descripcion || '',
       porcentajeCobertura: tipoBeca.PorcentajeCobertura,
       rubros: tipoBeca.rubros.map((r) => ({ nombre: r.Nombre, porcentaje: r.Porcentaje })),
-      criterios: tipoBeca.criterios.map((c) => ({ nombre: c.Nombre, obligatorio: c.Obligatorio }))
+      criterios: tipoBeca.criterios.map((c) => ({ nombre: c.Nombre, obligatorio: c.Obligatorio })),
+      requisitos: (tipoBeca.requisitos || []).map((r) => ({ nombre: r.Nombre, descripcion: r.Descripcion || '', obligatorio: r.Obligatorio }))
     });
     setIdEnEdicion(id);
     setMostrarFormulario(true);
@@ -122,7 +139,7 @@ export default function GestionTiposBeca() {
     <div>
       <div className="flex items-center justify-between">
         <h1 className="text-headline-lg font-semibold text-primary">Gestión de tipos de beca</h1>
-        <Boton onClick={nuevoTipoBeca}>Nuevo tipo de beca</Boton>
+        {puedeCrear && <Boton onClick={nuevoTipoBeca}>Nuevo tipo de beca</Boton>}
       </div>
 
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
@@ -178,8 +195,29 @@ export default function GestionTiposBeca() {
               ))}
             </div>
 
+            <div>
+              <div className="flex items-center justify-between">
+                <p className="font-semibold text-on-surface">Requisitos documentales de la beca</p>
+                <Boton type="button" variante="secundario" onClick={agregarRequisito}>Agregar requisito</Boton>
+              </div>
+              <p className="mt-1 text-body-sm text-on-surface-variant">
+                Se copian automáticamente a cada convocatoria nueva de esta beca; ninguna otra beca los comparte.
+              </p>
+              {formulario.requisitos.map((requisito, indice) => (
+                <div key={indice} className="mt-2 flex items-center gap-2">
+                  <CampoTexto className="flex-1" etiqueta="Nombre" value={requisito.nombre} onChange={(e) => actualizarRequisito(indice, 'nombre', e.target.value)} />
+                  <CampoTexto className="flex-1" etiqueta="Descripción" value={requisito.descripcion} onChange={(e) => actualizarRequisito(indice, 'descripcion', e.target.value)} />
+                  <label className="flex items-center gap-1 text-body-sm">
+                    <input type="checkbox" checked={requisito.obligatorio} onChange={(e) => actualizarRequisito(indice, 'obligatorio', e.target.checked)} />
+                    Obligatorio
+                  </label>
+                  <button type="button" className="text-error" onClick={() => quitarRequisito(indice)}>Quitar</button>
+                </div>
+              ))}
+            </div>
+
             <div className="flex gap-2">
-              <Boton type="submit" cargando={guardando}>Guardar</Boton>
+              {(idEnEdicion ? puedeEditar : puedeCrear) && <Boton type="submit" cargando={guardando}>Guardar</Boton>}
               <Boton type="button" variante="secundario" onClick={() => setMostrarFormulario(false)}>Cancelar</Boton>
             </div>
           </form>
@@ -207,10 +245,14 @@ export default function GestionTiposBeca() {
                     <td className="px-4 py-3">{tipoBeca.PorcentajeCobertura}%</td>
                     <td className="px-4 py-3"><EtiquetaEstado estado={tipoBeca.Activo ? 'ACTIVO' : 'INACTIVO'} /></td>
                     <td className="px-4 py-3">
-                      <button className="mr-3 text-primary-container hover:underline" onClick={() => editarTipoBeca(tipoBeca.IdTipoBeca)}>Editar</button>
-                      <button className="text-error hover:underline" onClick={() => manejarCambioEstado(tipoBeca.IdTipoBeca, !tipoBeca.Activo)}>
-                        {tipoBeca.Activo ? 'Desactivar' : 'Activar'}
-                      </button>
+                      {puedeEditar ? (
+                        <>
+                          <button className="mr-3 text-primary-container hover:underline" onClick={() => editarTipoBeca(tipoBeca.IdTipoBeca)}>Editar</button>
+                          <button className="text-error hover:underline" onClick={() => manejarCambioEstado(tipoBeca.IdTipoBeca, !tipoBeca.Activo)}>
+                            {tipoBeca.Activo ? 'Desactivar' : 'Activar'}
+                          </button>
+                        </>
+                      ) : <span className="text-on-surface-variant">Solo lectura</span>}
                     </td>
                   </tr>
                 ))}

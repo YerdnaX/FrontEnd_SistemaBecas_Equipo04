@@ -34,9 +34,10 @@ export default function GestionUsuarios() {
     <div className="space-y-6">
       <EncabezadoPagina titulo="Gestión de usuarios" descripcion="Administre acceso, bloqueo y roles sin eliminar referencias históricas." acciones={<Link to="/admin/usuarios/nuevo"><Boton>Nuevo usuario</Boton></Link>} />
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
-      <div className="flex max-w-lg items-end gap-2"><CampoTexto etiqueta="Buscar usuarios" value={buscar} onChange={(e) => setBuscar(e.target.value)} /><Boton onClick={() => pagina === 1 ? cargar() : setPagina(1)}>Buscar</Boton></div>
+      <div className="flex max-w-lg items-end gap-2"><CampoTexto etiqueta="Buscar por nombre, correo o cédula" value={buscar} onChange={(e) => setBuscar(e.target.value)} /><Boton onClick={() => pagina === 1 ? cargar() : setPagina(1)}>Buscar</Boton></div>
       <TablaDatos filas={usuarios} clave="IdUsuario" columnas={[
         { clave: 'usuario', etiqueta: 'Usuario', render: (fila) => <div><strong>{fila.Nombre} {fila.PrimerApellido}</strong><span className="block text-label-sm text-on-surface-variant">{fila.Correo}</span></div> },
+        { clave: 'Cedula', etiqueta: 'Cédula', render: (fila) => fila.Cedula || '—' },
         { clave: 'Roles', etiqueta: 'Roles', render: (fila) => fila.Roles.join(', ') || 'Sin rol' },
         { clave: 'Estado', etiqueta: 'Estado' },
         { clave: 'FechaCreacion', etiqueta: 'Creación', render: (fila) => new Date(fila.FechaCreacion).toLocaleDateString('es-CR') },

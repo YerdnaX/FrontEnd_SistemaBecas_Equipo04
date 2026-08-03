@@ -8,6 +8,7 @@ import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
 import { obtenerConvocatoria, listarEtapas, actualizarEtapa } from '../../servicios/servicioConvocatorias.js';
+import { useSesion } from '../../hooks/useSesion.js';
 
 const OPCIONES_ESTADO = [
   { valor: 'PROGRAMADA', etiqueta: 'Programada' },
@@ -17,6 +18,8 @@ const OPCIONES_ESTADO = [
 
 export default function GestionEtapasConvocatoria() {
   const { id } = useParams();
+  const { tienePermiso } = useSesion();
+  const puedeGestionar = tienePermiso('ETAPA_GESTIONAR');
   const [convocatoria, setConvocatoria] = useState(null);
   const [etapas, setEtapas] = useState([]);
   const [cargando, setCargando] = useState(true);
@@ -29,7 +32,7 @@ export default function GestionEtapasConvocatoria() {
       const [respuestaConvocatoria, respuestaEtapas] = await Promise.all([obtenerConvocatoria(id), listarEtapas(id)]);
       setConvocatoria(respuestaConvocatoria.datos);
       setEtapas(respuestaEtapas.datos.map((e) => ({
-        ...e, FechaInicio: e.FechaInicio.slice(0, 10), FechaFin: e.FechaFin.slice(0, 10)
+        ...e, FechaInicio: e.FechaInicio.slice(0, 16), FechaFin: e.FechaFin.slice(0, 16)
       })));
     } catch (err) {
       setError(err.mensaje);
@@ -74,16 +77,20 @@ export default function GestionEtapasConvocatoria() {
               <EtiquetaEstado estado={etapa.Estado} />
             </div>
             <div className="mt-4 grid gap-3 sm:grid-cols-3">
-              <CampoTexto etiqueta="Fecha inicio" type="date" value={etapa.FechaInicio}
+              <CampoTexto etiqueta="Fecha y hora inicio" type="datetime-local" value={etapa.FechaInicio} disabled={!puedeGestionar}
                 onChange={(e) => actualizarCampoEtapa(etapa.IdEtapa, 'FechaInicio', e.target.value)} />
-              <CampoTexto etiqueta="Fecha fin" type="date" value={etapa.FechaFin}
+              <CampoTexto etiqueta="Fecha y hora fin" type="datetime-local" value={etapa.FechaFin} disabled={!puedeGestionar}
                 onChange={(e) => actualizarCampoEtapa(etapa.IdEtapa, 'FechaFin', e.target.value)} />
-              <CampoSelect etiqueta="Estado" value={etapa.Estado} opciones={OPCIONES_ESTADO}
+              <CampoSelect etiqueta="Estado" value={etapa.Estado} opciones={OPCIONES_ESTADO} disabled={!puedeGestionar}
                 onChange={(e) => actualizarCampoEtapa(etapa.IdEtapa, 'Estado', e.target.value)} />
             </div>
-            <div className="mt-3">
-              <Boton cargando={guardandoId === etapa.IdEtapa} onClick={() => guardarEtapa(etapa)}>Guardar cambios</Boton>
-            </div>
+            {puedeGestionar ? (
+              <div className="mt-3">
+                <Boton cargando={guardandoId === etapa.IdEtapa} onClick={() => guardarEtapa(etapa)}>Guardar cambios</Boton>
+              </div>
+            ) : (
+              <p className="mt-3 text-body-sm text-on-surface-variant">Solo lectura: no tiene permiso para gestionar etapas.</p>
+            )}
           </Tarjeta>
         ))}
       </div>

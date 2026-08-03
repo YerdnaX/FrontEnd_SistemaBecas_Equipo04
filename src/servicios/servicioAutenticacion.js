@@ -1,5 +1,8 @@
 import { peticion } from './clienteHttp.js';
 
+export const consultarCedula = (cedula) =>
+  peticion(`/autenticacion/consulta-cedula/${encodeURIComponent(cedula)}`, { conAutenticacion: false });
+
 export const registrarUsuario = (datos) =>
   peticion('/autenticacion/registro', { metodo: 'POST', cuerpo: datos, conAutenticacion: false });
 

@@ -3,6 +3,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
+import CampoCedula from '../../componentes/formularios/CampoCedula.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import { actualizarUsuario, asignarRolesUsuario, crearUsuario, listarRoles, obtenerUsuario } from '../../servicios/servicioSegmentoDos.js';
@@ -11,13 +12,14 @@ export default function FormularioUsuario() {
   const { id } = useParams();
   const navegar = useNavigate();
   const esNuevo = id === 'nuevo';
-  const [formulario, setFormulario] = useState({ correo: '', nombre: '', primerApellido: '', segundoApellido: '', contrasena: '', idsRoles: [] });
+  const [formulario, setFormulario] = useState({ cedula: '', correo: '', nombre: '', primerApellido: '', segundoApellido: '', contrasena: '', idsRoles: [] });
   const [roles, setRoles] = useState([]);
   const [mensaje, setMensaje] = useState(null);
 
   useEffect(() => {
     listarRoles().then((respuesta) => setRoles(respuesta.datos));
     if (!esNuevo) obtenerUsuario(id).then((respuesta) => setFormulario({
+      cedula: respuesta.datos.Cedula || '',
       correo: respuesta.datos.Correo,
       nombre: respuesta.datos.Nombre,
       primerApellido: respuesta.datos.PrimerApellido,
@@ -51,6 +53,19 @@ export default function FormularioUsuario() {
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
       <Tarjeta>
         <form className="grid gap-4 sm:grid-cols-2" onSubmit={guardar}>
+          <div className="sm:col-span-2">
+            <CampoCedula
+              cedula={formulario.cedula}
+              requerido={esNuevo}
+              onCedulaChange={(valor) => setFormulario({ ...formulario, cedula: valor })}
+              onDatosEncontrados={(datos) => setFormulario((actual) => ({
+                ...actual,
+                nombre: datos.nombre || actual.nombre,
+                primerApellido: datos.primerApellido || actual.primerApellido,
+                segundoApellido: datos.segundoApellido || actual.segundoApellido
+              }))}
+            />
+          </div>
           <CampoTexto etiqueta="Correo" type="email" value={formulario.correo} onChange={(e) => setFormulario({ ...formulario, correo: e.target.value })} required />
           <CampoTexto etiqueta="Nombre" value={formulario.nombre} onChange={(e) => setFormulario({ ...formulario, nombre: e.target.value })} required />
           <CampoTexto etiqueta="Primer apellido" value={formulario.primerApellido} onChange={(e) => setFormulario({ ...formulario, primerApellido: e.target.value })} required />
