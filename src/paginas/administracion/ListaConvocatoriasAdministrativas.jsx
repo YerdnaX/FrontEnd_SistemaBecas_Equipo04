@@ -47,7 +47,9 @@ export default function ListaConvocatoriasAdministrativas() {
     <div>
       <div className="flex items-center justify-between">
         <h1 className="text-headline-lg font-semibold text-primary">Convocatorias</h1>
-        <Link to="/admin/convocatorias/nueva"><Boton>Nueva convocatoria</Boton></Link>
+        {tienePermiso('CONVOCATORIA_CREAR') && (
+          <Link to="/admin/convocatorias/nueva"><Boton>Nueva convocatoria</Boton></Link>
+        )}
       </div>
 
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
@@ -75,9 +77,13 @@ export default function ListaConvocatoriasAdministrativas() {
                   <td className="px-4 py-3">{formatearFecha(convocatoria.FechaInicio)} – {formatearFecha(convocatoria.FechaFin)}</td>
                   <td className="px-4 py-3">
                     <div className="flex flex-wrap gap-3">
-                      <Link to={`/admin/convocatorias/${convocatoria.IdConvocatoria}`} className="text-primary-container hover:underline">Editar</Link>
-                      <Link to={`/admin/convocatorias/${convocatoria.IdConvocatoria}/etapas`} className="text-primary-container hover:underline">Etapas</Link>
-                      {convocatoria.Estado === 'BORRADOR' && (
+                      {tienePermiso('CONVOCATORIA_EDITAR') && (
+                        <Link to={`/admin/convocatorias/${convocatoria.IdConvocatoria}`} className="text-primary-container hover:underline">Editar</Link>
+                      )}
+                      {tienePermiso('CONVOCATORIA_VER') && (
+                        <Link to={`/admin/convocatorias/${convocatoria.IdConvocatoria}/etapas`} className="text-primary-container hover:underline">Etapas</Link>
+                      )}
+                      {convocatoria.Estado === 'BORRADOR' && tienePermiso('CONVOCATORIA_EDITAR') && (
                         <button className="text-primary-container hover:underline" disabled={procesando === convocatoria.IdConvocatoria}
                           onClick={() => ejecutarAccion(enviarAprobacion, convocatoria.IdConvocatoria)}>
                           Enviar a aprobación
@@ -94,6 +100,9 @@ export default function ListaConvocatoriasAdministrativas() {
                           onClick={() => ejecutarAccion(publicarConvocatoria, convocatoria.IdConvocatoria)}>
                           Publicar
                         </button>
+                      )}
+                      {!tienePermiso('CONVOCATORIA_EDITAR') && !tienePermiso('CONVOCATORIA_APROBAR') && !tienePermiso('CONVOCATORIA_PUBLICAR') && (
+                        <span className="text-on-surface-variant">Solo lectura</span>
                       )}
                     </div>
                   </td>

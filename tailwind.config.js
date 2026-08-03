@@ -38,7 +38,21 @@ export default {
         advertencia: '#8a5300',
         'advertencia-container': '#ffe6b3',
         background: '#f9f9ff',
-        'on-background': '#111c2c'
+        'on-background': '#111c2c',
+        'categoria-academica': '#1d4ed8',
+        'categoria-academica-container': '#dbe6ff',
+        'categoria-financiera': '#0f766e',
+        'categoria-financiera-container': '#d3f5f0',
+        'categoria-convocatoria': '#7c3aed',
+        'categoria-convocatoria-container': '#ece2fd',
+        'categoria-evento': '#c2410c',
+        'categoria-evento-container': '#ffe3d1',
+        'categoria-urgente': '#be123c',
+        'categoria-urgente-container': '#ffe0e6',
+        'categoria-general': '#334155',
+        'categoria-general-container': '#e2e8f0',
+        'convocatoria-destacada': '#f59e0b',
+        'convocatoria-destacada-container': '#fff4dc'
       },
       fontFamily: {
         sans: ['Hanken Grotesk', 'sans-serif']

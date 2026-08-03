@@ -7,8 +7,14 @@ import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
+import EtiquetaCategoria, { obtenerCategoria } from '../../componentes/comunes/EtiquetaCategoria.jsx';
 import { obtenerInicio } from '../../servicios/servicioPublico.js';
 import { formatearFecha } from '../../utilidades/formato.js';
+
+function diasRestantes(fechaFin) {
+  const diferenciaMs = new Date(fechaFin) - new Date();
+  return Math.max(0, Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24)));
+}
 
 const ROLES = [
   { titulo: 'Aspirante', descripcion: 'Postule a convocatorias de beca y dé seguimiento a su solicitud.', imagen: '/images/aspirante.png' },
@@ -76,26 +82,43 @@ export default function LandingPublico() {
                 ) : (
                   <ul className="flex flex-col gap-3">
                     {datos.convocatoriasDestacadas.map((convocatoria) => (
-                      <Tarjeta key={convocatoria.IdConvocatoria}>
-                        <p className="font-semibold text-primary">{convocatoria.Nombre}</p>
+                      <li key={convocatoria.IdConvocatoria}
+                        className="rounded-lg border-2 border-convocatoria-destacada bg-convocatoria-destacada-container p-5 shadow-elevation-l2">
+                        <div className="flex flex-wrap items-center justify-between gap-2">
+                          <span className="inline-block rounded-full bg-convocatoria-destacada px-3 py-1 text-label-sm font-bold uppercase text-white">
+                            ¡Convocatoria abierta!
+                          </span>
+                          <span className="text-label-sm font-semibold text-primary">
+                            {diasRestantes(convocatoria.FechaFin)} día(s) para cerrar
+                          </span>
+                        </div>
+                        <p className="mt-3 text-headline-sm font-bold text-primary">{convocatoria.Nombre}</p>
                         <p className="text-body-sm text-on-surface-variant">Cierra: {formatearFecha(convocatoria.FechaFin)}</p>
-                        <Link to={`/convocatorias/${convocatoria.IdConvocatoria}`} className="text-body-sm text-primary-container hover:underline">
-                          Ver detalle
+                        <Link to={`/convocatorias/${convocatoria.IdConvocatoria}`} className="mt-2 inline-block text-body-sm font-semibold text-primary-container hover:underline">
+                          Ver detalle →
                         </Link>
-                      </Tarjeta>
+                      </li>
                     ))}
                   </ul>
                 )}
               </div>
               <div>
-                <h3 className="mb-3 text-headline-sm font-semibold text-on-surface">Noticias recientes</h3>
+                <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+                  <h3 className="text-headline-sm font-semibold text-on-surface">Noticias recientes</h3>
+                  {datos.cuatrimestreActual && (
+                    <span className="rounded-full bg-secondary-container px-3 py-1 text-label-sm font-semibold text-on-secondary-container">
+                      Cuatrimestre {datos.cuatrimestreActual.Periodo}
+                    </span>
+                  )}
+                </div>
                 {datos.noticiasRecientes.length === 0 ? (
                   <EstadoVacio titulo="Sin noticias publicadas" />
                 ) : (
                   <ul className="flex flex-col gap-3">
                     {datos.noticiasRecientes.map((noticia) => (
-                      <Tarjeta key={noticia.IdNoticia}>
-                        <p className="font-semibold text-primary">{noticia.Titulo}</p>
+                      <Tarjeta key={noticia.IdNoticia} className={`border-l-4 ${obtenerCategoria(noticia.Categoria).borde}`}>
+                        <EtiquetaCategoria categoria={noticia.Categoria} />
+                        <p className="mt-2 font-semibold text-primary">{noticia.Titulo}</p>
                         <p className="mt-1 line-clamp-2 text-body-sm text-on-surface-variant">{noticia.Contenido}</p>
                       </Tarjeta>
                     ))}

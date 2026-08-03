@@ -66,6 +66,9 @@ function estructuraMenu(roles = [], permisos = []) {
     ...(permisos.includes('JUSTIFICACION_RESOLVER') ? [enlace('/trabajo-social/justificaciones', 'Justificaciones')] : []),
     ...(permisos.includes('RENOVACION_RESOLVER') ? [enlace('/trabajo-social/renovaciones', 'Renovaciones')] : []),
     ...(permisos.includes('CONSULTA_GESTIONAR') ? [enlace('/trabajo-social/consultas', 'Consultas')] : []),
+    ...(roles.includes('TRABAJADORA_SOCIAL') && permisos.includes('CONVOCATORIA_VER')
+      ? [enlace('/trabajo-social/convocatorias', 'Convocatorias y becas')]
+      : []),
     ...(roles.includes('TRABAJADORA_SOCIAL') || roles.includes('ADMINISTRADOR')
       ? [enlace('/trabajo-social/apelaciones', 'Apelaciones'), enlace('/trabajo-social/disciplinario', 'Disciplinario')]
       : []),

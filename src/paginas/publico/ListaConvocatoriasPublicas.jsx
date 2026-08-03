@@ -5,9 +5,13 @@ import PiePagina from '../../componentes/navegacion/PiePagina.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
-import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import { listarConvocatoriasPublicas } from '../../servicios/servicioPublico.js';
 import { formatearFecha } from '../../utilidades/formato.js';
+
+function diasRestantes(fechaFin) {
+  const diferenciaMs = new Date(fechaFin) - new Date();
+  return Math.max(0, Math.ceil(diferenciaMs / (1000 * 60 * 60 * 24)));
+}
 
 export default function ListaConvocatoriasPublicas() {
   const [convocatorias, setConvocatorias] = useState([]);
@@ -36,19 +40,29 @@ export default function ListaConvocatoriasPublicas() {
           <EstadoVacio titulo="No hay convocatorias publicadas por ahora" descripcion="Vuelva a consultar más adelante." />
         )}
 
-        <div className="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-          {convocatorias.map((convocatoria) => (
-            <Tarjeta key={convocatoria.IdConvocatoria}>
-              <p className="text-label-sm font-semibold uppercase text-primary-container">{convocatoria.NombreTipoBeca}</p>
-              <p className="mt-1 text-headline-sm font-semibold text-on-surface">{convocatoria.Nombre}</p>
-              <p className="mt-2 text-body-sm text-on-surface-variant">{convocatoria.Descripcion}</p>
-              <p className="mt-3 text-body-sm text-on-surface-variant">Cupos: {convocatoria.Cupos}</p>
-              <p className="text-body-sm text-on-surface-variant">Cierra: {formatearFecha(convocatoria.FechaFin)}</p>
-              <Link to={`/convocatorias/${convocatoria.IdConvocatoria}`} className="mt-3 inline-block text-body-sm font-semibold text-primary-container hover:underline">
-                Ver detalle →
-              </Link>
-            </Tarjeta>
-          ))}
+        <div className="mt-6 grid gap-5 md:grid-cols-2 lg:grid-cols-3">
+          {convocatorias.map((convocatoria) => {
+            const restantes = diasRestantes(convocatoria.FechaFin);
+            const cierraPronto = restantes <= 7;
+            return (
+              <div key={convocatoria.IdConvocatoria}
+                className={`rounded-lg border-2 p-6 shadow-elevation-l2 ${cierraPronto ? 'border-categoria-urgente bg-categoria-urgente-container' : 'border-convocatoria-destacada bg-convocatoria-destacada-container'}`}>
+                <div className="flex flex-wrap items-center justify-between gap-2">
+                  <span className="text-label-sm font-semibold uppercase text-primary-container">{convocatoria.NombreTipoBeca}</span>
+                  <span className={`inline-block rounded-full px-3 py-1 text-label-sm font-bold text-white ${cierraPronto ? 'bg-categoria-urgente' : 'bg-convocatoria-destacada'}`}>
+                    {cierraPronto ? `¡Cierra en ${restantes} día(s)!` : 'Convocatoria abierta'}
+                  </span>
+                </div>
+                <p className="mt-2 text-headline-sm font-bold text-primary">{convocatoria.Nombre}</p>
+                <p className="mt-2 text-body-sm text-on-surface-variant">{convocatoria.Descripcion}</p>
+                <p className="mt-3 text-body-sm font-semibold text-on-surface-variant">Cupos disponibles: {convocatoria.Cupos}</p>
+                <p className="text-body-sm text-on-surface-variant">Cierra: {formatearFecha(convocatoria.FechaFin)}</p>
+                <Link to={`/convocatorias/${convocatoria.IdConvocatoria}`} className="mt-3 inline-block text-body-sm font-semibold text-primary-container hover:underline">
+                  Ver detalle →
+                </Link>
+              </div>
+            );
+          })}
         </div>
       </main>
       <PiePagina />

@@ -8,11 +8,12 @@ import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import { actualizarNoticia, cambiarEstadoNoticia, crearNoticia, listarNoticias } from '../../servicios/servicioSegmentoDos.js';
+import EtiquetaCategoria, { OPCIONES_CATEGORIA } from '../../componentes/comunes/EtiquetaCategoria.jsx';
 
 export default function GestionNoticias() {
   const [noticias, setNoticias] = useState([]);
   const [buscar, setBuscar] = useState('');
-  const [formulario, setFormulario] = useState({ titulo: '', contenido: '', publicoDestino: 'GENERAL' });
+  const [formulario, setFormulario] = useState({ titulo: '', contenido: '', publicoDestino: 'GENERAL', categoria: 'GENERAL' });
   const [editandoId, setEditandoId] = useState(null);
   const [mensaje, setMensaje] = useState(null);
   const filtradas = useMemo(() => noticias.filter((n) => n.Titulo.toLowerCase().includes(buscar.toLowerCase())), [noticias, buscar]);
@@ -28,7 +29,7 @@ export default function GestionNoticias() {
     try {
       if (editandoId) await actualizarNoticia(editandoId, formulario);
       else await crearNoticia(formulario);
-      setFormulario({ titulo: '', contenido: '', publicoDestino: 'GENERAL' });
+      setFormulario({ titulo: '', contenido: '', publicoDestino: 'GENERAL', categoria: 'GENERAL' });
       setMensaje({ tipo: 'exito', texto: editandoId ? 'Noticia actualizada.' : 'Noticia creada como borrador.' });
       setEditandoId(null);
       cargar();
@@ -40,7 +41,8 @@ export default function GestionNoticias() {
     setFormulario({
       titulo: noticia.Titulo,
       contenido: noticia.Contenido,
-      publicoDestino: noticia.PublicoDestino
+      publicoDestino: noticia.PublicoDestino,
+      categoria: noticia.Categoria || 'GENERAL'
     });
   }
 
@@ -60,9 +62,10 @@ export default function GestionNoticias() {
             <CampoTexto etiqueta="Título" value={formulario.titulo} onChange={(e) => setFormulario({ ...formulario, titulo: e.target.value })} required />
             <CampoAreaTexto etiqueta="Contenido" value={formulario.contenido} onChange={(e) => setFormulario({ ...formulario, contenido: e.target.value })} required />
             <CampoSelect etiqueta="Público" value={formulario.publicoDestino} onChange={(e) => setFormulario({ ...formulario, publicoDestino: e.target.value })} opciones={[{ valor: 'GENERAL', etiqueta: 'Público general y todos' }, { valor: 'ASPIRANTE', etiqueta: 'Aspirantes' }, { valor: 'BECADO', etiqueta: 'Becados' }]} />
+            <CampoSelect etiqueta="Categoría" value={formulario.categoria} onChange={(e) => setFormulario({ ...formulario, categoria: e.target.value })} opciones={OPCIONES_CATEGORIA} />
             <div className="flex gap-2">
               <Boton type="submit">{editandoId ? 'Guardar cambios' : 'Guardar borrador'}</Boton>
-              {editandoId && <Boton type="button" variante="secundario" onClick={() => { setEditandoId(null); setFormulario({ titulo: '', contenido: '', publicoDestino: 'GENERAL' }); }}>Cancelar</Boton>}
+              {editandoId && <Boton type="button" variante="secundario" onClick={() => { setEditandoId(null); setFormulario({ titulo: '', contenido: '', publicoDestino: 'GENERAL', categoria: 'GENERAL' }); }}>Cancelar</Boton>}
             </div>
           </form>
         </Tarjeta>
@@ -70,6 +73,7 @@ export default function GestionNoticias() {
           <CampoTexto etiqueta="Buscar por título" value={buscar} onChange={(e) => setBuscar(e.target.value)} className="mb-4 max-w-sm" />
           <TablaDatos filas={filtradas} clave="IdNoticia" columnas={[
             { clave: 'Titulo', etiqueta: 'Noticia' },
+            { clave: 'Categoria', etiqueta: 'Categoría', render: (fila) => <EtiquetaCategoria categoria={fila.Categoria} /> },
             { clave: 'PublicoDestino', etiqueta: 'Público' },
             { clave: 'Estado', etiqueta: 'Estado' },
             { clave: 'FechaPublicacion', etiqueta: 'Fecha', render: (fila) => fila.FechaPublicacion ? new Date(fila.FechaPublicacion).toLocaleDateString('es-CR') : 'Sin publicar' },

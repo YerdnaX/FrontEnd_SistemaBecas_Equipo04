@@ -53,6 +53,7 @@ import RevisionJustificacionCurso from './paginas/trabajo-social/RevisionJustifi
 import RevisionRenovacion from './paginas/trabajo-social/RevisionRenovacion.jsx';
 import BandejaJustificaciones from './paginas/trabajo-social/BandejaJustificaciones.jsx';
 import BandejaRenovaciones from './paginas/trabajo-social/BandejaRenovaciones.jsx';
+import ConvocatoriasBecas from './paginas/trabajo-social/ConvocatoriasBecas.jsx';
 
 import PanelComite from './paginas/comite/PanelComite.jsx';
 import SesionComite from './paginas/comite/SesionComite.jsx';
@@ -156,6 +157,7 @@ export default function App() {
       <Route path="/trabajo-social/justificaciones/:id" element={<RutaProtegida permisosRequeridos={['JUSTIFICACION_RESOLVER']}><RevisionJustificacionCurso /></RutaProtegida>} />
       <Route path="/trabajo-social/renovaciones" element={<RutaProtegida permisosRequeridos={['RENOVACION_RESOLVER']}><BandejaRenovaciones /></RutaProtegida>} />
       <Route path="/trabajo-social/renovaciones/:id" element={<RutaProtegida permisosRequeridos={['RENOVACION_RESOLVER']}><RevisionRenovacion /></RutaProtegida>} />
+      <Route path="/trabajo-social/convocatorias" element={<RutaProtegida permisosRequeridos={['CONVOCATORIA_VER']}><ConvocatoriasBecas /></RutaProtegida>} />
 
       <Route path="/comite" element={<RutaProtegida rolesPermitidos={ROLES_COMITE}><PanelComite /></RutaProtegida>} />
       <Route path="/comite/sesiones/:id" element={<RutaProtegida rolesPermitidos={ROLES_COMITE}><SesionComite /></RutaProtegida>} />
