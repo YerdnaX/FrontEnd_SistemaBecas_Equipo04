@@ -110,6 +110,8 @@ export default function DetalleExpediente() {
             <ul className="mt-2 text-body-sm text-on-surface-variant">
               <li>Ingreso mensual: ₡{solicitud.datosSocioeconomicos.IngresoMensual}</li>
               <li>Integrantes: {solicitud.datosSocioeconomicos.CantidadIntegrantes}</li>
+              <li>Periodo: {expediente.Periodo || '—'}</li>
+              <li>Quintil nacional: {expediente.precalculoQuintil ? `Q${expediente.precalculoQuintil.Quintil} (INEC ${expediente.precalculoQuintil.AnioReferencia})` : 'Pendiente'}</li>
               <li>Situación laboral: {solicitud.datosSocioeconomicos.SituacionLaboral}</li>
             </ul>
           ) : <p className="mt-2 text-body-sm text-on-surface-variant">Sin datos.</p>}

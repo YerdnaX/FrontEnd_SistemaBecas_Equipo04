@@ -11,7 +11,7 @@ import { listarTiposBeca, obtenerTipoBeca } from '../../servicios/servicioTiposB
 import { useSesion } from '../../hooks/useSesion.js';
 
 const FORMULARIO_INICIAL = {
-  idTipoBeca: '', nombre: '', descripcion: '', fechaInicio: '', fechaFin: '', cupos: '', presupuesto: '',
+  idTipoBeca: '', nombre: '', descripcion: '', periodo: '', fechaInicio: '', fechaFin: '', cupos: '', presupuesto: '',
   requisitosHeredados: [], requisitosAdicionales: []
 };
 
@@ -40,6 +40,7 @@ export default function FormularioConvocatoria() {
             idTipoBeca: convocatoria.IdTipoBeca,
             nombre: convocatoria.Nombre,
             descripcion: convocatoria.Descripcion || '',
+            periodo: convocatoria.Periodo || '',
             fechaInicio: convocatoria.FechaInicio.slice(0, 16),
             fechaFin: convocatoria.FechaFin.slice(0, 16),
             cupos: convocatoria.Cupos,
@@ -129,6 +130,8 @@ export default function FormularioConvocatoria() {
             onChange={(e) => actualizarCampo('idTipoBeca', e.target.value)}
             opciones={tiposBeca.map((t) => ({ valor: t.IdTipoBeca, etiqueta: t.Nombre }))} />
           <CampoTexto etiqueta="Nombre" value={formulario.nombre} required onChange={(e) => actualizarCampo('nombre', e.target.value)} />
+          <CampoTexto etiqueta="Periodo académico" value={formulario.periodo} required placeholder="Ej. 2026-3"
+            onChange={(e) => actualizarCampo('periodo', e.target.value)} />
           <CampoTexto etiqueta="Fecha y hora de apertura" type="datetime-local" value={formulario.fechaInicio} required
             onChange={(e) => actualizarCampo('fechaInicio', e.target.value)} />
           <CampoTexto etiqueta="Fecha y hora de cierre" type="datetime-local" value={formulario.fechaFin} required

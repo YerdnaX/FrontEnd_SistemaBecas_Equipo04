@@ -7,7 +7,7 @@ import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
-import { obtenerSesion, registrarDecision, cerrarSesion } from '../../servicios/servicioComite.js';
+import { obtenerSesion, registrarVoto, cerrarSesion } from '../../servicios/servicioComite.js';
 
 const OPCIONES_DECISION = [
   { valor: 'APROBADA', etiqueta: 'Aprobada' },
@@ -19,7 +19,7 @@ const OPCIONES_DECISION = [
 export default function SesionComite() {
   const { id } = useParams();
   const [sesion, setSesion] = useState(null);
-  const [decisiones, setDecisiones] = useState({});
+  const [votos, setVotos] = useState({});
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [procesandoId, setProcesandoId] = useState(null);
@@ -39,27 +39,38 @@ export default function SesionComite() {
 
   useEffect(() => { cargar(); }, [id]);
 
-  function actualizarDecision(idExpediente, campo, valor) {
-    setDecisiones((actual) => ({ ...actual, [idExpediente]: { ...actual[idExpediente], [campo]: valor } }));
+  function actualizarVoto(caso, campo, valor) {
+    setVotos((actual) => ({
+      ...actual,
+      [caso.IdExpediente]: {
+        tipoDecision: caso.votoActual?.TipoDecision || '',
+        motivo: caso.votoActual?.Motivo || '',
+        ...actual[caso.IdExpediente],
+        [campo]: valor
+      }
+    }));
   }
 
-  async function manejarGuardarDecision(idExpediente) {
-    const decision = decisiones[idExpediente];
-    if (!decision?.tipoDecision) return;
-    setProcesandoId(idExpediente);
+  async function manejarGuardarVoto(caso) {
+    const voto = votos[caso.IdExpediente] || {
+      tipoDecision: caso.votoActual?.TipoDecision,
+      motivo: caso.votoActual?.Motivo
+    };
+    if (!voto.tipoDecision) return;
+    setProcesandoId(caso.IdExpediente);
     setError(null);
     try {
-      await registrarDecision(id, idExpediente, decision);
+      await registrarVoto(id, caso.IdExpediente, voto);
       await cargar();
     } catch (err) {
-      setError(err.mensaje || 'No fue posible registrar la decisión.');
+      setError(err.mensaje || 'No fue posible registrar el voto.');
     } finally {
       setProcesandoId(null);
     }
   }
 
   async function manejarCerrarSesion() {
-    if (!window.confirm('¿Confirma cerrar la sesión y publicar los resultados? Esta acción no se puede deshacer.')) return;
+    if (!window.confirm('¿Confirma cerrar la sesión y publicar la decisión mayoritaria?')) return;
     setCerrando(true);
     setError(null);
     try {
@@ -72,58 +83,74 @@ export default function SesionComite() {
     }
   }
 
-  if (cargando) return <EstadoCarga />;
-
-  const todosDecididos = sesion.casos.every((caso) => caso.IdDecision);
+  if (cargando && !sesion) return <EstadoCarga />;
+  if (!sesion) return error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>;
+  const todosVotaron = sesion.casos.every((caso) => caso.votos.length === sesion.miembros.length);
 
   return (
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
           <h1 className="text-headline-lg font-semibold text-primary">{sesion.Nombre}</h1>
-          <p className="text-body-sm text-on-surface-variant">{sesion.NombreConvocatoria}</p>
+          <p className="text-body-sm text-on-surface-variant">{sesion.NombreConvocatoria} · {sesion.Periodo}</p>
         </div>
         <EtiquetaEstado estado={sesion.Estado} />
       </div>
 
       {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
+      <Tarjeta>
+        <h2 className="font-semibold">Integrantes de esta sesión ({sesion.miembros.length})</h2>
+        <p className="mt-1 text-body-sm text-on-surface-variant">
+          {sesion.miembros.map((miembro) => `${miembro.NombreMiembro} (${miembro.Cargo || 'Miembro'})`).join(' · ')}
+        </p>
+        {!sesion.miembroActual && sesion.Estado === 'ABIERTA' && (
+          <div className="mt-3"><AlertaMensaje tipo="advertencia">Puede consultar la sesión, pero no votar porque no integra su nómina.</AlertaMensaje></div>
+        )}
+      </Tarjeta>
 
       <div className="flex flex-col gap-4">
-        {sesion.casos.map((caso) => (
-          <Tarjeta key={caso.IdCasoSesion}>
-            <div className="flex items-center justify-between">
-              <p className="font-semibold text-on-surface">{caso.NombreAspirante} {caso.ApellidoAspirante} — {caso.CodigoExpediente}</p>
-              <p className="text-body-sm text-on-surface-variant">Puntaje: {caso.PuntajeTotal ?? '—'} (pos. {caso.Posicion ?? '—'})</p>
-            </div>
+        {sesion.casos.map((caso) => {
+          const votoFormulario = votos[caso.IdExpediente] || {};
+          return (
+            <Tarjeta key={caso.IdCasoSesion}>
+              <div className="flex flex-wrap items-center justify-between gap-2">
+                <p className="font-semibold">{caso.NombreAspirante} {caso.ApellidoAspirante} — {caso.CodigoExpediente}</p>
+                <p className="text-body-sm">Puntaje {caso.PuntajeTotal ?? '—'} · Q{caso.Quintil ?? '—'} (INEC {caso.AnioReferencia ?? '—'}) · {caso.votos.length}/{sesion.miembros.length} votos</p>
+              </div>
+              <div className="mt-3 grid gap-3 rounded-md bg-surface-container-low p-3 sm:grid-cols-3">
+                <p><strong>Cobertura definida:</strong> {caso.PorcentajeDefinido}%</p>
+                <p><strong>Recomendación social:</strong> {caso.RecomendacionSocial || '—'}</p>
+                <p><strong>Ingreso per cápita:</strong> {caso.IngresoPerCapita == null ? '—' : `₡${Number(caso.IngresoPerCapita).toLocaleString('es-CR')}`}</p>
+                <p className="sm:col-span-3"><strong>Resumen social:</strong> {caso.ResumenSocial || '—'}</p>
+                <p className="sm:col-span-3"><strong>Hallazgos:</strong> {caso.HallazgosSociales || '—'}</p>
+              </div>
 
-            {caso.IdDecision ? (
-              <div className="mt-3">
-                <EtiquetaEstado estado={caso.TipoDecision} />
-                {caso.PorcentajeBeca !== null && <p className="mt-1 text-body-sm">Porcentaje: {caso.PorcentajeBeca}%</p>}
-                {caso.Motivo && <p className="text-body-sm text-on-surface-variant">Motivo: {caso.Motivo}</p>}
-              </div>
-            ) : sesion.Estado === 'ABIERTA' ? (
-              <div className="mt-3 grid gap-2 sm:grid-cols-4 sm:items-end">
-                <CampoSelect etiqueta="Decisión" opciones={OPCIONES_DECISION}
-                  value={decisiones[caso.IdExpediente]?.tipoDecision || ''}
-                  onChange={(e) => actualizarDecision(caso.IdExpediente, 'tipoDecision', e.target.value)} />
-                <CampoTexto etiqueta="Porcentaje beca" type="number" min="0" max="100"
-                  value={decisiones[caso.IdExpediente]?.porcentajeBeca || ''}
-                  onChange={(e) => actualizarDecision(caso.IdExpediente, 'porcentajeBeca', e.target.value)} />
-                <CampoTexto etiqueta="Motivo" value={decisiones[caso.IdExpediente]?.motivo || ''}
-                  onChange={(e) => actualizarDecision(caso.IdExpediente, 'motivo', e.target.value)} />
-                <Boton cargando={procesandoId === caso.IdExpediente} onClick={() => manejarGuardarDecision(caso.IdExpediente)}>
-                  Guardar decisión
-                </Boton>
-              </div>
-            ) : null}
-          </Tarjeta>
-        ))}
+              {caso.IdDecision ? (
+                <div className="mt-3">
+                  <EtiquetaEstado estado={caso.TipoDecision} />
+                  <p className="mt-1 text-body-sm">La cobertura la determina el tipo de beca: {caso.PorcentajeDefinido}%.</p>
+                  {caso.Motivo && <p className="text-body-sm text-on-surface-variant">Acuerdo: {caso.Motivo}</p>}
+                </div>
+              ) : sesion.Estado === 'ABIERTA' && sesion.miembroActual ? (
+                <div className="mt-4 grid gap-2 sm:grid-cols-3 sm:items-end">
+                  <CampoSelect etiqueta="Mi voto" opciones={OPCIONES_DECISION}
+                    value={votoFormulario.tipoDecision ?? caso.votoActual?.TipoDecision ?? ''}
+                    onChange={(e) => actualizarVoto(caso, 'tipoDecision', e.target.value)} />
+                  <CampoTexto etiqueta="Motivo" value={votoFormulario.motivo ?? caso.votoActual?.Motivo ?? ''}
+                    onChange={(e) => actualizarVoto(caso, 'motivo', e.target.value)} />
+                  <Boton cargando={procesandoId === caso.IdExpediente} onClick={() => manejarGuardarVoto(caso)}>
+                    {caso.votoActual ? 'Actualizar mi voto' : 'Registrar mi voto'}
+                  </Boton>
+                </div>
+              ) : null}
+            </Tarjeta>
+          );
+        })}
       </div>
 
-      {sesion.Estado === 'ABIERTA' && (
-        <Boton variante="peligro" deshabilitado={!todosDecididos} cargando={cerrando} onClick={manejarCerrarSesion}>
-          Cerrar sesión y publicar resultados
+      {sesion.Estado === 'ABIERTA' && sesion.miembroActual && (
+        <Boton variante="peligro" deshabilitado={!todosVotaron} cargando={cerrando} onClick={manejarCerrarSesion}>
+          Cerrar sesión por mayoría y publicar resultados
         </Boton>
       )}
     </div>

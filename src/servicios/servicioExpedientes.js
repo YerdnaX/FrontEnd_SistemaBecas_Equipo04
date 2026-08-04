@@ -5,6 +5,7 @@ export const listarExpedientes = (filtros = {}) => {
   return peticion(`/expedientes${parametros ? `?${parametros}` : ''}`);
 };
 export const obtenerExpediente = (id) => peticion(`/expedientes/${id}`);
+export const listarPeriodosExpedientes = () => peticion('/expedientes/periodos');
 export const asignarExpediente = (id, idEmpleado) =>
   peticion(`/expedientes/${id}/asignar`, { metodo: 'POST', cuerpo: { idEmpleado } });
 export const revisarDocumento = (id, idDocumento, datos) =>
@@ -16,6 +17,9 @@ export const solicitarSubsanacion = (id, observacion) =>
 export const resolverElegibilidad = (id, datos) =>
   peticion(`/expedientes/${id}/elegibilidad`, { metodo: 'POST', cuerpo: datos });
 export const obtenerEvaluacion = (id) => peticion(`/expedientes/${id}/evaluacion`);
-export const guardarEvaluacion = (id, puntajes) =>
-  peticion(`/expedientes/${id}/evaluacion`, { metodo: 'POST', cuerpo: { puntajes } });
+export const guardarEvaluacionAutomatica = (id) =>
+  peticion(`/expedientes/${id}/evaluacion/automatica`, { metodo: 'POST' });
+export const obtenerInformeSocial = (id) => peticion(`/expedientes/${id}/informe-social`);
+export const guardarInformeSocial = (id, datos) =>
+  peticion(`/expedientes/${id}/informe-social`, { metodo: 'PUT', cuerpo: datos });
 export const enviarComite = (id) => peticion(`/expedientes/${id}/enviar-comite`, { metodo: 'POST' });

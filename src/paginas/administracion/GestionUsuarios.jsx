@@ -13,16 +13,17 @@ export default function GestionUsuarios() {
   const [pagina, setPagina] = useState(1);
   const [total, setTotal] = useState(0);
   const [mensaje, setMensaje] = useState(null);
+  const [tipoCuenta, setTipoCuenta] = useState('ESTUDIANTE');
 
   async function cargar() {
     try {
-      const respuesta = await listarUsuarios({ buscar, pagina, limite: 20 });
+      const respuesta = await listarUsuarios({ buscar, pagina, limite: 20, tipoCuenta });
       setUsuarios(respuesta.datos.items);
       setTotal(respuesta.datos.total);
     }
     catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
   }
-  useEffect(() => { cargar(); }, [pagina]);
+  useEffect(() => { cargar(); }, [pagina, tipoCuenta]);
 
   async function cambiar(id, estado) {
     await cambiarEstadoUsuario(id, estado);
@@ -34,6 +35,16 @@ export default function GestionUsuarios() {
     <div className="space-y-6">
       <EncabezadoPagina titulo="Gestión de usuarios" descripcion="Administre acceso, bloqueo y roles sin eliminar referencias históricas." acciones={<Link to="/admin/usuarios/nuevo"><Boton>Nuevo usuario</Boton></Link>} />
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
+      <div className="flex gap-2" role="tablist" aria-label="Tipo de cuenta">
+        <Boton variante={tipoCuenta === 'ESTUDIANTE' ? 'primario' : 'secundario'}
+          onClick={() => { setTipoCuenta('ESTUDIANTE'); setPagina(1); }}>
+          Aspirantes y becados
+        </Boton>
+        <Boton variante={tipoCuenta === 'PERSONAL' ? 'primario' : 'secundario'}
+          onClick={() => { setTipoCuenta('PERSONAL'); setPagina(1); }}>
+          Personal institucional
+        </Boton>
+      </div>
       <div className="flex max-w-lg items-end gap-2"><CampoTexto etiqueta="Buscar por nombre, correo o cédula" value={buscar} onChange={(e) => setBuscar(e.target.value)} /><Boton onClick={() => pagina === 1 ? cargar() : setPagina(1)}>Buscar</Boton></div>
       <TablaDatos filas={usuarios} clave="IdUsuario" columnas={[
         { clave: 'usuario', etiqueta: 'Usuario', render: (fila) => <div><strong>{fila.Nombre} {fila.PrimerApellido}</strong><span className="block text-label-sm text-on-surface-variant">{fila.Correo}</span></div> },

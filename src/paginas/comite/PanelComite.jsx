@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
+import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
@@ -13,6 +14,7 @@ export default function PanelComite() {
   const [expedientes, setExpedientes] = useState([]);
   const [seleccionados, setSeleccionados] = useState([]);
   const [nombreSesion, setNombreSesion] = useState('');
+  const [periodo, setPeriodo] = useState('');
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
   const [creando, setCreando] = useState(false);
@@ -47,6 +49,10 @@ export default function PanelComite() {
 
   if (cargando) return <EstadoCarga />;
 
+  const periodos = [...new Set(expedientes.map((item) => item.Periodo).filter(Boolean))].sort().reverse();
+  const expedientesVisibles = periodo ? expedientes.filter((item) => item.Periodo === periodo) : expedientes;
+  const convocatoriaSeleccionada = expedientes.find((item) => item.IdExpediente === seleccionados[0])?.IdConvocatoria;
+
   return (
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
@@ -54,6 +60,12 @@ export default function PanelComite() {
         <img src="/images/comitebecas.png" alt="Panel de comité de becas" className="imagen-ui-seccion self-center sm:self-auto" />
       </div>
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
+
+      <div className="mt-4 max-w-xs">
+        <CampoSelect etiqueta="Filtrar por periodo" value={periodo}
+          onChange={(e) => { setPeriodo(e.target.value); setSeleccionados([]); }}
+          opciones={periodos.map((item) => ({ valor: item, etiqueta: item }))} />
+      </div>
 
       {expedientes.length === 0 ? (
         <EstadoVacio titulo="No hay expedientes listos para el comité" descripcion="Los expedientes aparecen aquí cuando trabajo social los envía al comité." />
@@ -68,20 +80,27 @@ export default function PanelComite() {
                   <th className="px-4 py-3">Código</th>
                   <th className="px-4 py-3">Aspirante</th>
                   <th className="px-4 py-3">Convocatoria</th>
+                  <th className="px-4 py-3">Periodo</th>
+                  <th className="px-4 py-3">Quintil</th>
+                  <th className="px-4 py-3">Cobertura</th>
                   <th className="px-4 py-3">Puntaje</th>
                 </tr>
               </thead>
               <tbody>
-                {expedientes.map((expediente) => (
+                {expedientesVisibles.map((expediente) => (
                   <tr key={expediente.IdExpediente} className="border-t border-outline-variant">
                     <td className="px-4 py-3">
                       <input type="checkbox" checked={seleccionados.includes(expediente.IdExpediente)}
+                        disabled={convocatoriaSeleccionada && convocatoriaSeleccionada !== expediente.IdConvocatoria}
                         onChange={() => alternarSeleccion(expediente.IdExpediente)} />
                     </td>
                     <td className="px-4 py-3">{expediente.Posicion ?? '—'}</td>
                     <td className="px-4 py-3">{expediente.CodigoExpediente}</td>
                     <td className="px-4 py-3">{expediente.NombreAspirante} {expediente.ApellidoAspirante}</td>
                     <td className="px-4 py-3">{expediente.NombreConvocatoria}</td>
+                    <td className="px-4 py-3">{expediente.Periodo || '—'}</td>
+                    <td className="px-4 py-3">Q{expediente.Quintil} <span className="block text-label-sm text-on-surface-variant">INEC {expediente.AnioReferencia}</span></td>
+                    <td className="px-4 py-3">{expediente.PorcentajeDefinido}%</td>
                     <td className="px-4 py-3">{expediente.PuntajeTotal ?? '—'}</td>
                   </tr>
                 ))}

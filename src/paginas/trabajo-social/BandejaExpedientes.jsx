@@ -5,7 +5,7 @@ import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
-import { listarExpedientes } from '../../servicios/servicioExpedientes.js';
+import { listarExpedientes, listarPeriodosExpedientes } from '../../servicios/servicioExpedientes.js';
 
 const ESTADOS = [
   'EN_REVISION_DOCUMENTAL', 'PENDIENTE_SUBSANACION', 'ELEGIBLE', 'NO_ELEGIBLE',
@@ -14,23 +14,29 @@ const ESTADOS = [
 
 export default function BandejaExpedientes() {
   const [expedientes, setExpedientes] = useState([]);
+  const [periodos, setPeriodos] = useState([]);
   const [filtroEstado, setFiltroEstado] = useState('');
+  const [filtroPeriodo, setFiltroPeriodo] = useState('');
   const [cargando, setCargando] = useState(true);
   const [error, setError] = useState(null);
 
-  async function cargar(estado) {
-    setCargando(true);
-    try {
-      const respuesta = await listarExpedientes(estado ? { estado } : {});
-      setExpedientes(respuesta.datos);
-    } catch (err) {
-      setError(err.mensaje);
-    } finally {
-      setCargando(false);
-    }
-  }
+  useEffect(() => {
+    listarPeriodosExpedientes()
+      .then((respuesta) => setPeriodos(respuesta.datos || []))
+      .catch((err) => setError(err.mensaje));
+  }, []);
 
-  useEffect(() => { cargar(filtroEstado); }, [filtroEstado]);
+  useEffect(() => {
+    setCargando(true);
+    setError(null);
+    const filtros = {};
+    if (filtroEstado) filtros.estado = filtroEstado;
+    if (filtroPeriodo) filtros.periodo = filtroPeriodo;
+    listarExpedientes(filtros)
+      .then((respuesta) => setExpedientes(respuesta.datos))
+      .catch((err) => setError(err.mensaje))
+      .finally(() => setCargando(false));
+  }, [filtroEstado, filtroPeriodo]);
 
   return (
     <div>
@@ -39,7 +45,13 @@ export default function BandejaExpedientes() {
         <img src="/images/trabajosocial.png" alt="Bandeja de trabajo social" className="imagen-ui-seccion self-center sm:self-auto" />
       </div>
 
-      <div className="mt-4 max-w-xs">
+      <div className="mt-4 grid max-w-2xl gap-4 sm:grid-cols-2">
+        <CampoSelect
+          etiqueta="Filtrar por periodo"
+          value={filtroPeriodo}
+          onChange={(e) => setFiltroPeriodo(e.target.value)}
+          opciones={periodos.map((periodo) => ({ valor: periodo, etiqueta: periodo }))}
+        />
         <CampoSelect
           etiqueta="Filtrar por estado"
           value={filtroEstado}
@@ -50,7 +62,7 @@ export default function BandejaExpedientes() {
 
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
       {cargando && <EstadoCarga />}
-      {!cargando && expedientes.length === 0 && <EstadoVacio titulo="No hay expedientes con este filtro" />}
+      {!cargando && expedientes.length === 0 && <EstadoVacio titulo="No hay expedientes con estos filtros" />}
 
       {!cargando && expedientes.length > 0 && (
         <div className="mt-6 overflow-x-auto rounded-lg bg-surface-container-lowest shadow-elevation-l2">
@@ -59,8 +71,8 @@ export default function BandejaExpedientes() {
               <tr>
                 <th className="px-4 py-3">Código</th>
                 <th className="px-4 py-3">Aspirante</th>
-                <th className="px-4 py-3">Cédula</th>
-                <th className="px-4 py-3">Convocatoria</th>
+                <th className="px-4 py-3">Periodo</th>
+                <th className="px-4 py-3">Quintil</th>
                 <th className="px-4 py-3">Estado</th>
                 <th className="px-4 py-3">Responsable</th>
                 <th className="px-4 py-3"></th>
@@ -71,8 +83,8 @@ export default function BandejaExpedientes() {
                 <tr key={expediente.IdExpediente} className="border-t border-outline-variant">
                   <td className="px-4 py-3">{expediente.CodigoExpediente}</td>
                   <td className="px-4 py-3">{expediente.NombreAspirante} {expediente.ApellidoAspirante}</td>
-                  <td className="px-4 py-3">{expediente.CedulaAspirante || '—'}</td>
-                  <td className="px-4 py-3">{expediente.NombreConvocatoria}</td>
+                  <td className="px-4 py-3">{expediente.Periodo || '—'}</td>
+                  <td className="px-4 py-3">{expediente.Quintil ? `Q${expediente.Quintil}` : 'Pendiente'}</td>
                   <td className="px-4 py-3"><EtiquetaEstado estado={expediente.Estado} /></td>
                   <td className="px-4 py-3">{expediente.ResponsableAsignado || 'Sin asignar'}</td>
                   <td className="px-4 py-3">
