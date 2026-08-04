@@ -2,6 +2,7 @@ import { peticion } from './clienteHttp.js';
 
 export const listarExpedientesDisponibles = (idConvocatoria) =>
   peticion(`/comite/expedientes${idConvocatoria ? `?idConvocatoria=${idConvocatoria}` : ''}`);
+export const listarSesiones = () => peticion('/comite/sesiones');
 export const crearSesion = (datos) => peticion('/comite/sesiones', { metodo: 'POST', cuerpo: datos });
 export const obtenerSesion = (id) => peticion(`/comite/sesiones/${id}`);
 export const registrarVoto = (id, idExpediente, datos) =>
