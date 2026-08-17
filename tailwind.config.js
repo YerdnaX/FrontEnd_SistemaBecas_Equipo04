@@ -1,6 +1,6 @@
 /**
  * Sistema cromático SGBE - CUC.
- * Paleta base: carbón vegetal #181C14, grafito #3C3D37, salvia #697565 y marfil #ECDFCC.
+ * Paleta base: azul #427AB5, azul profundo #406AAF, amarillo #F7DD7D y crema #FFE8BE.
  * Los tonos intermedios son mezclas de estos cuatro colores y se reservan para
  * separar niveles de superficie sin introducir matices ajenos a la identidad.
  */
@@ -18,65 +18,65 @@ export default {
     },
     extend: {
       colors: {
-        background: '#181C14',
-        'on-background': '#ECDFCC',
+        background: '#14283D',
+        'on-background': '#FFE8BE',
 
-        surface: '#3C3D37',
-        'surface-dim': '#181C14',
-        'surface-bright': '#596054',
-        'surface-container-lowest': '#181C14',
-        'surface-container-low': '#22271F',
-        'surface-container': '#2C302A',
-        'surface-container-high': '#3C3D37',
-        'surface-container-highest': '#4A4D46',
+        surface: '#203E5C',
+        'surface-dim': '#14283D',
+        'surface-bright': '#427AB5',
+        'surface-container-lowest': '#14283D',
+        'surface-container-low': '#19324B',
+        'surface-container': '#203E5C',
+        'surface-container-high': '#294D72',
+        'surface-container-highest': '#315D8C',
 
-        'on-surface': '#ECDFCC',
-        'on-surface-variant': '#C8C1B3',
-        outline: '#8B9588',
-        'outline-variant': '#697565',
+        'on-surface': '#FFE8BE',
+        'on-surface-variant': '#D7DCE0',
+        outline: '#9CC3E8',
+        'outline-variant': '#78A7D5',
 
-        primary: '#F7ECDD',
-        'on-primary': '#181C14',
-        'primary-container': '#ECDFCC',
-        'on-primary-container': '#181C14',
+        primary: '#FFE8BE',
+        'on-primary': '#172A3D',
+        'primary-container': '#F7DD7D',
+        'on-primary-container': '#172A3D',
 
-        secondary: '#9BA692',
-        'on-secondary': '#181C14',
-        'secondary-container': '#3C3D37',
-        'on-secondary-container': '#ECDFCC',
+        secondary: '#427AB5',
+        'on-secondary': '#FFF3DC',
+        'secondary-container': '#315D8C',
+        'on-secondary-container': '#FFE8BE',
 
-        tertiary: '#D2C9B9',
-        'on-tertiary': '#181C14',
-        'tertiary-container': '#465044',
-        'on-tertiary-container': '#ECDFCC',
+        tertiary: '#FFE8BE',
+        'on-tertiary': '#172A3D',
+        'tertiary-container': '#2B527A',
+        'on-tertiary-container': '#FFE8BE',
 
-        error: '#E2BFAF',
-        'on-error': '#181C14',
-        'error-container': '#493A34',
-        'on-error-container': '#F0D2C3',
+        error: '#9D3E48',
+        'on-error': '#FFF0DF',
+        'error-container': '#512D38',
+        'on-error-container': '#FFD9D8',
 
-        exito: '#BFCBB7',
-        'exito-container': '#344236',
-        'on-exito-container': '#DCE6D5',
+        exito: '#D8EDC4',
+        'exito-container': '#365B49',
+        'on-exito-container': '#E8F6DD',
 
-        advertencia: '#E0CDAF',
-        'advertencia-container': '#4A4233',
-        'on-advertencia-container': '#F0DFC4',
+        advertencia: '#F7DD7D',
+        'advertencia-container': '#5A4D27',
+        'on-advertencia-container': '#FFF1BF',
 
-        'categoria-academica': '#D5D8C9',
-        'categoria-academica-container': '#384038',
-        'categoria-financiera': '#BFCBB7',
-        'categoria-financiera-container': '#344236',
-        'categoria-convocatoria': '#D9CEC0',
-        'categoria-convocatoria-container': '#46413B',
-        'categoria-evento': '#E0CDAF',
-        'categoria-evento-container': '#4A4233',
-        'categoria-urgente': '#E2BFAF',
-        'categoria-urgente-container': '#493A34',
-        'categoria-general': '#C8C1B3',
-        'categoria-general-container': '#3C3D37',
-        'convocatoria-destacada': '#ECDFCC',
-        'convocatoria-destacada-container': '#465044'
+        'categoria-academica': '#B9D8F4',
+        'categoria-academica-container': '#294D72',
+        'categoria-financiera': '#D8EDC4',
+        'categoria-financiera-container': '#365B49',
+        'categoria-convocatoria': '#FFE8BE',
+        'categoria-convocatoria-container': '#2B527A',
+        'categoria-evento': '#F7DD7D',
+        'categoria-evento-container': '#5A4D27',
+        'categoria-urgente': '#FFD9D8',
+        'categoria-urgente-container': '#512D38',
+        'categoria-general': '#D7DCE0',
+        'categoria-general-container': '#3B4D5E',
+        'convocatoria-destacada': '#F7DD7D',
+        'convocatoria-destacada-container': '#514824'
       },
       fontFamily: {
         sans: ['Hanken Grotesk', 'sans-serif']
@@ -97,10 +97,10 @@ export default {
         'container-max': '80rem'
       },
       boxShadow: {
-        'elevation-l1': '0 1px 2px rgba(24,28,20,0.55)',
-        'elevation-l2': '0 8px 24px -8px rgba(24,28,20,0.72)',
-        'elevation-l3': '0 20px 48px -12px rgba(24,28,20,0.84)',
-        'focus-ring': '0 0 0 3px rgba(236,223,204,0.4)'
+        'elevation-l1': '0 1px 2px rgba(20,40,61,0.55)',
+        'elevation-l2': '0 8px 24px -8px rgba(20,40,61,0.72)',
+        'elevation-l3': '0 20px 48px -12px rgba(20,40,61,0.84)',
+        'focus-ring': '0 0 0 3px rgba(247,221,125,0.42)'
       },
       transitionDuration: {
         DEFAULT: '160ms'

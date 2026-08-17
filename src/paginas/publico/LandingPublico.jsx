@@ -39,7 +39,7 @@ export default function LandingPublico() {
     <div>
       <EncabezadoPublico />
       <main>
-        <section className="bg-primary-container px-4 py-16 text-on-primary md:px-12">
+        <section className="bg-secondary-container px-4 py-16 text-on-secondary-container md:px-12">
           <div className="mx-auto max-w-container-max">
             <h1 className="text-headline-md md:text-headline-lg font-bold leading-tight">
               Sistema de Gestión de Becas Estudiantiles
@@ -49,7 +49,7 @@ export default function LandingPublico() {
             </p>
             <div className="mt-6 flex gap-3">
               <Link to="/convocatorias"><Boton>Ver convocatorias</Boton></Link>
-              <Link to="/registro"><Boton variante="secundario" className="border-on-primary-container text-on-primary-container hover:bg-on-primary-container/10">Registrarme</Boton></Link>
+              <Link to="/registro"><Boton variante="secundario" className="!border-on-secondary-container !text-on-secondary-container hover:!bg-on-secondary-container/10">Registrarme</Boton></Link>
             </div>
           </div>
         </section>

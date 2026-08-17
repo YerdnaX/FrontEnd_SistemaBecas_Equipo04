@@ -17,7 +17,7 @@ export default function Boton({ variante = 'primario', tamano = 'md', deshabilit
   return (
     <button
       disabled={deshabilitado || cargando}
-      className={`inline-flex items-center justify-center rounded-md font-semibold transition disabled:cursor-not-allowed disabled:opacity-50 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
+      className={`inline-flex items-center justify-center rounded-md font-semibold transition disabled:cursor-not-allowed disabled:opacity-70 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-background ${
         esIcono ? '' : TAMANOS[tamano]
       } ${VARIANTES[variante]} ${className}`}
       {...resto}
