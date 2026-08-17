@@ -58,7 +58,7 @@ export default function ActivacionFinanciera() {
       {beneficio && (
         <div className="grid gap-6 lg:grid-cols-[1fr_1.4fr]">
           <Tarjeta>
-            <h2 className="font-semibold text-primary">Beneficio #{beneficio.IdBecaActiva}</h2>
+            <h2 className="font-semibold text-on-surface">Beneficio #{beneficio.IdBecaActiva}</h2>
             <dl className="mt-4 space-y-3 text-body-sm">
               <div><dt className="text-on-surface-variant">Tipo</dt><dd className="font-semibold">{beneficio.TipoBeca}</dd></div>
               <div><dt className="text-on-surface-variant">Expediente</dt><dd className="font-semibold">{beneficio.CodigoExpediente}</dd></div>

@@ -7,6 +7,7 @@ import CampoCedula from '../../componentes/formularios/CampoCedula.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
+import DialogoConfirmacion from '../../componentes/comunes/DialogoConfirmacion.jsx';
 import { registrarUsuario, verificarRegistro } from '../../servicios/servicioAutenticacion.js';
 import { contrasenaEsSegura, cedulaEsValida } from '../../utilidades/validaciones.js';
 
@@ -94,8 +95,8 @@ export default function RegistroUsuario() {
       <EncabezadoPublico />
       <main className="mx-auto max-w-2xl px-4 py-12 md:px-12">
         <Tarjeta>
-          <img src="/images/logo.png" alt="Logo SGBE CUC" className="mx-auto mb-3 h-48 w-48 object-contain" />
-          <h1 className="text-headline-md font-semibold text-primary">Crear cuenta</h1>
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="mx-auto mb-3 h-16 w-16 object-contain" />
+          <h1 className="text-headline-md font-semibold text-on-surface">Crear cuenta</h1>
 
           {exito ? (
             <AlertaMensaje tipo="exito" titulo="Cuenta creada">
@@ -178,34 +179,27 @@ export default function RegistroUsuario() {
         </Tarjeta>
       </main>
 
-      {mostrarTerminos && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 px-4" role="dialog" aria-modal="true" aria-label="Términos y condiciones">
-          <Tarjeta className="w-full max-w-xl">
-            <div className="flex items-start justify-between gap-4">
-              <h2 className="text-headline-sm font-semibold text-primary">Términos y condiciones</h2>
-              <button
-                type="button"
-                className="text-body-sm font-semibold text-primary-container hover:underline"
-                onClick={() => setMostrarTerminos(false)}
-              >
-                Cerrar
-              </button>
-            </div>
-            <div className="mt-4 space-y-3 text-body-sm text-on-surface-variant">
-              <p>
-                La información registrada en este sistema se utiliza únicamente con fines académicos y estudiantiles,
-                como parte del proceso de gestión y análisis de becas del proyecto SGBE-CUC.
-              </p>
-              <p>
-                Sus datos no serán usados para fines comerciales ni compartidos fuera del alcance educativo del proyecto :D
-              </p>
-              <p>
-                Al continuar con el registro, usted acepta el tratamiento de sus datos bajo estas condiciones :D?
-              </p>
-            </div>
-          </Tarjeta>
+      <DialogoConfirmacion
+        abierto={mostrarTerminos}
+        titulo="Términos y condiciones"
+        cancelar={() => setMostrarTerminos(false)}
+        confirmar={() => setMostrarTerminos(false)}
+        textoCancelar="Cerrar"
+        textoConfirmar="Aceptar"
+      >
+        <div className="space-y-3 text-body-sm text-on-surface-variant">
+          <p>
+            La información registrada en este sistema se utiliza únicamente con fines académicos y estudiantiles,
+            como parte del proceso de gestión y análisis de becas del proyecto SGBE-CUC.
+          </p>
+          <p>
+            Sus datos no serán usados para fines comerciales ni compartidos fuera del alcance educativo del proyecto :D
+          </p>
+          <p>
+            Al continuar con el registro, usted acepta el tratamiento de sus datos bajo estas condiciones :D?
+          </p>
         </div>
-      )}
+      </DialogoConfirmacion>
 
       <PiePagina />
     </div>

@@ -1,9 +1,8 @@
 import { useEffect, useState } from 'react';
-import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
+import TablaDatos from '../../componentes/comunes/TablaDatos.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
-import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
 import * as servicioSeguridad from '../../servicios/servicioSeguridad.js';
 
 const PESTANAS = ['Auditoría', 'Eventos de seguridad', 'Sesiones activas'];
@@ -14,14 +13,16 @@ export default function Auditoria() {
 
   return (
     <div>
-      <h1 className="text-headline-lg font-semibold text-primary">Auditoría y seguridad</h1>
+      <h1 className="text-headline-lg font-semibold text-on-surface">Auditoría y seguridad</h1>
 
-      <div className="mt-4 flex gap-2 border-b border-outline-variant">
+      <div className="mt-4 flex gap-2" role="tablist" aria-label="Auditoría y seguridad">
         {PESTANAS.map((titulo, indice) => (
           <button
             key={titulo}
+            role="tab"
+            aria-selected={pestana === indice}
             onClick={() => { setPestana(indice); setError(null); }}
-            className={`px-4 py-2 text-body-sm font-medium ${pestana === indice ? 'border-b-2 border-primary-container text-primary-container' : 'text-on-surface-variant'}`}
+            className={`rounded-md px-4 py-2 text-body-sm font-medium transition ${pestana === indice ? 'bg-primary-container text-on-primary-container' : 'border border-outline-variant text-on-surface-variant hover:bg-surface-container-high'}`}
           >
             {titulo}
           </button>
@@ -53,33 +54,20 @@ function TablaAuditoria({ onError }) {
   }, []);
 
   if (cargando) return <EstadoCarga />;
-  if (registros.length === 0) return <EstadoVacio titulo="Sin registros de auditoría" />;
 
   return (
-    <Tarjeta className="overflow-x-auto">
-      <table className="w-full text-left text-body-sm">
-        <thead className="bg-surface-container-low">
-          <tr>
-            <th className="px-3 py-2">Fecha</th>
-            <th className="px-3 py-2">Usuario</th>
-            <th className="px-3 py-2">Módulo</th>
-            <th className="px-3 py-2">Acción</th>
-            <th className="px-3 py-2">Detalle</th>
-          </tr>
-        </thead>
-        <tbody>
-          {registros.map((r) => (
-            <tr key={r.IdAuditoria} className="border-t border-outline-variant">
-              <td className="px-3 py-2">{new Date(r.Fecha).toLocaleString()}</td>
-              <td className="px-3 py-2">{r.CorreoUsuario || 'sistema'}</td>
-              <td className="px-3 py-2">{r.Modulo}</td>
-              <td className="px-3 py-2">{r.Accion}</td>
-              <td className="px-3 py-2 text-on-surface-variant">{r.Detalle}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </Tarjeta>
+    <TablaDatos
+      clave="IdAuditoria"
+      textoVacio="Sin registros de auditoría"
+      filas={registros}
+      columnas={[
+        { clave: 'Fecha', etiqueta: 'Fecha', render: (r) => new Date(r.Fecha).toLocaleString() },
+        { clave: 'Usuario', etiqueta: 'Usuario', render: (r) => r.CorreoUsuario || 'sistema' },
+        { clave: 'Modulo', etiqueta: 'Módulo' },
+        { clave: 'Accion', etiqueta: 'Acción' },
+        { clave: 'Detalle', etiqueta: 'Detalle', render: (r) => <span className="text-on-surface-variant">{r.Detalle}</span> }
+      ]}
+    />
   );
 }
 
@@ -97,33 +85,20 @@ function TablaEventos({ onError }) {
   }, []);
 
   if (cargando) return <EstadoCarga />;
-  if (eventos.length === 0) return <EstadoVacio titulo="Sin eventos de seguridad" />;
 
   return (
-    <Tarjeta className="overflow-x-auto">
-      <table className="w-full text-left text-body-sm">
-        <thead className="bg-surface-container-low">
-          <tr>
-            <th className="px-3 py-2">Fecha</th>
-            <th className="px-3 py-2">Usuario</th>
-            <th className="px-3 py-2">Tipo</th>
-            <th className="px-3 py-2">Nivel</th>
-            <th className="px-3 py-2">Descripción</th>
-          </tr>
-        </thead>
-        <tbody>
-          {eventos.map((ev) => (
-            <tr key={ev.IdEvento} className="border-t border-outline-variant">
-              <td className="px-3 py-2">{new Date(ev.Fecha).toLocaleString()}</td>
-              <td className="px-3 py-2">{ev.CorreoUsuario || '—'}</td>
-              <td className="px-3 py-2">{ev.TipoEvento}</td>
-              <td className="px-3 py-2">{ev.Nivel}</td>
-              <td className="px-3 py-2 text-on-surface-variant">{ev.Descripcion}</td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </Tarjeta>
+    <TablaDatos
+      clave="IdEvento"
+      textoVacio="Sin eventos de seguridad"
+      filas={eventos}
+      columnas={[
+        { clave: 'Fecha', etiqueta: 'Fecha', render: (ev) => new Date(ev.Fecha).toLocaleString() },
+        { clave: 'Usuario', etiqueta: 'Usuario', render: (ev) => ev.CorreoUsuario || '—' },
+        { clave: 'TipoEvento', etiqueta: 'Tipo' },
+        { clave: 'Nivel', etiqueta: 'Nivel' },
+        { clave: 'Descripcion', etiqueta: 'Descripción', render: (ev) => <span className="text-on-surface-variant">{ev.Descripcion}</span> }
+      ]}
+    />
   );
 }
 
@@ -151,36 +126,27 @@ function TablaSesiones({ onError }) {
   }
 
   if (cargando) return <EstadoCarga />;
-  if (sesiones.length === 0) return <EstadoVacio titulo="No hay sesiones activas" />;
 
   return (
-    <Tarjeta className="overflow-x-auto">
-      <table className="w-full text-left text-body-sm">
-        <thead className="bg-surface-container-low">
-          <tr>
-            <th className="px-3 py-2">Usuario</th>
-            <th className="px-3 py-2">IP</th>
-            <th className="px-3 py-2">Creada</th>
-            <th className="px-3 py-2">Expira</th>
-            <th className="px-3 py-2"></th>
-          </tr>
-        </thead>
-        <tbody>
-          {sesiones.map((s) => (
-            <tr key={s.IdSesion} className="border-t border-outline-variant">
-              <td className="px-3 py-2">{s.Correo}</td>
-              <td className="px-3 py-2">{s.DireccionIp || '—'}</td>
-              <td className="px-3 py-2">{new Date(s.FechaCreacion).toLocaleString()}</td>
-              <td className="px-3 py-2">{new Date(s.FechaVencimiento).toLocaleString()}</td>
-              <td className="px-3 py-2">
-                <Boton variante="peligro" cargando={revocando === s.IdSesion} onClick={() => revocar(s.IdSesion)}>
-                  Revocar
-                </Boton>
-              </td>
-            </tr>
-          ))}
-        </tbody>
-      </table>
-    </Tarjeta>
+    <TablaDatos
+      clave="IdSesion"
+      textoVacio="No hay sesiones activas"
+      filas={sesiones}
+      columnas={[
+        { clave: 'Correo', etiqueta: 'Usuario' },
+        { clave: 'DireccionIp', etiqueta: 'IP', render: (s) => s.DireccionIp || '—' },
+        { clave: 'FechaCreacion', etiqueta: 'Creada', render: (s) => new Date(s.FechaCreacion).toLocaleString() },
+        { clave: 'FechaVencimiento', etiqueta: 'Expira', render: (s) => new Date(s.FechaVencimiento).toLocaleString() },
+        {
+          clave: 'acciones',
+          etiqueta: '',
+          render: (s) => (
+            <Boton variante="peligro" cargando={revocando === s.IdSesion} onClick={() => revocar(s.IdSesion)}>
+              Revocar
+            </Boton>
+          )
+        }
+      ]}
+    />
   );
 }

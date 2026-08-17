@@ -22,7 +22,11 @@ const CONFIGURACION = {
 };
 
 function EnlaceAccion({ ruta, children }) {
-  return <Link className="font-semibold text-primary-container hover:underline" to={ruta}>{children}</Link>;
+  return (
+    <Link className="inline-flex items-center rounded-md px-2 py-1 text-label-sm font-semibold text-primary transition hover:bg-primary-container/15" to={ruta}>
+      {children}
+    </Link>
+  );
 }
 
 export default function BandejaBeneficios({ area }) {

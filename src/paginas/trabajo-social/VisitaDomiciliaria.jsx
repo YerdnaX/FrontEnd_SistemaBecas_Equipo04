@@ -5,8 +5,10 @@ import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import TablaDatos from '../../componentes/comunes/TablaDatos.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
+import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
+import DialogoConfirmacion from '../../componentes/comunes/DialogoConfirmacion.jsx';
 import {
   cancelarVisita,
   listarVisitas,
@@ -23,6 +25,8 @@ export default function VisitaDomiciliaria() {
   const [informe, setInforme] = useState({ idVisita: '', resultado: '', observaciones: '' });
   const [procesando, setProcesando] = useState(false);
   const [mensaje, setMensaje] = useState(null);
+  const [idVisitaCancelar, setIdVisitaCancelar] = useState(null);
+  const [cancelando, setCancelando] = useState(false);
 
   async function cargar() {
     try { setVisitas((await listarVisitas(id)).datos); }
@@ -68,9 +72,11 @@ export default function VisitaDomiciliaria() {
     finally { setProcesando(false); }
   }
 
-  async function cancelar(idVisita) {
-    if (!window.confirm('¿Desea cancelar esta visita?')) return;
-    await cancelarVisita(idVisita, { observacion: 'Cancelada desde la gestión de visitas.' });
+  async function confirmarCancelacion() {
+    setCancelando(true);
+    await cancelarVisita(idVisitaCancelar, { observacion: 'Cancelada desde la gestión de visitas.' });
+    setCancelando(false);
+    setIdVisitaCancelar(null);
     cargar();
   }
 
@@ -81,7 +87,7 @@ export default function VisitaDomiciliaria() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Tarjeta>
           <form className="space-y-4" onSubmit={programar}>
-            <h2 className="font-semibold text-primary">{editandoId ? 'Reprogramar visita' : 'Programar nueva visita'}</h2>
+            <h2 className="font-semibold text-on-surface">{editandoId ? 'Reprogramar visita' : 'Programar nueva visita'}</h2>
             <CampoTexto etiqueta="Fecha y hora" type="datetime-local" value={formulario.fechaProgramada} onChange={(e) => setFormulario({ ...formulario, fechaProgramada: e.target.value })} required />
             <CampoTexto etiqueta="Dirección" value={formulario.direccion} onChange={(e) => setFormulario({ ...formulario, direccion: e.target.value })} required />
             <CampoAreaTexto etiqueta="Observaciones" value={formulario.observaciones} onChange={(e) => setFormulario({ ...formulario, observaciones: e.target.value })} />
@@ -93,8 +99,17 @@ export default function VisitaDomiciliaria() {
         </Tarjeta>
         <Tarjeta>
           <form className="space-y-4" onSubmit={completar}>
-            <h2 className="font-semibold text-primary">Registrar informe</h2>
-            <label className="flex flex-col gap-1 text-body-sm"><span className="font-medium">Visita</span><select className="rounded-md border p-2" value={informe.idVisita} onChange={(e) => setInforme({ ...informe, idVisita: e.target.value })} required><option value="">Seleccione...</option>{visitas.filter((visita) => visita.Estado === 'PROGRAMADA').map((visita) => <option key={visita.IdVisita} value={visita.IdVisita}>{new Date(visita.FechaProgramada).toLocaleString('es-CR')} · {visita.Direccion}</option>)}</select></label>
+            <h2 className="font-semibold text-on-surface">Registrar informe</h2>
+            <CampoSelect
+              etiqueta="Visita"
+              value={informe.idVisita}
+              onChange={(e) => setInforme({ ...informe, idVisita: e.target.value })}
+              required
+              opciones={visitas.filter((visita) => visita.Estado === 'PROGRAMADA').map((visita) => ({
+                valor: visita.IdVisita,
+                etiqueta: `${new Date(visita.FechaProgramada).toLocaleString('es-CR')} · ${visita.Direccion}`
+              }))}
+            />
             <CampoTexto etiqueta="Resultado" value={informe.resultado} onChange={(e) => setInforme({ ...informe, resultado: e.target.value })} required />
             <CampoAreaTexto etiqueta="Observaciones del entorno" value={informe.observaciones} onChange={(e) => setInforme({ ...informe, observaciones: e.target.value })} />
             <Boton type="submit" cargando={procesando}>Finalizar visita</Boton>
@@ -106,8 +121,19 @@ export default function VisitaDomiciliaria() {
         { clave: 'Direccion', etiqueta: 'Ubicación' },
         { clave: 'Responsable', etiqueta: 'Responsable' },
         { clave: 'Estado', etiqueta: 'Estado' },
-        { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => fila.Estado === 'PROGRAMADA' ? <div className="flex gap-2"><Boton variante="texto" onClick={() => editar(fila)}>Reprogramar</Boton><Boton variante="texto" onClick={() => cancelar(fila.IdVisita)}>Cancelar</Boton></div> : '—' }
+        { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => fila.Estado === 'PROGRAMADA' ? <div className="flex gap-2"><Boton variante="texto" onClick={() => editar(fila)}>Reprogramar</Boton><Boton variante="texto" onClick={() => setIdVisitaCancelar(fila.IdVisita)}>Cancelar</Boton></div> : '—' }
       ]} />
+
+      <DialogoConfirmacion
+        abierto={idVisitaCancelar !== null}
+        titulo="Cancelar visita"
+        mensaje="¿Desea cancelar esta visita?"
+        varianteConfirmar="peligro"
+        textoConfirmar="Cancelar visita"
+        cargando={cancelando}
+        confirmar={confirmarCancelacion}
+        cancelar={() => setIdVisitaCancelar(null)}
+      />
     </div>
   );
 }

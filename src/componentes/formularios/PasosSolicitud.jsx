@@ -1,4 +1,5 @@
 import { Link, useParams } from 'react-router-dom';
+import { obtenerClaseEstado } from '../comunes/EtiquetaEstado.jsx';
 
 const PASOS = [
   { clave: 'personal', etiqueta: 'Datos personales' },
@@ -14,29 +15,34 @@ function obtenerIndicePasoActual(pasoActual) {
   return indice >= 0 ? indice : 0;
 }
 
-const ESTADOS_SOLICITUD = {
-  BORRADOR: { etiqueta: 'En borrador', clase: 'bg-surface-container text-on-surface-variant' },
-  ENVIADA: { etiqueta: 'Enviada', clase: 'bg-primary-container text-on-primary' },
-  EN_REVISION_DOCUMENTAL: { etiqueta: 'En revisión', clase: 'bg-primary-container text-on-primary' },
-  PENDIENTE_SUBSANACION: { etiqueta: 'Subsanación', clase: 'bg-error-container text-on-error-container' },
-  ELEGIBLE: { etiqueta: 'Validada', clase: 'bg-exito-container text-on-exito-container' },
-  NO_ELEGIBLE: { etiqueta: 'Finalizada', clase: 'bg-surface-container text-on-surface-variant' },
-  EN_EVALUACION: { etiqueta: 'En revisión', clase: 'bg-primary-container text-on-primary' },
-  EVALUADA: { etiqueta: 'Validada', clase: 'bg-exito-container text-on-exito-container' },
-  EN_COMITE: { etiqueta: 'En revisión', clase: 'bg-primary-container text-on-primary' },
-  APROBADA: { etiqueta: 'Finalizada', clase: 'bg-exito-container text-on-exito-container' },
-  CONDICIONADA: { etiqueta: 'Finalizada', clase: 'bg-exito-container text-on-exito-container' },
-  LISTA_ESPERA: { etiqueta: 'Finalizada', clase: 'bg-surface-container text-on-surface-variant' },
-  RECHAZADA: { etiqueta: 'Finalizada', clase: 'bg-surface-container text-on-surface-variant' }
+/**
+ * Solo agrupa varios estados crudos de la solicitud bajo una etiqueta corta
+ * y amigable para este resumen. El color viene de EtiquetaEstado.obtenerClaseEstado
+ * (misma fuente que usa el resto de la app) para no mantener un segundo mapa de colores.
+ */
+const ETIQUETAS_SOLICITUD = {
+  BORRADOR: 'En borrador',
+  ENVIADA: 'Enviada',
+  EN_REVISION_DOCUMENTAL: 'En revisión',
+  PENDIENTE_SUBSANACION: 'Subsanación',
+  ELEGIBLE: 'Validada',
+  NO_ELEGIBLE: 'Finalizada',
+  EN_EVALUACION: 'En revisión',
+  EVALUADA: 'Validada',
+  EN_COMITE: 'En revisión',
+  APROBADA: 'Finalizada',
+  CONDICIONADA: 'Finalizada',
+  LISTA_ESPERA: 'Finalizada',
+  RECHAZADA: 'Finalizada'
 };
 
+const ESTADO_POR_PASO = ['BORRADOR', 'ENVIADA', 'ENVIADA', 'ENVIADA', 'EN_REVISION_DOCUMENTAL', 'EN_COMITE'];
+
 function obtenerEstadoVisible(estadoSolicitud, pasoActual) {
-  if (estadoSolicitud && ESTADOS_SOLICITUD[estadoSolicitud]) return ESTADOS_SOLICITUD[estadoSolicitud];
-  const indice = obtenerIndicePasoActual(pasoActual);
-  if (indice === 0) return ESTADOS_SOLICITUD.BORRADOR;
-  if (indice === 1 || indice === 2 || indice === 3) return ESTADOS_SOLICITUD.ENVIADA;
-  if (indice === 4) return ESTADOS_SOLICITUD.EN_REVISION_DOCUMENTAL;
-  return ESTADOS_SOLICITUD.EN_COMITE;
+  const clave = estadoSolicitud && ETIQUETAS_SOLICITUD[estadoSolicitud]
+    ? estadoSolicitud
+    : ESTADO_POR_PASO[obtenerIndicePasoActual(pasoActual)];
+  return { etiqueta: ETIQUETAS_SOLICITUD[clave], clase: obtenerClaseEstado(clave) };
 }
 
 export default function PasosSolicitud({ pasoActual, estadoSolicitud }) {
@@ -46,11 +52,11 @@ export default function PasosSolicitud({ pasoActual, estadoSolicitud }) {
   const estadoVisible = obtenerEstadoVisible(estadoSolicitud, pasoActual);
 
   return (
-    <section className="mb-6 overflow-hidden rounded-2xl border border-outline-variant bg-surface-container-lowest shadow-elevation-l2">
+    <section className="mb-6 overflow-hidden rounded-xl border border-outline-variant bg-surface-container shadow-elevation-l2">
       <div className="grid gap-4 border-b border-outline-variant px-6 py-5 lg:grid-cols-[1fr_auto] lg:items-start">
         <div>
           <p className="text-label-md font-semibold uppercase tracking-wide text-primary-container">Nueva solicitud</p>
-          <h2 className="mt-1 text-headline-sm font-semibold text-primary">Estado de Solicitud</h2>
+          <h2 className="mt-1 text-headline-sm font-semibold text-on-surface">Estado de Solicitud</h2>
           <p className="mt-1 text-body-sm text-on-surface-variant">Complete cada sección para avanzar con su solicitud.</p>
         </div>
 
@@ -75,20 +81,20 @@ export default function PasosSolicitud({ pasoActual, estadoSolicitud }) {
               const enlace = `/aspirante/solicitudes/${id}/${paso.clave}`;
 
               return (
-                <Link key={paso.clave} to={enlace} className="relative z-10 flex flex-col items-center text-center">
+                <Link key={paso.clave} to={enlace} className="relative z-10 flex flex-col items-center rounded-md text-center focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary focus-visible:ring-offset-2 focus-visible:ring-offset-surface-container">
                   <span
                     className={`flex h-9 w-9 items-center justify-center rounded-full border-2 text-label-sm font-bold transition ${
                       completado
-                        ? 'border-primary-container bg-primary-container text-on-primary'
+                        ? 'border-primary-container bg-primary-container text-on-primary-container'
                         : activo
-                          ? 'border-primary-container bg-primary-container text-on-primary shadow-elevation-l1'
-                          : 'border-surface-container-high bg-surface-container-lowest text-on-surface-variant'
+                          ? 'border-primary-container bg-primary-container text-on-primary-container shadow-elevation-l1'
+                          : 'border-outline-variant bg-surface-container-low text-on-surface-variant'
                     }`}
                     aria-hidden="true"
                   >
                     {completado ? '✓' : indice + 1}
                   </span>
-                  <span className={`mt-3 text-label-md font-semibold ${activo ? 'text-primary' : 'text-on-surface-variant'}`}>
+                  <span className={`mt-3 text-label-md font-semibold ${activo ? 'text-on-surface' : 'text-on-surface-variant'}`}>
                     {paso.etiqueta}
                   </span>
                 </Link>

@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
@@ -50,10 +51,10 @@ export default function DetalleDisciplinario() {
 
   return (
     <div className="mx-auto max-w-3xl">
-      <div className="flex items-center justify-between">
-        <h1 className="text-headline-lg font-semibold text-primary">Proceso disciplinario #{investigacion.IdInvestigacion}</h1>
-        <EtiquetaEstado estado={investigacion.Estado} />
-      </div>
+      <EncabezadoPagina
+        titulo={`Proceso disciplinario #${investigacion.IdInvestigacion}`}
+        acciones={<EtiquetaEstado estado={investigacion.Estado} />}
+      />
 
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
       {mensaje && <div className="mt-4"><AlertaMensaje tipo="exito">{mensaje}</AlertaMensaje></div>}

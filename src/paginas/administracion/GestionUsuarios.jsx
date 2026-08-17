@@ -36,11 +36,11 @@ export default function GestionUsuarios() {
       <EncabezadoPagina titulo="Gestión de usuarios" descripcion="Administre acceso, bloqueo y roles sin eliminar referencias históricas." acciones={<Link to="/admin/usuarios/nuevo"><Boton>Nuevo usuario</Boton></Link>} />
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
       <div className="flex gap-2" role="tablist" aria-label="Tipo de cuenta">
-        <Boton variante={tipoCuenta === 'ESTUDIANTE' ? 'primario' : 'secundario'}
+        <Boton role="tab" aria-selected={tipoCuenta === 'ESTUDIANTE'} variante={tipoCuenta === 'ESTUDIANTE' ? 'primario' : 'secundario'}
           onClick={() => { setTipoCuenta('ESTUDIANTE'); setPagina(1); }}>
           Aspirantes y becados
         </Boton>
-        <Boton variante={tipoCuenta === 'PERSONAL' ? 'primario' : 'secundario'}
+        <Boton role="tab" aria-selected={tipoCuenta === 'PERSONAL'} variante={tipoCuenta === 'PERSONAL' ? 'primario' : 'secundario'}
           onClick={() => { setTipoCuenta('PERSONAL'); setPagina(1); }}>
           Personal institucional
         </Boton>

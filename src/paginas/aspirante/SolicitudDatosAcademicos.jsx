@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import PasosSolicitud from '../../componentes/formularios/PasosSolicitud.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
+import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
@@ -151,7 +152,7 @@ export default function SolicitudDatosAcademicos() {
     <div>
       <PasosSolicitud pasoActual="academicos" estadoSolicitud={estadoSolicitud} />
       <Tarjeta className="mx-auto w-full max-w-5xl">
-        <h1 className="text-headline-sm font-semibold text-primary">Información académica</h1>
+        <h1 className="text-headline-sm font-semibold text-on-surface">Información académica</h1>
         <form className="mt-6 grid gap-4 md:grid-cols-2 xl:grid-cols-3" onSubmit={manejarEnvio}>
           {error && <div className="md:col-span-2 xl:col-span-3"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
           <CampoTexto etiqueta="Nombre del estudiante" value={nombreEstudiante} readOnly
@@ -161,19 +162,15 @@ export default function SolicitudDatosAcademicos() {
             error={erroresCampos.numeroEstudiante}
             success={Boolean(numeroEstudianteAutomatico)}
             helperText="Se obtiene automáticamente de su cuenta." />
-          <label className="flex flex-col gap-1 text-body-sm">
-            <span className="font-medium text-on-surface">Carrera</span>
-            <select
-              className={`rounded-md border px-3 py-2 text-body-md outline-none focus:border-primary-container ${erroresCampos.carrera ? 'border-error' : carreraValida ? 'border-exito text-exito' : 'border-outline-variant'}`}
-              value={formulario.carrera}
-              onChange={(e) => actualizarCampo('carrera', e.target.value)}
-              required
-            >
-              <option value="">Seleccione una carrera</option>
-              {CARRERAS.map((carrera) => <option key={carrera} value={carrera}>{carrera}</option>)}
-            </select>
-            {erroresCampos.carrera ? <span className="text-label-sm text-error">{erroresCampos.carrera}</span> : carreraValida ? <span className="text-label-sm text-exito">Correcto</span> : null}
-          </label>
+          <CampoSelect
+            etiqueta="Carrera"
+            etiquetaVacia="Seleccione una carrera"
+            opciones={CARRERAS.map((carrera) => ({ valor: carrera, etiqueta: carrera }))}
+            value={formulario.carrera}
+            onChange={(e) => actualizarCampo('carrera', e.target.value)}
+            error={erroresCampos.carrera}
+            required
+          />
           <CampoTexto etiqueta="Nivel o periodo" value={nivelAcademico} readOnly
             success={Boolean(nivelAcademico)} />
           <CampoTexto etiqueta="Promedio" type="number" step="0.01" min="0" max="100" value={formulario.promedio} required
@@ -184,19 +181,15 @@ export default function SolicitudDatosAcademicos() {
             error={erroresCampos.creditosMatriculados}
             success={creditosValido}
             onChange={(e) => actualizarCampo('creditosMatriculados', e.target.value)} />
-          <label className="flex flex-col gap-1 text-body-sm">
-            <span className="font-medium text-on-surface">Condición académica</span>
-            <select
-              className={`rounded-md border px-3 py-2 text-body-md outline-none focus:border-primary-container ${erroresCampos.condicionAcademica ? 'border-error' : condicionAcademicaValida ? 'border-exito text-exito' : 'border-outline-variant'}`}
-              value={formulario.condicionAcademica}
-              onChange={(e) => actualizarCampo('condicionAcademica', e.target.value)}
-              required
-            >
-              <option value="">Seleccione una condición</option>
-              {CONDICIONES_ACADEMICAS.map((condicion) => <option key={condicion} value={condicion}>{condicion}</option>)}
-            </select>
-            {erroresCampos.condicionAcademica ? <span className="text-label-sm text-error">{erroresCampos.condicionAcademica}</span> : condicionAcademicaValida ? <span className="text-label-sm text-exito">Correcto</span> : null}
-          </label>
+          <CampoSelect
+            etiqueta="Condición académica"
+            etiquetaVacia="Seleccione una condición"
+            opciones={CONDICIONES_ACADEMICAS.map((condicion) => ({ valor: condicion, etiqueta: condicion }))}
+            value={formulario.condicionAcademica}
+            onChange={(e) => actualizarCampo('condicionAcademica', e.target.value)}
+            error={erroresCampos.condicionAcademica}
+            required
+          />
           <div className="sm:col-span-2">
             <Boton type="submit" cargando={guardando}>Guardar y continuar</Boton>
           </div>

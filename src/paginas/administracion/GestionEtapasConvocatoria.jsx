@@ -66,7 +66,7 @@ export default function GestionEtapasConvocatoria() {
 
   return (
     <div>
-      <h1 className="text-headline-lg font-semibold text-primary">Etapas de {convocatoria?.Nombre}</h1>
+      <h1 className="text-headline-lg font-semibold text-on-surface">Etapas de {convocatoria?.Nombre}</h1>
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
 
       <div className="mt-6 flex flex-col gap-4">

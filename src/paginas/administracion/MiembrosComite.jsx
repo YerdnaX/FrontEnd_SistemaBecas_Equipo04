@@ -6,6 +6,8 @@ import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
+import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
+import DialogoConfirmacion from '../../componentes/comunes/DialogoConfirmacion.jsx';
 import { crearMiembroComite, eliminarMiembroComite, listarEmpleados, listarMiembrosComite, obtenerCatalogosPersonal } from '../../servicios/servicioSegmentoDos.js';
 
 export default function MiembrosComite() {
@@ -14,6 +16,8 @@ export default function MiembrosComite() {
   const [comites, setComites] = useState([]);
   const [formulario, setFormulario] = useState({ idComite: '', idEmpleado: '', cargo: '', fechaInicio: '', fechaFin: '' });
   const [mensaje, setMensaje] = useState(null);
+  const [cargando, setCargando] = useState(true);
+  const [idAFinalizar, setIdAFinalizar] = useState(null);
 
   async function cargar() {
     try {
@@ -21,7 +25,7 @@ export default function MiembrosComite() {
       setMiembros(m.datos);
       setEmpleados(e.datos.filter((item) => item.Activo));
       setComites(c.datos.comites);
-    } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
+    } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); } finally { setCargando(false); }
   }
   useEffect(() => { cargar(); }, []);
 
@@ -34,8 +38,9 @@ export default function MiembrosComite() {
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
   }
 
-  async function quitar(id) {
-    if (!window.confirm('¿Finalizar esta membresía?')) return;
+  async function confirmarFinalizar() {
+    const id = idAFinalizar;
+    setIdAFinalizar(null);
     await eliminarMiembroComite(id);
     cargar();
   }
@@ -55,15 +60,26 @@ export default function MiembrosComite() {
             <Boton type="submit">Agregar miembro</Boton>
           </form>
         </Tarjeta>
-        <TablaDatos filas={miembros} clave="IdMiembroComite" columnas={[
-          { clave: 'Empleado', etiqueta: 'Empleado' },
-          { clave: 'Comite', etiqueta: 'Comité' },
-          { clave: 'Cargo', etiqueta: 'Cargo' },
-          { clave: 'FechaInicio', etiqueta: 'Inicio', render: (fila) => new Date(fila.FechaInicio).toLocaleDateString('es-CR') },
-          { clave: 'Activo', etiqueta: 'Estado', render: (fila) => fila.Activo ? 'Vigente' : 'Finalizado' },
-          { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => fila.Activo ? <Boton variante="texto" onClick={() => quitar(fila.IdMiembroComite)}>Finalizar</Boton> : '—' }
-        ]} />
+        {cargando ? <EstadoCarga /> : (
+          <TablaDatos filas={miembros} clave="IdMiembroComite" columnas={[
+            { clave: 'Empleado', etiqueta: 'Empleado' },
+            { clave: 'Comite', etiqueta: 'Comité' },
+            { clave: 'Cargo', etiqueta: 'Cargo' },
+            { clave: 'FechaInicio', etiqueta: 'Inicio', render: (fila) => new Date(fila.FechaInicio).toLocaleDateString('es-CR') },
+            { clave: 'Activo', etiqueta: 'Estado', render: (fila) => fila.Activo ? 'Vigente' : 'Finalizado' },
+            { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => fila.Activo ? <Boton variante="texto" onClick={() => setIdAFinalizar(fila.IdMiembroComite)}>Finalizar</Boton> : '—' }
+          ]} />
+        )}
       </div>
+
+      <DialogoConfirmacion
+        abierto={Boolean(idAFinalizar)}
+        titulo="Finalizar membresía"
+        mensaje="¿Finalizar esta membresía?"
+        varianteConfirmar="peligro"
+        confirmar={confirmarFinalizar}
+        cancelar={() => setIdAFinalizar(null)}
+      />
     </div>
   );
 }

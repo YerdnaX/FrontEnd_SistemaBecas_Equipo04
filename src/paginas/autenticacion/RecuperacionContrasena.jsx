@@ -83,8 +83,8 @@ export default function RecuperacionContrasena() {
       <EncabezadoPublico />
       <main className="mx-auto max-w-md px-4 py-16 md:px-12">
         <Tarjeta>
-          <img src="/images/logo.png" alt="Logo SGBE CUC" className="mx-auto mb-3 h-48 w-48 object-contain" />
-          <h1 className="text-headline-md font-semibold text-primary">Recuperar contraseña</h1>
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="mx-auto mb-3 h-16 w-16 object-contain" />
+          <h1 className="text-headline-md font-semibold text-on-surface">Recuperar contraseña</h1>
 
           {exito ? (
             <AlertaMensaje tipo="exito" titulo="Contraseña actualizada">
@@ -111,9 +111,9 @@ export default function RecuperacionContrasena() {
                 required
               />
               <Boton type="submit" cargando={enviando}>Validar código</Boton>
-              <button type="button" className="text-body-sm text-primary-container hover:underline" onClick={() => setPaso('SOLICITAR')}>
+              <Boton type="button" variante="texto" tamano="sm" onClick={() => setPaso('SOLICITAR')}>
                 Volver a enviar código
-              </button>
+              </Boton>
             </form>
           ) : (
             <form className="mt-6 flex flex-col gap-4" onSubmit={manejarCambioContrasena}>

@@ -77,8 +77,8 @@ export default function InicioSesion() {
       <EncabezadoPublico />
       <main className="mx-auto max-w-md px-4 py-16 md:px-12">
         <Tarjeta className="text-center">
-          <img src="/images/logo.png" alt="Logo SGBE CUC" className="mx-auto mb-3 h-48 w-48 object-contain" />
-          <h1 className="text-headline-md font-semibold text-primary">
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="mx-auto mb-3 h-16 w-16 object-contain" />
+          <h1 className="text-headline-md font-semibold text-on-surface">
             {requiereDosFactores ? 'Verificación de seguridad' : 'Iniciar sesión'}
           </h1>
 
@@ -99,9 +99,9 @@ export default function InicioSesion() {
                 />
               </div>
               <Boton type="submit" className="w-full" cargando={enviando}>Verificar e ingresar</Boton>
-              <button type="button" className="text-body-sm text-primary-container hover:underline" onClick={volverAlPrimerPaso}>
+              <Boton type="button" variante="texto" tamano="sm" onClick={volverAlPrimerPaso}>
                 Volver al inicio de sesión
-              </button>
+              </Boton>
             </form>
           ) : (
             <form className="mt-6 flex flex-col items-center gap-4 text-center" onSubmit={manejarCredenciales}>
@@ -112,7 +112,7 @@ export default function InicioSesion() {
               <div className="w-full">
                 <CampoTexto etiqueta="Contraseña" type="password" value={contrasena} onChange={(e) => setContrasena(e.target.value)} required />
               </div>
-              <Link to="/recuperar-contrasena" className="text-body-sm text-primary-container hover:underline">¿Olvidó su contraseña?</Link>
+              <Link to="/recuperar-contrasena"><Boton variante="texto" tamano="sm">¿Olvidó su contraseña?</Boton></Link>
               <Boton type="submit" className="w-full" cargando={enviando}>Continuar</Boton>
               <p className="text-body-sm text-on-surface-variant">
                 ¿No tiene cuenta? <Link to="/registro" className="font-semibold text-primary-container hover:underline">Regístrese</Link>

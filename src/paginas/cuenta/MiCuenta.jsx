@@ -97,20 +97,20 @@ export default function MiCuenta() {
 
   return (
     <div className="mx-auto flex max-w-6xl flex-col gap-8">
-      <div className="overflow-hidden rounded-2xl border border-outline-variant bg-gradient-to-br from-primary-container via-primary to-slate-950 text-on-primary shadow-elevation-l2">
+      <div className="overflow-hidden rounded-xl border border-outline-variant bg-gradient-to-br from-primary-container via-primary to-background text-on-primary shadow-elevation-l2">
         <div className="grid gap-6 p-6 md:grid-cols-[1.6fr_0.9fr] md:p-8">
           <div className="space-y-4">
             <p className="text-label-md font-semibold uppercase tracking-[0.2em] text-on-primary-container">Mi cuenta</p>
             <h1 className="text-headline-lg font-semibold text-on-primary">{perfil?.nombre || 'Usuario'}</h1>
             <p className="max-w-2xl text-body-md text-on-primary-container">Panel personal con sus datos del sistema, accesos y seguridad de la cuenta.</p>
             <div className="flex flex-wrap gap-2">
-              <span className="rounded-full bg-white/10 px-3 py-1 text-label-sm font-semibold text-on-primary">{tipoUsuario}</span>
-              <span className="rounded-full bg-white/10 px-3 py-1 text-label-sm text-on-primary">ID {perfil?.idUsuario}</span>
-              <span className="rounded-full bg-white/10 px-3 py-1 text-label-sm text-on-primary">{totalRoles} rol{totalRoles === 1 ? '' : 'es'}</span>
+              <span className="rounded-full bg-on-surface/10 px-3 py-1 text-label-sm font-semibold text-on-primary">{tipoUsuario}</span>
+              <span className="rounded-full bg-on-surface/10 px-3 py-1 text-label-sm text-on-primary">ID {perfil?.idUsuario}</span>
+              <span className="rounded-full bg-on-surface/10 px-3 py-1 text-label-sm text-on-primary">{totalRoles} rol{totalRoles === 1 ? '' : 'es'}</span>
             </div>
           </div>
           <div className="flex items-center justify-start md:justify-end">
-            <div className="flex h-28 w-28 items-center justify-center rounded-3xl border border-white/20 bg-white/10 text-4xl font-semibold text-on-primary backdrop-blur-sm">
+            <div className="flex h-28 w-28 items-center justify-center rounded-full border border-on-surface/20 bg-on-surface/10 text-4xl font-semibold text-on-primary backdrop-blur-sm">
               {inicial}
             </div>
           </div>
@@ -123,22 +123,22 @@ export default function MiCuenta() {
       <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-4">
         <Tarjeta className="border-l-4 border-primary-container">
           <p className="text-label-md font-semibold uppercase tracking-wide text-primary-container">Usuario</p>
-          <p className="mt-2 text-headline-md font-semibold text-primary">{perfil?.idUsuario}</p>
+          <p className="mt-2 text-headline-md font-semibold text-on-surface">{perfil?.idUsuario}</p>
           <p className="text-body-sm text-on-surface-variant">Identificador interno de la cuenta.</p>
         </Tarjeta>
         <Tarjeta className="border-l-4 border-primary-container">
           <p className="text-label-md font-semibold uppercase tracking-wide text-primary-container">Correo</p>
-          <p className="mt-2 truncate text-headline-md font-semibold text-primary">{perfil?.correo}</p>
+          <p className="mt-2 truncate text-headline-md font-semibold text-on-surface">{perfil?.correo}</p>
           <p className="text-body-sm text-on-surface-variant">Correo principal registrado.</p>
         </Tarjeta>
         <Tarjeta className="border-l-4 border-primary-container">
           <p className="text-label-md font-semibold uppercase tracking-wide text-primary-container">Roles</p>
-          <p className="mt-2 text-headline-md font-semibold text-primary">{totalRoles}</p>
+          <p className="mt-2 text-headline-md font-semibold text-on-surface">{totalRoles}</p>
           <p className="text-body-sm text-on-surface-variant">Roles activos en el sistema.</p>
         </Tarjeta>
         <Tarjeta className="border-l-4 border-primary-container">
           <p className="text-label-md font-semibold uppercase tracking-wide text-primary-container">Notificaciones</p>
-          <p className="mt-2 text-headline-md font-semibold text-primary">{datosActividad.notificaciones}</p>
+          <p className="mt-2 text-headline-md font-semibold text-on-surface">{datosActividad.notificaciones}</p>
           <p className="text-body-sm text-on-surface-variant">
             {datosActividad.notificaciones === 0 ? 'No tiene notificaciones sin leer.' : 'Notificaciones sin leer disponibles para revisar.'}
           </p>
@@ -147,8 +147,8 @@ export default function MiCuenta() {
 
       <div className="grid gap-6 lg:grid-cols-3">
         <Tarjeta className="lg:col-span-1">
-          <h2 className="text-headline-sm font-semibold text-primary">Datos personales</h2>
-          <div className="mt-4 rounded-2xl bg-surface-container-low p-4">
+          <h2 className="text-headline-sm font-semibold text-on-surface">Datos personales</h2>
+          <div className="mt-4 rounded-lg bg-surface-container-low p-4">
             <p className="text-label-sm uppercase tracking-wide text-on-surface-variant">Nombre completo</p>
             <p className="mt-1 text-body-lg font-semibold text-on-surface">{nombresCompletos}</p>
             <p className="mt-4 text-label-sm uppercase tracking-wide text-on-surface-variant">Cédula</p>
@@ -162,7 +162,7 @@ export default function MiCuenta() {
           <Tarjeta>
             <div className="flex items-start justify-between gap-4">
               <div>
-                <h2 className="text-headline-sm font-semibold text-primary">Cambiar contraseña</h2>
+                <h2 className="text-headline-sm font-semibold text-on-surface">Cambiar contraseña</h2>
                 <p className="mt-1 text-body-sm text-on-surface-variant">Al actualizarla, la sesión se cerrará por seguridad.</p>
               </div>
             </div>
@@ -181,15 +181,15 @@ export default function MiCuenta() {
           </Tarjeta>
 
           <Tarjeta>
-            <h2 className="text-headline-sm font-semibold text-primary">Seguridad de la cuenta</h2>
+            <h2 className="text-headline-sm font-semibold text-on-surface">Seguridad de la cuenta</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
-              <Link to="/mi-cuenta/sesiones" className="rounded-xl border border-outline-variant bg-surface-container-lowest p-4 transition hover:border-primary-container hover:bg-surface-container-low">
+              <Link to="/mi-cuenta/sesiones" className="rounded-lg border border-outline-variant bg-surface-container-lowest p-4 transition hover:border-primary-container hover:bg-surface-container-low">
                 <p className="text-label-sm uppercase tracking-wide text-on-surface-variant">Sesiones activas</p>
-                <p className="mt-1 text-headline-md font-semibold text-primary">Accesibles desde aquí</p>
+                <p className="mt-1 text-headline-md font-semibold text-on-surface">Accesibles desde aquí</p>
               </Link>
-              <div className="rounded-xl border border-outline-variant bg-surface-container-lowest p-4">
+              <div className="rounded-lg border border-outline-variant bg-surface-container-lowest p-4">
                 <p className="text-label-sm uppercase tracking-wide text-on-surface-variant">Correo verificado</p>
-                <p className="mt-1 text-headline-md font-semibold text-primary">Sí</p>
+                <p className="mt-1 text-headline-md font-semibold text-on-surface">Sí</p>
               </div>
             </div>
           </Tarjeta>

@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
+import TablaDatos from '../../componentes/comunes/TablaDatos.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import {
   guardarEvaluacionAutomatica,
@@ -94,16 +96,14 @@ export default function EvaluacionIntegral() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div>
-        <h1 className="text-headline-lg font-semibold text-primary">Evaluación integral</h1>
-        <p className="text-body-md text-on-surface-variant">
-          El resultado se obtiene de fuentes académicas y del quintil socioeconómico; no se digitan puntajes manuales.
-        </p>
-      </div>
+      <EncabezadoPagina
+        titulo="Evaluación integral"
+        descripcion="El resultado se obtiene de fuentes académicas y del quintil socioeconómico; no se digitan puntajes manuales."
+      />
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
 
       <Tarjeta>
-        <h2 className="text-headline-sm font-semibold">Clasificación nacional por ingreso del hogar</h2>
+        <h2 className="text-headline-sm font-semibold text-on-surface">Clasificación nacional por ingreso del hogar</h2>
         {precalculoQuintil ? (
           <>
             <div className="mt-4 grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
@@ -161,29 +161,30 @@ export default function EvaluacionIntegral() {
       </Tarjeta>
 
       <Tarjeta>
-        <h2 className="text-headline-sm font-semibold">Cálculo automático</h2>
-        <div className="mt-4 overflow-x-auto">
-          <table className="w-full text-left text-body-sm">
-            <thead><tr><th className="py-2">Componente</th><th>Peso</th><th>Fuente</th><th>Puntaje</th></tr></thead>
-            <tbody>
-              {componentes.map((componente) => {
-                const guardado = evaluacion?.puntajes?.find((p) => p.IdComponente === componente.IdComponente);
-                const fuente = componente.Codigo === 'ACADEMICO'
+        <h2 className="text-headline-sm font-semibold text-on-surface">Cálculo automático</h2>
+        <div className="mt-4">
+          <TablaDatos
+            filas={componentes}
+            clave="IdComponente"
+            columnas={[
+              { clave: 'Nombre', etiqueta: 'Componente' },
+              { clave: 'Porcentaje', etiqueta: 'Peso', render: (componente) => `${componente.Porcentaje}%` },
+              {
+                clave: 'fuente',
+                etiqueta: 'Fuente',
+                render: (componente) => componente.Codigo === 'ACADEMICO'
                   ? `Promedio ${datosAutomaticos?.PromedioNotasSimuladas ?? datosAutomaticos?.PromedioAcademico ?? 0}`
                   : componente.Codigo === 'SOCIOECONOMICO'
                     ? `Quintil Q${precalculoQuintil?.Quintil ?? '—'}`
-                    : 'Sin fuente institucional: 0';
-                return (
-                  <tr key={componente.IdComponente} className="border-t border-outline-variant">
-                    <td className="py-3">{componente.Nombre}</td>
-                    <td>{componente.Porcentaje}%</td>
-                    <td>{fuente}</td>
-                    <td>{guardado?.Puntaje ?? 'Se calculará'}</td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                    : 'Sin fuente institucional: 0'
+              },
+              {
+                clave: 'puntaje',
+                etiqueta: 'Puntaje',
+                render: (componente) => evaluacion?.puntajes?.find((p) => p.IdComponente === componente.IdComponente)?.Puntaje ?? 'Se calculará'
+              }
+            ]}
+          />
         </div>
         {evaluacion?.Estado === 'COMPLETA' ? (
           <div className="mt-4"><AlertaMensaje tipo="exito" titulo={`Puntaje total: ${evaluacion.PuntajeTotal}`}>

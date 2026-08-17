@@ -39,9 +39,9 @@ export default function PanelBecado() {
       {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
       {investigacionActiva && (
         <Link to={`/becado/descargos/${investigacionActiva.IdInvestigacion}`}>
-          <Tarjeta className="border-l-4 border-error bg-error-container/40 hover:bg-error-container/60">
+          <Tarjeta className="border-l-4 border-error bg-error-container text-on-error-container">
             <strong>Tiene un proceso de revisión de beca en trámite</strong>
-            <p className="mt-1 text-body-sm text-on-surface-variant">
+            <p className="mt-1 text-body-sm text-on-error-container">
               Causal: {investigacionActiva.Causal}. Toque aquí para ver el detalle y presentar sus descargos.
             </p>
           </Tarjeta>
@@ -50,16 +50,16 @@ export default function PanelBecado() {
       {panel && (
         <>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-6">
-            <Tarjeta><p className="text-body-sm text-on-surface-variant">Beca actual</p><p className="mt-2 text-headline-sm font-semibold">{panel.TipoBeca}</p></Tarjeta>
-            <Tarjeta><p className="text-body-sm text-on-surface-variant">Cobertura</p><p className="mt-2 text-headline-sm font-semibold">{panel.Porcentaje}%</p></Tarjeta>
-            <Tarjeta><p className="text-body-sm text-on-surface-variant">Periodo</p><p className="mt-2 text-headline-sm font-semibold">{panel.Periodo}</p></Tarjeta>
-            <Tarjeta><p className="text-body-sm text-on-surface-variant">Estado</p><p className="mt-2 text-headline-sm font-semibold">{panel.Estado}</p></Tarjeta>
-            <Tarjeta><p className="text-body-sm text-on-surface-variant">Promedio</p><p className="mt-2 text-headline-sm font-semibold">{panel.Promedio ?? 'Sin registro'}</p></Tarjeta>
-            <Tarjeta className={panel.AlertasAbiertas ? 'border-l-4 border-advertencia' : ''}><p className="text-body-sm text-on-surface-variant">Alertas abiertas</p><p className="mt-2 text-headline-sm font-semibold">{panel.AlertasAbiertas}</p></Tarjeta>
+            <Tarjeta><p className="text-label-md text-on-surface-variant">Beca actual</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{panel.TipoBeca}</p></Tarjeta>
+            <Tarjeta><p className="text-label-md text-on-surface-variant">Cobertura</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{panel.Porcentaje}%</p></Tarjeta>
+            <Tarjeta><p className="text-label-md text-on-surface-variant">Periodo</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{panel.Periodo}</p></Tarjeta>
+            <Tarjeta><p className="text-label-md text-on-surface-variant">Estado</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{panel.Estado}</p></Tarjeta>
+            <Tarjeta><p className="text-label-md text-on-surface-variant">Promedio</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{panel.Promedio ?? 'Sin registro'}</p></Tarjeta>
+            <Tarjeta className={panel.AlertasAbiertas ? 'border-l-4 border-advertencia' : ''}><p className="text-label-md text-on-surface-variant">Alertas abiertas</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{panel.AlertasAbiertas}</p></Tarjeta>
           </div>
           <div className="grid gap-6 lg:grid-cols-[1.2fr_1fr]">
             <section>
-              <h2 className="mb-3 text-headline-sm font-semibold text-primary">Accesos rápidos</h2>
+              <h2 className="mb-3 text-headline-sm font-semibold text-on-surface">Accesos rápidos</h2>
               <div className="grid gap-3 sm:grid-cols-2">
                 {ACCESOS.map((acceso) => (
                   <Link key={acceso.ruta} to={acceso.ruta}>
@@ -72,7 +72,7 @@ export default function PanelBecado() {
               </div>
             </section>
             <section>
-              <h2 className="mb-3 text-headline-sm font-semibold text-primary">Noticias para becados</h2>
+              <h2 className="mb-3 text-headline-sm font-semibold text-on-surface">Noticias para becados</h2>
               <Tarjeta className="space-y-4">
                 {noticias.map((noticia) => (
                   <article key={noticia.IdNoticia} className="border-b border-outline-variant pb-3 last:border-0 last:pb-0">

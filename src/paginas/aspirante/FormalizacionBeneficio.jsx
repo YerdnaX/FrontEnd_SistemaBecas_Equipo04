@@ -77,13 +77,13 @@ export default function FormalizacionBeneficio() {
             <Boton variante="secundario" className="mt-5" onClick={descargarConvenio}>
               Descargar convenio PDF
             </Boton>
-            <h3 className="mt-7 font-semibold text-primary">Condiciones versión {formalizacion.VersionCondiciones}</h3>
+            <h3 className="mt-7 font-semibold text-on-surface">Condiciones versión {formalizacion.VersionCondiciones}</h3>
             <div className="mt-3 whitespace-pre-line rounded-lg bg-surface-container-low p-4 text-body-md">
               {formalizacion.Condiciones}
             </div>
           </Tarjeta>
           <Tarjeta className="h-fit">
-            <h2 className="text-headline-sm font-semibold text-primary">Aceptación</h2>
+            <h2 className="text-headline-sm font-semibold text-on-surface">Aceptación</h2>
             <p className="mt-3 text-body-sm text-on-surface-variant">
               Esta aceptación registra fecha, usuario, versión e IP. No sustituye una firma digital certificada.
             </p>

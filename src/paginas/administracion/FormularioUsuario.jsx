@@ -71,7 +71,14 @@ export default function FormularioUsuario() {
           <CampoTexto etiqueta="Primer apellido" value={formulario.primerApellido} onChange={(e) => setFormulario({ ...formulario, primerApellido: e.target.value })} required />
           <CampoTexto etiqueta="Segundo apellido" value={formulario.segundoApellido} onChange={(e) => setFormulario({ ...formulario, segundoApellido: e.target.value })} />
           {esNuevo && <CampoTexto etiqueta="Contraseña temporal" type="password" value={formulario.contrasena} onChange={(e) => setFormulario({ ...formulario, contrasena: e.target.value })} required />}
-          <fieldset className="sm:col-span-2"><legend className="font-semibold">Roles</legend><div className="mt-2 flex flex-wrap gap-3">{roles.map((rol) => <label key={rol.IdRol} className="rounded-md border px-3 py-2 text-body-sm"><input className="mr-2" type="checkbox" checked={formulario.idsRoles.includes(rol.IdRol)} onChange={() => alternarRol(rol.IdRol)} />{rol.Nombre}</label>)}</div></fieldset>
+          <fieldset className="sm:col-span-2"><legend className="font-semibold text-on-surface">Roles</legend><div className="mt-2 flex flex-wrap gap-3">{roles.map((rol) => {
+            const seleccionado = formulario.idsRoles.includes(rol.IdRol);
+            return (
+              <label key={rol.IdRol} className={`rounded-md border px-3 py-2 text-body-sm ${seleccionado ? 'border-primary-container bg-primary-container text-on-primary-container' : 'border-outline-variant bg-surface-container text-on-surface'}`}>
+                <input className="mr-2" type="checkbox" checked={seleccionado} onChange={() => alternarRol(rol.IdRol)} />{rol.Nombre}
+              </label>
+            );
+          })}</div></fieldset>
           <Boton type="submit">Guardar usuario</Boton>
         </form>
       </Tarjeta>

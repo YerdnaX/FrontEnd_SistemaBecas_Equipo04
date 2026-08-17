@@ -50,7 +50,7 @@ export default function RevisionJustificacionCurso() {
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
       <div className="grid gap-6 lg:grid-cols-2">
         <Tarjeta>
-          <h2 className="font-semibold text-primary">{justificacion?.Curso}</h2>
+          <h2 className="font-semibold text-on-surface">{justificacion?.Curso}</h2>
           <p className="mt-2 text-body-sm">Periodo: <strong>{justificacion?.Periodo}</strong></p>
           <p className="mt-4 whitespace-pre-wrap">{justificacion?.Motivo}</p>
           <p className="mt-4 text-body-sm text-on-surface-variant">Respaldo: {justificacion?.NombreOriginal || 'Sin archivo'}</p>

@@ -70,7 +70,7 @@ export default function SolicitudNotasSimuladas() {
     <div>
       <PasosSolicitud pasoActual="notas" estadoSolicitud={estadoSolicitud} />
       <Tarjeta className="mx-auto w-full max-w-5xl">
-        <h1 className="text-headline-sm font-semibold text-primary">Simulación de notas del periodo</h1>
+        <h1 className="text-headline-sm font-semibold text-on-surface">Simulación de notas del periodo</h1>
         <AlertaMensaje tipo="info" titulo="Información simulada">
           Estas notas son una simulación ingresada por usted para fines del sistema académico de prueba;
           no provienen de Registro Académico. Escala utilizada: 0 a 100.

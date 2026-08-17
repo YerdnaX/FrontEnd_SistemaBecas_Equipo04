@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
+import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import EncabezadoPublico from '../../componentes/navegacion/EncabezadoPublico.jsx';
 import PiePagina from '../../componentes/navegacion/PiePagina.jsx';
 import { consultarChatbot } from '../../servicios/servicioChatbot.js';
@@ -33,7 +34,7 @@ export default function ChatbotPublico() {
     <div>
       <EncabezadoPublico />
       <main className="mx-auto max-w-2xl px-4 py-10 md:px-12">
-        <h1 className="text-headline-lg font-semibold text-primary">Asistente de preguntas frecuentes</h1>
+        <h1 className="text-headline-lg font-semibold text-on-surface">Asistente de preguntas frecuentes</h1>
         <p className="mt-1 text-body-sm text-on-surface-variant">
           Escriba su consulta sobre el proceso de becas. Si no encontramos una respuesta, contacte a la Oficina de Becas.
         </p>
@@ -63,12 +64,13 @@ export default function ChatbotPublico() {
 
         {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
 
-        <form onSubmit={enviar} className="mt-6 flex gap-3">
-          <input
+        <form onSubmit={enviar} className="mt-6 flex items-end gap-3">
+          <CampoTexto
+            etiqueta="Escriba su pregunta"
             value={pregunta}
             onChange={(e) => setPregunta(e.target.value)}
             placeholder="Ej: ¿Cómo apelo una resolución?"
-            className="flex-1 rounded-md border border-outline-variant px-3 py-2 text-body-md outline-none focus:border-primary-container"
+            className="flex-1 [&>span:first-child]:sr-only"
           />
           <Boton type="submit" cargando={enviando}>Preguntar</Boton>
         </form>

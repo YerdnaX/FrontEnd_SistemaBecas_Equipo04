@@ -67,7 +67,7 @@ export default function CargaDocumental() {
     <div>
       <PasosSolicitud pasoActual="documentos" estadoSolicitud={estadoSolicitud} />
       <Tarjeta>
-        <h1 className="text-headline-sm font-semibold text-primary">Documentos requeridos</h1>
+        <h1 className="text-headline-sm font-semibold text-on-surface">Documentos requeridos</h1>
         {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
 
         <div className="mt-6 flex flex-col gap-4">

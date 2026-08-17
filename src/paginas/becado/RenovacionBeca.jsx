@@ -83,7 +83,7 @@ export default function RenovacionBeca() {
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
       {id === 'nueva' && (
         <Tarjeta>
-          <h2 className="text-headline-sm font-semibold text-primary">{disponibilidad?.renovacionExistente ? 'Renovación del periodo ya iniciada' : disponibilidad?.disponible ? 'Periodo de renovación abierto' : 'Renovación no disponible'}</h2>
+          <h2 className="text-headline-sm font-semibold text-on-surface">{disponibilidad?.renovacionExistente ? 'Renovación del periodo ya iniciada' : disponibilidad?.disponible ? 'Periodo de renovación abierto' : 'Renovación no disponible'}</h2>
           <p className="mt-3">{disponibilidad?.periodo?.Periodo || 'No hay un periodo activo.'}</p>
           <Boton className="mt-5" deshabilitado={!disponibilidad?.disponible && !disponibilidad?.renovacionExistente} onClick={iniciar}>{disponibilidad?.renovacionExistente ? 'Ver renovación existente' : 'Iniciar renovación'}</Boton>
         </Tarjeta>
@@ -91,7 +91,7 @@ export default function RenovacionBeca() {
       {renovacion && (
         <div className="grid gap-6 lg:grid-cols-[1.5fr_1fr]">
           <Tarjeta>
-            <h2 className="font-semibold text-primary">Información del expediente</h2>
+            <h2 className="font-semibold text-on-surface">Información del expediente</h2>
             <div className="mt-4 grid gap-3 sm:grid-cols-2">
               <p>Carné: <strong>{renovacion.NumeroEstudiante}</strong></p>
               <p>Carrera: <strong>{renovacion.Carrera}</strong></p>
@@ -101,13 +101,16 @@ export default function RenovacionBeca() {
             <div className="mt-6 space-y-4">
               <CampoAreaTexto etiqueta="Actualización socioeconómica" value={datos.actualizacionSocioeconomica} onChange={(e) => setDatos({ ...datos, actualizacionSocioeconomica: e.target.value })} disabled={renovacion.Estado !== 'BORRADOR'} />
               {renovacion.Estado === 'BORRADOR' && <SelectorArchivoBase64 etiqueta="Comprobante actualizado" onChange={setArchivo} />}
-              <label className="flex gap-2 text-body-sm"><input type="checkbox" checked={datos.declaracion} onChange={(e) => setDatos({ ...datos, declaracion: e.target.checked })} disabled={renovacion.Estado !== 'BORRADOR'} /> Declaro que la información es veraz y vigente.</label>
+              <label className="flex items-center gap-2 text-body-sm">
+                <input type="checkbox" className="h-4 w-4 rounded-sm border-outline-variant bg-surface-container-low text-primary-container focus-visible:ring-2 focus-visible:ring-primary accent-primary-container" checked={datos.declaracion} onChange={(e) => setDatos({ ...datos, declaracion: e.target.checked })} disabled={renovacion.Estado !== 'BORRADOR'} />
+                Declaro que la información es veraz y vigente.
+              </label>
               {renovacion.Estado === 'BORRADOR' && <div className="flex gap-2"><Boton variante="secundario" onClick={() => guardar(false)}>Guardar borrador</Boton><Boton deshabilitado={!datos.declaracion || (!archivo && !renovacion.documentos?.length)} onClick={() => guardar(true)}>Enviar renovación</Boton></div>}
             </div>
           </Tarjeta>
           <Tarjeta className="h-fit">
             <p className="text-label-md uppercase text-on-surface-variant">Estado del trámite</p>
-            <p className="mt-2 text-headline-sm font-semibold text-primary">{renovacion.Estado}</p>
+            <p className="mt-2 text-headline-sm font-semibold text-on-surface">{renovacion.Estado}</p>
             <p className="mt-4 text-body-sm">Periodo: {renovacion.Periodo}</p>
             <p className="mt-2 text-body-sm">Documentos: {renovacion.documentos?.length || 0}</p>
             <div className="mt-2 space-y-1">

@@ -56,7 +56,7 @@ export default function CampoArchivo({ etiqueta, onArchivoListo, error }) {
         type="file"
         accept={aceptar}
         onChange={manejarCambio}
-        className="rounded-md border border-outline-variant bg-white px-3 py-2 text-body-sm"
+        className="rounded-md border border-outline-variant bg-surface-container-low px-3 py-2 text-body-sm text-on-surface file:mr-3 file:rounded-md file:border-0 file:bg-primary-container file:px-3 file:py-1.5 file:text-label-sm file:font-semibold file:text-on-primary-container"
       />
       {archivoSeleccionado && (
         <span className={`text-label-sm ${archivoSeleccionado.excede ? 'text-error font-semibold' : 'text-on-surface-variant'}`}>

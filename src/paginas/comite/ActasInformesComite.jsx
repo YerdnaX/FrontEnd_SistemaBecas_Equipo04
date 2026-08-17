@@ -3,16 +3,18 @@ import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import TablaDatos from '../../componentes/comunes/TablaDatos.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
+import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import { generarDocumentoActa, listarActas, obtenerArchivoActa } from '../../servicios/servicioSegmentoDos.js';
 import { abrirArchivo, descargarArchivo } from '../../utilidades/archivos.js';
 
 export default function ActasInformesComite() {
   const [actas, setActas] = useState([]);
   const [mensaje, setMensaje] = useState(null);
+  const [cargando, setCargando] = useState(true);
 
   async function cargar() {
     try { setActas((await listarActas()).datos); }
-    catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
+    catch (error) { setMensaje({ tipo: 'error', texto: error.message }); } finally { setCargando(false); }
   }
   useEffect(() => { cargar(); }, []);
 
@@ -40,14 +42,16 @@ export default function ActasInformesComite() {
     <div className="space-y-6">
       <EncabezadoPagina titulo="Actas e informes del comité" descripcion="Repositorio institucional de sesiones, acuerdos y documentos generados." />
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
-      <TablaDatos filas={actas} clave="IdActa" columnas={[
-        { clave: 'NumeroActa', etiqueta: 'Acta' },
-        { clave: 'Sesion', etiqueta: 'Sesión' },
-        { clave: 'FechaSesion', etiqueta: 'Fecha', render: (fila) => new Date(fila.FechaSesion).toLocaleDateString('es-CR') },
-        { clave: 'Estado', etiqueta: 'Estado' },
-        { clave: 'IdArchivo', etiqueta: 'Documento', render: (fila) => fila.IdArchivo ? 'PDF disponible' : 'Pendiente' },
-        { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => <div className="flex flex-wrap gap-2"><Boton variante="texto" onClick={() => generar(fila.IdActa)}>Generar PDF</Boton>{fila.IdArchivo && <><Boton variante="texto" onClick={() => manejarArchivo(fila.IdActa, 'abrir')}>Ver</Boton><Boton variante="texto" onClick={() => manejarArchivo(fila.IdActa, 'descargar')}>Descargar</Boton></>}</div> }
-      ]} />
+      {cargando ? <EstadoCarga /> : (
+        <TablaDatos filas={actas} clave="IdActa" columnas={[
+          { clave: 'NumeroActa', etiqueta: 'Acta' },
+          { clave: 'Sesion', etiqueta: 'Sesión' },
+          { clave: 'FechaSesion', etiqueta: 'Fecha', render: (fila) => new Date(fila.FechaSesion).toLocaleDateString('es-CR') },
+          { clave: 'Estado', etiqueta: 'Estado' },
+          { clave: 'IdArchivo', etiqueta: 'Documento', render: (fila) => fila.IdArchivo ? 'PDF disponible' : 'Pendiente' },
+          { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => <div className="flex flex-wrap gap-2"><Boton variante="texto" onClick={() => generar(fila.IdActa)}>Generar PDF</Boton>{fila.IdArchivo && <><Boton variante="texto" onClick={() => manejarArchivo(fila.IdActa, 'abrir')}>Ver</Boton><Boton variante="texto" onClick={() => manejarArchivo(fila.IdActa, 'descargar')}>Descargar</Boton></>}</div> }
+        ]} />
+      )}
     </div>
   );
 }

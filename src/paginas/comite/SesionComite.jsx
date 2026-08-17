@@ -7,6 +7,7 @@ import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
+import DialogoConfirmacion from '../../componentes/comunes/DialogoConfirmacion.jsx';
 import { obtenerSesion, registrarVoto, cerrarSesion } from '../../servicios/servicioComite.js';
 
 const OPCIONES_DECISION = [
@@ -24,6 +25,7 @@ export default function SesionComite() {
   const [error, setError] = useState(null);
   const [procesandoId, setProcesandoId] = useState(null);
   const [cerrando, setCerrando] = useState(false);
+  const [confirmarCierre, setConfirmarCierre] = useState(false);
 
   async function cargar() {
     setCargando(true);
@@ -70,7 +72,7 @@ export default function SesionComite() {
   }
 
   async function manejarCerrarSesion() {
-    if (!window.confirm('¿Confirma cerrar la sesión y publicar la decisión mayoritaria?')) return;
+    setConfirmarCierre(false);
     setCerrando(true);
     setError(null);
     try {
@@ -91,7 +93,7 @@ export default function SesionComite() {
     <div className="flex flex-col gap-6">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-headline-lg font-semibold text-primary">{sesion.Nombre}</h1>
+          <h1 className="text-headline-lg font-semibold text-on-surface">{sesion.Nombre}</h1>
           <p className="text-body-sm text-on-surface-variant">{sesion.NombreConvocatoria} · {sesion.Periodo}</p>
         </div>
         <EtiquetaEstado estado={sesion.Estado} />
@@ -149,10 +151,20 @@ export default function SesionComite() {
       </div>
 
       {sesion.Estado === 'ABIERTA' && sesion.miembroActual && (
-        <Boton variante="peligro" deshabilitado={!todosVotaron} cargando={cerrando} onClick={manejarCerrarSesion}>
+        <Boton variante="peligro" deshabilitado={!todosVotaron} cargando={cerrando} onClick={() => setConfirmarCierre(true)}>
           Cerrar sesión por mayoría y publicar resultados
         </Boton>
       )}
+
+      <DialogoConfirmacion
+        abierto={confirmarCierre}
+        titulo="Cerrar sesión de comité"
+        mensaje="¿Confirma cerrar la sesión y publicar la decisión mayoritaria?"
+        varianteConfirmar="peligro"
+        cargando={cerrando}
+        confirmar={manejarCerrarSesion}
+        cancelar={() => setConfirmarCierre(false)}
+      />
     </div>
   );
 }

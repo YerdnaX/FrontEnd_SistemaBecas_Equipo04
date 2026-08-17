@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
+import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
@@ -11,6 +12,14 @@ import { obtenerSolicitud } from '../../servicios/servicioSolicitudes.js';
 import { obtenerTipoBeca } from '../../servicios/servicioTiposBeca.js';
 import { formatearFecha } from '../../utilidades/formato.js';
 import { useSesion } from '../../hooks/useSesion.js';
+
+function EnlaceAccion({ to, children }) {
+  return (
+    <Link to={to} className="inline-flex items-center rounded-md px-2 py-1 text-body-md font-semibold text-primary transition hover:bg-primary-container/15">
+      {children}
+    </Link>
+  );
+}
 
 export default function DetalleExpediente() {
   const { id } = useParams();
@@ -73,13 +82,11 @@ export default function DetalleExpediente() {
 
   return (
     <div className="flex flex-col gap-6">
-      <div className="flex items-center justify-between">
-        <div>
-          <h1 className="text-headline-lg font-semibold text-primary">Expediente {expediente.CodigoExpediente}</h1>
-          <p className="text-body-sm text-on-surface-variant">{expediente.NombreAspirante} {expediente.ApellidoAspirante} — {expediente.NombreConvocatoria}</p>
-        </div>
-        <EtiquetaEstado estado={expediente.Estado} />
-      </div>
+      <EncabezadoPagina
+        titulo={`Expediente ${expediente.CodigoExpediente}`}
+        descripcion={`${expediente.NombreAspirante} ${expediente.ApellidoAspirante} — ${expediente.NombreConvocatoria}`}
+        acciones={<EtiquetaEstado estado={expediente.Estado} />}
+      />
 
       {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
 
@@ -158,24 +165,16 @@ export default function DetalleExpediente() {
         </Tarjeta>
       </div>
 
-      <div className="flex gap-4">
-        <Link to={`/trabajo-social/expedientes/${id}/documentos`} className="text-body-md font-semibold text-primary-container hover:underline">
-          Verificación documental →
-        </Link>
-        <Link to={`/trabajo-social/expedientes/${id}/evaluacion`} className="text-body-md font-semibold text-primary-container hover:underline">
-          Evaluación integral →
-        </Link>
+      <div className="flex flex-wrap items-center gap-4">
+        <EnlaceAccion to={`/trabajo-social/expedientes/${id}/documentos`}>Verificación documental →</EnlaceAccion>
+        <EnlaceAccion to={`/trabajo-social/expedientes/${id}/evaluacion`}>Evaluación integral →</EnlaceAccion>
         {tienePermiso('VISITA_GESTIONAR') && (
-          <Link to={`/trabajo-social/expedientes/${id}/visita`} className="text-body-md font-semibold text-primary-container hover:underline">
-            Visita domiciliaria →
-          </Link>
+          <EnlaceAccion to={`/trabajo-social/expedientes/${id}/visita`}>Visita domiciliaria →</EnlaceAccion>
         )}
         {expediente.Estado === 'EVALUADA' && (
           <Boton onClick={manejarEnviarComite} cargando={procesando}>Enviar al comité</Boton>
         )}
-        <Link to={`/trabajo-social/expedientes/${id}/cierre`} className="text-body-md font-semibold text-primary-container hover:underline">
-          Cierre del expediente →
-        </Link>
+        <EnlaceAccion to={`/trabajo-social/expedientes/${id}/cierre`}>Cierre del expediente →</EnlaceAccion>
       </div>
 
       <Tarjeta>

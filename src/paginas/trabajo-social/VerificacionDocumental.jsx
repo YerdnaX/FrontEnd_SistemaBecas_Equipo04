@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
@@ -104,7 +105,7 @@ export default function VerificacionDocumental() {
 
   return (
     <div className="flex flex-col gap-6">
-      <h1 className="text-headline-lg font-semibold text-primary">Verificación de documentos — {expediente.CodigoExpediente}</h1>
+      <EncabezadoPagina titulo={`Verificación de documentos — ${expediente.CodigoExpediente}`} />
       {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
 
       <div className="flex flex-col gap-4">

@@ -7,6 +7,7 @@ import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
+import DialogoConfirmacion from '../../componentes/comunes/DialogoConfirmacion.jsx';
 import {
   cerrarAlerta,
   crearAlerta,
@@ -29,6 +30,9 @@ export default function SeguimientoBecario() {
   const [disciplinario, setDisciplinario] = useState({ causal: '', descripcion: '' });
   const [abriendoDisciplinario, setAbriendoDisciplinario] = useState(false);
   const [mensaje, setMensaje] = useState(null);
+  const [idAlertaCerrar, setIdAlertaCerrar] = useState(null);
+  const [observacionCierre, setObservacionCierre] = useState('');
+  const [cerrandoAlerta, setCerrandoAlerta] = useState(false);
 
   async function cargar() {
     try {
@@ -92,14 +96,20 @@ export default function SeguimientoBecario() {
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
   }
 
-  async function atenderAlerta(idAlerta) {
-    const observacion = window.prompt('Observación de cierre de la alerta:');
-    if (observacion === null) return;
+  function solicitarCierreAlerta(idAlerta) {
+    setIdAlertaCerrar(idAlerta);
+    setObservacionCierre('');
+  }
+
+  async function confirmarCierreAlerta() {
+    setCerrandoAlerta(true);
     try {
-      await cerrarAlerta(idAlerta, observacion);
+      await cerrarAlerta(idAlertaCerrar, observacionCierre);
       setMensaje({ tipo: 'exito', texto: 'Alerta atendida.' });
+      setIdAlertaCerrar(null);
       cargar();
     } catch (error) { setMensaje({ tipo: 'error', texto: error.message }); }
+    finally { setCerrandoAlerta(false); }
   }
 
   return (
@@ -108,7 +118,7 @@ export default function SeguimientoBecario() {
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
 
       <Tarjeta className={investigacionActiva ? 'border-l-4 border-advertencia' : ''}>
-        <h2 className="font-semibold text-primary">Proceso disciplinario</h2>
+        <h2 className="font-semibold text-on-surface">Proceso disciplinario</h2>
         {investigacionActiva ? (
           <div className="mt-3 flex items-center justify-between">
             <p className="text-body-sm text-on-surface-variant">
@@ -116,7 +126,7 @@ export default function SeguimientoBecario() {
             </p>
             <Link
               to={`/trabajo-social/disciplinario/${investigacionActiva.IdInvestigacion}`}
-              className="text-body-md font-semibold text-primary-container hover:underline"
+              className="inline-flex items-center rounded-md px-2 py-1 text-body-md font-semibold text-primary transition hover:bg-primary-container/15"
             >
               Ver proceso →
             </Link>
@@ -153,7 +163,7 @@ export default function SeguimientoBecario() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Tarjeta>
           <form className="space-y-4" onSubmit={guardarSeguimiento}>
-            <h2 className="font-semibold text-primary">Seguimiento manual</h2>
+            <h2 className="font-semibold text-on-surface">Seguimiento manual</h2>
             <CampoTexto etiqueta="Periodo" value={seguimiento.periodo} onChange={(e) => setSeguimiento({ ...seguimiento, periodo: e.target.value })} required />
             <CampoTexto etiqueta="Estado" value={seguimiento.estado} onChange={(e) => setSeguimiento({ ...seguimiento, estado: e.target.value })} required />
             <CampoAreaTexto etiqueta="Observaciones" value={seguimiento.observaciones} onChange={(e) => setSeguimiento({ ...seguimiento, observaciones: e.target.value })} />
@@ -162,7 +172,7 @@ export default function SeguimientoBecario() {
         </Tarjeta>
         <Tarjeta>
           <form className="space-y-4" onSubmit={guardarAlerta}>
-            <h2 className="font-semibold text-primary">Crear alerta manual</h2>
+            <h2 className="font-semibold text-on-surface">Crear alerta manual</h2>
             <CampoTexto etiqueta="Tipo" value={alerta.tipo} onChange={(e) => setAlerta({ ...alerta, tipo: e.target.value })} required />
             <CampoTexto etiqueta="Nivel" value={alerta.nivel} onChange={(e) => setAlerta({ ...alerta, nivel: e.target.value })} required />
             <CampoAreaTexto etiqueta="Descripción" value={alerta.descripcion} onChange={(e) => setAlerta({ ...alerta, descripcion: e.target.value })} required />
@@ -182,9 +192,21 @@ export default function SeguimientoBecario() {
           { clave: 'Tipo', etiqueta: 'Alerta' },
           { clave: 'Nivel', etiqueta: 'Nivel' },
           { clave: 'Estado', etiqueta: 'Estado' },
-          { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => fila.Estado === 'ABIERTA' ? <Boton variante="texto" onClick={() => atenderAlerta(fila.IdAlerta)}>Marcar atendida</Boton> : '—' }
+          { clave: 'acciones', etiqueta: 'Acciones', render: (fila) => fila.Estado === 'ABIERTA' ? <Boton variante="texto" onClick={() => solicitarCierreAlerta(fila.IdAlerta)}>Marcar atendida</Boton> : '—' }
         ]} />
       </div>
+
+      <DialogoConfirmacion
+        abierto={idAlertaCerrar !== null}
+        titulo="Atender alerta"
+        mensaje="Registre la observación de cierre de esta alerta."
+        textoConfirmar="Marcar atendida"
+        cargando={cerrandoAlerta}
+        confirmar={confirmarCierreAlerta}
+        cancelar={() => setIdAlertaCerrar(null)}
+      >
+        <CampoAreaTexto etiqueta="Observación de cierre" value={observacionCierre} onChange={(e) => setObservacionCierre(e.target.value)} />
+      </DialogoConfirmacion>
     </div>
   );
 }

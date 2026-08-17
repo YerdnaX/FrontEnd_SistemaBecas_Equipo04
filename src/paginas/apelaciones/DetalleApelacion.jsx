@@ -6,6 +6,7 @@ import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
+import DialogoConfirmacion from '../../componentes/comunes/DialogoConfirmacion.jsx';
 import { useSesion } from '../../hooks/useSesion.js';
 import { obtenerApelacion, asignarRevisorApelacion, resolverApelacion } from '../../servicios/servicioApelaciones.js';
 
@@ -20,6 +21,7 @@ export default function DetalleApelacion() {
   const [nuevoPorcentaje, setNuevoPorcentaje] = useState('');
   const [motivoResolucion, setMotivoResolucion] = useState('');
   const [procesando, setProcesando] = useState(false);
+  const [confirmacionResolver, setConfirmacionResolver] = useState(null);
 
   const permisos = usuario?.permisos || [];
 
@@ -70,6 +72,12 @@ export default function DetalleApelacion() {
     }
   }
 
+  async function confirmarResolucion() {
+    const aFavor = confirmacionResolver;
+    setConfirmacionResolver(null);
+    await resolver(aFavor);
+  }
+
   if (cargando) return <EstadoCarga />;
   if (!apelacion) return error ? <AlertaMensaje tipo="error">{error}</AlertaMensaje> : null;
 
@@ -78,7 +86,7 @@ export default function DetalleApelacion() {
   return (
     <div className="mx-auto max-w-3xl">
       <div className="flex items-center justify-between">
-        <h1 className="text-headline-lg font-semibold text-primary">Apelación #{apelacion.IdApelacion}</h1>
+        <h1 className="text-headline-lg font-semibold text-on-surface">Apelación #{apelacion.IdApelacion}</h1>
         <EtiquetaEstado estado={apelacion.Estado} />
       </div>
 
@@ -140,12 +148,24 @@ export default function DetalleApelacion() {
               className="max-w-xs"
             />
             <div className="flex gap-3">
-              <Boton variante="primario" onClick={() => resolver(true)} cargando={procesando}>Resolver a favor</Boton>
-              <Boton variante="peligro" onClick={() => resolver(false)} cargando={procesando}>Resolver en contra</Boton>
+              <Boton variante="primario" onClick={() => setConfirmacionResolver(true)} cargando={procesando}>Resolver a favor</Boton>
+              <Boton variante="peligro" onClick={() => setConfirmacionResolver(false)} cargando={procesando}>Resolver en contra</Boton>
             </div>
           </div>
         </Tarjeta>
       )}
+
+      <DialogoConfirmacion
+        abierto={confirmacionResolver !== null}
+        titulo={confirmacionResolver ? 'Resolver apelación a favor' : 'Resolver apelación en contra'}
+        mensaje={confirmacionResolver
+          ? '¿Confirma resolver esta apelación a favor del aspirante? Esta acción no se puede deshacer.'
+          : '¿Confirma resolver esta apelación en contra del aspirante? Esta acción no se puede deshacer.'}
+        varianteConfirmar={confirmacionResolver ? 'primario' : 'peligro'}
+        cargando={procesando}
+        confirmar={confirmarResolucion}
+        cancelar={() => setConfirmacionResolver(null)}
+      />
     </div>
   );
 }

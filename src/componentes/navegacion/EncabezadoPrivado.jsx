@@ -119,47 +119,47 @@ export default function EncabezadoPrivado() {
   }
 
   return (
-    <header className="sticky top-0 z-20 border-b border-outline-variant bg-primary-container text-on-primary">
+    <header className="sticky top-0 z-20 border-b border-outline-variant bg-surface-container-lowest/95 backdrop-blur">
       <div className="mx-auto flex max-w-container-max items-center justify-between px-4 py-3 md:px-12">
-        <Link to="/" className="flex items-center gap-3 text-headline-sm font-bold">
-          <img src="/images/logo.png" alt="Logo SGBE CUC" className="h-14 w-14 object-contain md:h-16 md:w-16" />
+        <Link to="/" className="flex items-center gap-3 text-headline-sm font-bold text-on-surface">
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="h-12 w-12 object-contain" />
           <span>SGBE · CUC</span>
         </Link>
         <nav className="flex items-center gap-2 md:gap-4">
           <details className="relative lg:hidden">
-            <summary className="cursor-pointer list-none rounded-md border border-white/60 px-3 py-2 text-body-sm">Menú</summary>
-            <div className="absolute right-0 mt-2 w-56 overflow-hidden rounded-lg bg-white text-on-surface shadow-elevation-l3">
+            <summary className="cursor-pointer list-none rounded-md border border-outline px-3 py-2 text-body-sm text-on-surface">Menú</summary>
+            <div className="anim-pop absolute right-0 mt-2 w-56 overflow-hidden rounded-lg border border-outline-variant bg-surface-container-high text-on-surface shadow-elevation-l3">
               {aplanarParaMovil(menu).map((fila, indice) => (
                 fila.tipo === 'titulo'
-                  ? <p key={`titulo-${fila.etiqueta}-${indice}`} className="border-b bg-surface-container-low px-4 py-2 text-label-sm font-semibold uppercase text-on-surface-variant">{fila.etiqueta}</p>
-                  : <Link key={fila.ruta} to={fila.ruta} className="block border-b px-4 py-3 text-body-sm hover:bg-surface-container">{fila.etiqueta}</Link>
+                  ? <p key={`titulo-${fila.etiqueta}-${indice}`} className="border-b border-outline-variant bg-surface-container-low px-4 py-2 text-label-sm font-semibold uppercase text-on-surface-variant">{fila.etiqueta}</p>
+                  : <Link key={fila.ruta} to={fila.ruta} className="block border-b border-outline-variant px-4 py-3 text-body-sm hover:bg-surface-container hover:text-primary">{fila.etiqueta}</Link>
               ))}
             </div>
           </details>
-          <div className="hidden items-center gap-4 lg:flex">
+          <div className="hidden items-center gap-5 lg:flex">
             {menu.map((item) => (
               item.tipo === 'grupo'
                 ? <MenuDesplegable key={item.etiqueta} etiqueta={item.etiqueta} enlaces={item.enlaces} />
-                : <Link key={item.ruta} to={item.ruta} className="text-body-sm hover:underline">{item.etiqueta}</Link>
+                : <Link key={item.ruta} to={item.ruta} className="text-body-sm text-on-surface-variant transition hover:text-primary">{item.etiqueta}</Link>
             ))}
           </div>
           <CampanaNotificaciones />
           <MenuDesplegable
             alinear="derecha"
-            botonClassName="hidden items-center gap-2 rounded-full px-2 py-1 transition hover:bg-white/10 md:flex"
+            botonClassName="hidden items-center gap-2 rounded-full p-1 transition hover:bg-surface-container-high md:flex"
             enlaces={[enlace('/mi-cuenta', 'Mi cuenta'), enlace('/mi-cuenta/sesiones', 'Mis sesiones')]}
           >
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container-lowest text-primary-container font-semibold">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-container text-on-primary-container font-semibold">
               {avatarInicial(usuario?.nombre)}
             </span>
-            <span className="text-body-sm font-medium">{usuario?.nombre}</span>
+            <span className="text-body-sm font-medium text-on-surface">{usuario?.nombre}</span>
           </MenuDesplegable>
-          <Link to="/mi-cuenta" className="flex items-center gap-2 rounded-full p-1 transition hover:bg-white/10 md:hidden" aria-label="Abrir mi cuenta">
-            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-surface-container-lowest text-primary-container font-semibold">
+          <Link to="/mi-cuenta" className="flex items-center gap-2 rounded-full p-1 transition hover:bg-surface-container-high md:hidden" aria-label="Abrir mi cuenta">
+            <span className="flex h-9 w-9 items-center justify-center rounded-full bg-primary-container text-on-primary-container font-semibold">
               {avatarInicial(usuario?.nombre)}
             </span>
           </Link>
-          <Boton variante="secundario" className="border-white text-white hover:bg-white/10" onClick={manejarCerrarSesion}>
+          <Boton variante="secundario" tamano="sm" onClick={manejarCerrarSesion}>
             Cerrar sesión
           </Boton>
         </nav>

@@ -42,7 +42,7 @@ export default function BandejaRenovaciones() {
           clave: 'accion',
           etiqueta: 'Acción',
           render: (fila) => (
-            <Link className="font-semibold text-primary-container hover:underline" to={`/trabajo-social/renovaciones/${fila.IdRenovacion}`}>
+            <Link className="inline-flex items-center rounded-md px-2 py-1 text-label-sm font-semibold text-primary transition hover:bg-primary-container/15" to={`/trabajo-social/renovaciones/${fila.IdRenovacion}`}>
               Revisar
             </Link>
           )

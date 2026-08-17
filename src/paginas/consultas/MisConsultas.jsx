@@ -65,7 +65,7 @@ export default function MisConsultas() {
         <div className="space-y-4">
           <Tarjeta>
             <form className="space-y-3" onSubmit={enviarNueva}>
-              <h2 className="font-semibold text-primary">Nueva consulta</h2>
+              <h2 className="font-semibold text-on-surface">Nueva consulta</h2>
               <CampoTexto etiqueta="Asunto" value={nueva.asunto} onChange={(e) => setNueva({ ...nueva, asunto: e.target.value })} required />
               <CampoAreaTexto etiqueta="Mensaje" value={nueva.mensaje} onChange={(e) => setNueva({ ...nueva, mensaje: e.target.value })} required />
               <Boton type="submit" cargando={procesando}>Crear consulta</Boton>
@@ -73,7 +73,7 @@ export default function MisConsultas() {
           </Tarjeta>
           <div className="space-y-2">
             {consultas.map((consulta) => (
-              <button key={consulta.IdConsulta} type="button" onClick={() => abrir(consulta.IdConsulta)} className="w-full rounded-lg border border-outline-variant bg-white p-4 text-left hover:bg-surface-container-low">
+              <button key={consulta.IdConsulta} type="button" onClick={() => abrir(consulta.IdConsulta)} className="w-full rounded-lg border border-outline-variant bg-surface-container p-4 text-left transition hover:border-outline hover:bg-surface-container-high">
                 <strong>{consulta.Asunto}</strong>
                 <span className="mt-1 block text-label-sm text-on-surface-variant">{consulta.Estado} · {new Date(consulta.FechaCreacion).toLocaleDateString('es-CR')}</span>
               </button>
@@ -90,7 +90,7 @@ export default function MisConsultas() {
               </div>
               <div className="my-5 space-y-3">
                 {seleccionada.mensajes.map((item) => (
-                  <div key={item.IdRespuesta} className={`max-w-[85%] rounded-lg p-3 ${item.IdUsuario === seleccionada.IdUsuario ? 'bg-surface-container' : 'ml-auto bg-primary-fixed'}`}>
+                  <div key={item.IdRespuesta} className={`max-w-[85%] rounded-lg p-3 ${item.IdUsuario === seleccionada.IdUsuario ? 'bg-surface-container' : 'ml-auto bg-primary-container/15'}`}>
                     <strong className="text-label-sm">{item.Autor}</strong>
                     <p className="mt-1 whitespace-pre-wrap text-body-sm">{item.Mensaje}</p>
                   </div>

@@ -1,7 +1,9 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
+import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
@@ -50,10 +52,10 @@ export default function DescargosBecado() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <div className="flex items-center justify-between">
-        <h1 className="text-headline-lg font-semibold text-primary">Proceso de revisión #{investigacion.IdInvestigacion}</h1>
-        <EtiquetaEstado estado={investigacion.Estado} />
-      </div>
+      <EncabezadoPagina
+        titulo={`Proceso de revisión #${investigacion.IdInvestigacion}`}
+        acciones={<EtiquetaEstado estado={investigacion.Estado} />}
+      />
 
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
 
@@ -72,13 +74,13 @@ export default function DescargosBecado() {
         <Tarjeta className="mt-6">
           <h2 className="text-headline-sm font-semibold text-on-surface">Presentar descargos</h2>
           <form onSubmit={enviar} className="mt-3 flex flex-col gap-4">
-            <textarea
+            <CampoAreaTexto
+              etiqueta="Detalle de los descargos"
               required
               minLength={10}
               rows={6}
               value={detalle}
               onChange={(e) => setDetalle(e.target.value)}
-              className="rounded-md border border-outline-variant px-3 py-2 text-body-md outline-none focus:border-primary-container"
               placeholder="Explique su situación en relación con la causal indicada..."
             />
             <Boton type="submit" cargando={enviando}>Enviar descargos</Boton>

@@ -56,9 +56,9 @@ export default function BandejaConsultas() {
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
       <div className="max-w-xs"><CampoSelect etiqueta="Estado" value={estado} onChange={(e) => { setEstado(e.target.value); setPagina(1); }} opciones={[{ valor: 'ABIERTA', etiqueta: 'Abierta' }, { valor: 'RESPONDIDA', etiqueta: 'En atención' }, { valor: 'CERRADA', etiqueta: 'Cerrada' }]} /></div>
       <div className="grid min-h-[540px] gap-4 lg:grid-cols-[1fr_1.8fr]">
-        <div className="overflow-hidden rounded-lg border border-outline-variant bg-white">
+        <div className="overflow-hidden rounded-lg border border-outline-variant bg-surface-container">
           {consultas.map((consulta) => (
-            <button key={consulta.IdConsulta} type="button" onClick={() => abrir(consulta.IdConsulta)} className="block w-full border-b p-4 text-left hover:bg-primary-fixed/40">
+            <button key={consulta.IdConsulta} type="button" onClick={() => abrir(consulta.IdConsulta)} className="block w-full border-b border-outline-variant p-4 text-left hover:bg-surface-container-high">
               <strong>{consulta.NombreUsuario}</strong>
               <span className="block text-body-sm">{consulta.Asunto}</span>
               <span className="text-label-sm text-on-surface-variant">{consulta.Estado} · {consulta.Responsable || 'Sin asignar'}</span>
@@ -69,7 +69,7 @@ export default function BandejaConsultas() {
           {!seleccionada && <p className="text-center text-on-surface-variant">Seleccione una consulta.</p>}
           {seleccionada && (
             <>
-              <div className="flex flex-wrap items-center justify-between gap-2 border-b pb-4">
+              <div className="flex flex-wrap items-center justify-between gap-2 border-b border-outline-variant pb-4">
                 <div><h2 className="font-semibold">{seleccionada.Asunto}</h2><p className="text-body-sm">{seleccionada.NombreUsuario}</p></div>
                 <div className="flex gap-2"><Boton variante="secundario" onClick={asignarme}>Asignarme</Boton><Boton variante="secundario" onClick={cerrar}>Cerrar</Boton></div>
               </div>

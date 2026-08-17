@@ -89,8 +89,8 @@ export default function PanelAdministrativo() {
 
   return (
     <div className="flex flex-col gap-8">
-      <div className="relative overflow-hidden rounded-2xl border border-outline-variant bg-gradient-to-br from-primary-container via-primary to-slate-950 px-6 py-8 text-on-primary shadow-elevation-l2 md:px-8">
-        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-white/10 blur-2xl" />
+      <div className="relative overflow-hidden rounded-xl border border-outline-variant bg-gradient-to-br from-primary-container via-secondary to-background px-6 py-8 text-on-primary shadow-elevation-l2 md:px-8">
+        <div className="absolute -right-10 -top-10 h-40 w-40 rounded-full bg-on-primary/10 blur-2xl" />
         <div className="absolute -bottom-12 -left-12 h-44 w-44 rounded-full bg-surface-container/20 blur-2xl" />
         <div className="relative flex flex-col gap-4 md:flex-row md:items-center md:justify-between">
           <div>
@@ -100,7 +100,7 @@ export default function PanelAdministrativo() {
               Gestione convocatorias, seguridad y configuraciones desde un único panel operativo.
             </p>
           </div>
-          <div className="flex items-center gap-3 rounded-2xl border border-white/20 bg-white/10 px-4 py-3 backdrop-blur-sm">
+          <div className="flex items-center gap-3 rounded-xl border border-on-primary/20 bg-on-primary/10 px-4 py-3 backdrop-blur-sm">
             <img src="/images/administracion.png" alt="Panel administrativo" className="h-16 w-16 object-contain" />
             <div>
               <p className="text-label-sm uppercase tracking-wide text-on-primary-container">Rol activo</p>

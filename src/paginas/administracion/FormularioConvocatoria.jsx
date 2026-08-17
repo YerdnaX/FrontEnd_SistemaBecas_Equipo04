@@ -118,7 +118,7 @@ export default function FormularioConvocatoria() {
 
   return (
     <Tarjeta>
-      <h1 className="text-headline-sm font-semibold text-primary">{esNueva ? 'Nueva convocatoria' : 'Editar convocatoria'}</h1>
+      <h1 className="text-headline-sm font-semibold text-on-surface">{esNueva ? 'Nueva convocatoria' : 'Editar convocatoria'}</h1>
       <form className="mt-6 flex flex-col gap-4" onSubmit={manejarEnvio}>
         {error && <AlertaMensaje tipo="error">{error}</AlertaMensaje>}
         {!puedeGuardar && (

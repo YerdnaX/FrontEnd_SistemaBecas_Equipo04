@@ -41,7 +41,7 @@ export default function LandingPublico() {
       <main>
         <section className="bg-primary-container px-4 py-16 text-on-primary md:px-12">
           <div className="mx-auto max-w-container-max">
-            <h1 className="text-headline-lg-mobile md:text-headline-lg font-bold leading-tight">
+            <h1 className="text-headline-md md:text-headline-lg font-bold leading-tight">
               Sistema de Gestión de Becas Estudiantiles
             </h1>
             <p className="mt-4 max-w-xl text-body-lg">
@@ -49,18 +49,18 @@ export default function LandingPublico() {
             </p>
             <div className="mt-6 flex gap-3">
               <Link to="/convocatorias"><Boton>Ver convocatorias</Boton></Link>
-              <Link to="/registro"><Boton variante="secundario" className="border-white text-white hover:bg-white/10">Registrarme</Boton></Link>
+              <Link to="/registro"><Boton variante="secundario" className="border-on-primary-container text-on-primary-container hover:bg-on-primary-container/10">Registrarme</Boton></Link>
             </div>
           </div>
         </section>
 
         <section className="mx-auto max-w-container-max px-4 py-12 md:px-12">
-          <h2 className="text-headline-md font-semibold text-primary">Un sistema para cada rol</h2>
+          <h2 className="text-headline-md font-semibold text-on-surface">Un sistema para cada rol</h2>
           <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
             {ROLES.map((rol) => (
               <Tarjeta key={rol.titulo}>
                 <img src={rol.imagen} alt={rol.titulo} className="imagen-ui-seccion mb-3" />
-                <p className="text-headline-sm font-semibold text-primary">{rol.titulo}</p>
+                <p className="text-headline-sm font-semibold text-on-surface">{rol.titulo}</p>
                 <p className="mt-2 text-body-sm text-on-surface-variant">{rol.descripcion}</p>
               </Tarjeta>
             ))}
@@ -68,7 +68,7 @@ export default function LandingPublico() {
         </section>
 
         <section className="mx-auto max-w-container-max px-4 pb-16 md:px-12">
-          <h2 className="text-headline-md font-semibold text-primary">Convocatorias y noticias</h2>
+          <h2 className="text-headline-md font-semibold text-on-surface">Convocatorias y noticias</h2>
 
           {cargando && <EstadoCarga />}
           {error && <AlertaMensaje tipo="error" titulo="No fue posible cargar la información">{error}</AlertaMensaje>}
@@ -85,17 +85,17 @@ export default function LandingPublico() {
                       <li key={convocatoria.IdConvocatoria}
                         className="rounded-lg border-2 border-convocatoria-destacada bg-convocatoria-destacada-container p-5 shadow-elevation-l2">
                         <div className="flex flex-wrap items-center justify-between gap-2">
-                          <span className="inline-block rounded-full bg-convocatoria-destacada px-3 py-1 text-label-sm font-bold uppercase text-white">
+                          <span className="inline-block rounded-full bg-convocatoria-destacada-container px-3 py-1 text-label-sm font-bold uppercase text-convocatoria-destacada">
                             ¡Convocatoria abierta!
                           </span>
                           <span className="text-label-sm font-semibold text-primary">
                             {diasRestantes(convocatoria.FechaFin)} día(s) para cerrar
                           </span>
                         </div>
-                        <p className="mt-3 text-headline-sm font-bold text-primary">{convocatoria.Nombre}</p>
+                        <p className="mt-3 text-headline-sm font-bold text-on-surface">{convocatoria.Nombre}</p>
                         <p className="text-body-sm text-on-surface-variant">Cierra: {formatearFecha(convocatoria.FechaFin)}</p>
-                        <Link to={`/convocatorias/${convocatoria.IdConvocatoria}`} className="mt-2 inline-block text-body-sm font-semibold text-primary-container hover:underline">
-                          Ver detalle →
+                        <Link to={`/convocatorias/${convocatoria.IdConvocatoria}`} className="mt-2 inline-block">
+                          <Boton variante="texto" tamano="sm">Ver detalle →</Boton>
                         </Link>
                       </li>
                     ))}

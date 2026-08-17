@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
+import Boton from '../../componentes/comunes/Boton.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
@@ -25,7 +26,7 @@ export default function ResultadoSolicitud() {
 
   return (
     <Tarjeta>
-      <h1 className="text-headline-sm font-semibold text-primary">Estado de su solicitud</h1>
+      <h1 className="text-headline-sm font-semibold text-on-surface">Estado de su solicitud</h1>
       <div className="mt-4">
         <EtiquetaEstado estado={resultado.estadoSolicitud} />
       </div>
@@ -46,11 +47,8 @@ export default function ResultadoSolicitud() {
           )}
           {resultado.resolucion.motivo && <p className="mt-2 text-body-sm text-on-surface-variant">Motivo: {resultado.resolucion.motivo}</p>}
           {['APROBADA', 'CONDICIONADA'].includes(resultado.resolucion.tipoResultado) && (
-            <Link
-              to={`/aspirante/solicitudes/${id}/formalizacion`}
-              className="mt-5 inline-block rounded-md bg-primary-container px-4 py-2 font-semibold text-on-primary"
-            >
-              Consultar condiciones y formalizar
+            <Link to={`/aspirante/solicitudes/${id}/formalizacion`} className="mt-5 inline-block">
+              <Boton>Consultar condiciones y formalizar</Boton>
             </Link>
           )}
 
@@ -58,11 +56,8 @@ export default function ResultadoSolicitud() {
             <p className="text-body-sm text-on-surface-variant">
               ¿No está de acuerdo con esta resolución? Puede presentar una apelación.
             </p>
-            <Link
-              to={`/apelaciones/resoluciones/${resultado.resolucion.idResolucion}`}
-              className="mt-2 inline-block rounded-md border border-primary px-4 py-2 font-semibold text-primary"
-            >
-              Apelar esta resolución
+            <Link to={`/apelaciones/resoluciones/${resultado.resolucion.idResolucion}`} className="mt-2 inline-block">
+              <Boton variante="secundario">Apelar esta resolución</Boton>
             </Link>
           </div>
         </div>

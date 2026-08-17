@@ -5,6 +5,7 @@ import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
+import TablaDatos from '../../componentes/comunes/TablaDatos.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
@@ -62,7 +63,7 @@ export default function PanelComite() {
   return (
     <div>
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-        <h1 className="text-headline-lg font-semibold text-primary">Revisión de expedientes priorizados</h1>
+        <h1 className="text-headline-lg font-semibold text-on-surface">Revisión de expedientes priorizados</h1>
         <img src="/images/comitebecas.png" alt="Panel de comité de becas" className="imagen-ui-seccion self-center sm:self-auto" />
       </div>
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
@@ -77,60 +78,54 @@ export default function PanelComite() {
           </div>
         </div>
 
-        {sesiones.length === 0 ? (
-          <div className="mt-4">
-            <EstadoVacio titulo="No hay sesiones registradas" descripcion="Cuando un integrante cree una sesión, aparecerá aquí para los demás miembros." />
-          </div>
-        ) : (
-          <div className="mt-4 overflow-x-auto rounded-lg border border-outline-variant">
-            <table className="w-full text-left text-body-sm">
-              <thead className="bg-surface-container-low">
-                <tr>
-                  <th className="px-4 py-3">Sesión</th>
-                  <th className="px-4 py-3">Periodo</th>
-                  <th className="px-4 py-3">Estado</th>
-                  <th className="px-4 py-3">Casos</th>
-                  <th className="px-4 py-3">Mi participación</th>
-                  <th className="px-4 py-3">Creada por</th>
-                  <th className="px-4 py-3">Acción</th>
-                </tr>
-              </thead>
-              <tbody>
-                {sesiones.map((sesion) => (
-                  <tr key={sesion.IdSesionComite} className="border-t border-outline-variant">
-                    <td className="px-4 py-3">
-                      <span className="font-semibold">{sesion.Nombre}</span>
-                      <span className="block text-label-sm text-on-surface-variant">{sesion.NombreConvocatoria}</span>
-                    </td>
-                    <td className="px-4 py-3">{sesion.Periodo || '—'}</td>
-                    <td className="px-4 py-3"><EtiquetaEstado estado={sesion.Estado} /></td>
-                    <td className="px-4 py-3">{sesion.TotalCasos}</td>
-                    <td className="px-4 py-3">
-                      {sesion.MisVotos}/{sesion.TotalCasos} voto(s)
-                      {sesion.Estado === 'ABIERTA' && sesion.MisVotosPendientes > 0 && (
-                        <span className="block text-label-sm font-semibold text-advertencia">
-                          {sesion.MisVotosPendientes} pendiente(s)
-                        </span>
-                      )}
-                    </td>
-                    <td className="px-4 py-3">
-                      {sesion.NombreCreador}
-                      <span className="block text-label-sm text-on-surface-variant">{formatearFechaHora(sesion.FechaCreacion)}</span>
-                    </td>
-                    <td className="px-4 py-3">
-                      <Boton variante="texto" onClick={() => navegar(`/comite/sesiones/${sesion.IdSesionComite}`)}>
-                        {sesion.Estado === 'ABIERTA' ? 'Abrir y votar' : 'Consultar'}
-                      </Boton>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
+        <div className="mt-4">
+          <TablaDatos
+            clave="IdSesionComite"
+            textoVacio="No hay sesiones registradas"
+            filas={sesiones}
+            columnas={[
+              {
+                clave: 'sesion',
+                etiqueta: 'Sesión',
+                render: (sesion) => <><span className="font-semibold">{sesion.Nombre}</span><span className="block text-label-sm text-on-surface-variant">{sesion.NombreConvocatoria}</span></>
+              },
+              { clave: 'Periodo', etiqueta: 'Periodo', render: (sesion) => sesion.Periodo || '—' },
+              { clave: 'Estado', etiqueta: 'Estado', render: (sesion) => <EtiquetaEstado estado={sesion.Estado} /> },
+              { clave: 'TotalCasos', etiqueta: 'Casos' },
+              {
+                clave: 'participacion',
+                etiqueta: 'Mi participación',
+                render: (sesion) => (
+                  <>
+                    {sesion.MisVotos}/{sesion.TotalCasos} voto(s)
+                    {sesion.Estado === 'ABIERTA' && sesion.MisVotosPendientes > 0 && (
+                      <span className="block text-label-sm font-semibold text-advertencia">
+                        {sesion.MisVotosPendientes} pendiente(s)
+                      </span>
+                    )}
+                  </>
+                )
+              },
+              {
+                clave: 'creador',
+                etiqueta: 'Creada por',
+                render: (sesion) => <>{sesion.NombreCreador}<span className="block text-label-sm text-on-surface-variant">{formatearFechaHora(sesion.FechaCreacion)}</span></>
+              },
+              {
+                clave: 'accion',
+                etiqueta: 'Acción',
+                render: (sesion) => (
+                  <Boton variante="texto" onClick={() => navegar(`/comite/sesiones/${sesion.IdSesionComite}`)}>
+                    {sesion.Estado === 'ABIERTA' ? 'Abrir y votar' : 'Consultar'}
+                  </Boton>
+                )
+              }
+            ]}
+          />
+        </div>
       </Tarjeta>
 
-      <h2 className="mt-8 text-headline-sm font-semibold text-primary">Expedientes pendientes de crear sesión</h2>
+      <h2 className="mt-8 text-headline-sm font-semibold text-on-surface">Expedientes pendientes de crear sesión</h2>
 
       <div className="mt-4 max-w-xs">
         <CampoSelect etiqueta="Filtrar por periodo" value={periodo}
@@ -142,41 +137,30 @@ export default function PanelComite() {
         <EstadoVacio titulo="No hay expedientes listos para el comité" descripcion="Los expedientes aparecen aquí cuando trabajo social los envía al comité." />
       ) : (
         <>
-          <div className="mt-6 overflow-x-auto rounded-lg bg-surface-container-lowest shadow-elevation-l2">
-            <table className="w-full text-left text-body-sm">
-              <thead className="bg-surface-container-low">
-                <tr>
-                  <th className="px-4 py-3"></th>
-                  <th className="px-4 py-3">Posición</th>
-                  <th className="px-4 py-3">Código</th>
-                  <th className="px-4 py-3">Aspirante</th>
-                  <th className="px-4 py-3">Convocatoria</th>
-                  <th className="px-4 py-3">Periodo</th>
-                  <th className="px-4 py-3">Quintil</th>
-                  <th className="px-4 py-3">Cobertura</th>
-                  <th className="px-4 py-3">Puntaje</th>
-                </tr>
-              </thead>
-              <tbody>
-                {expedientesVisibles.map((expediente) => (
-                  <tr key={expediente.IdExpediente} className="border-t border-outline-variant">
-                    <td className="px-4 py-3">
-                      <input type="checkbox" checked={seleccionados.includes(expediente.IdExpediente)}
-                        disabled={convocatoriaSeleccionada && convocatoriaSeleccionada !== expediente.IdConvocatoria}
-                        onChange={() => alternarSeleccion(expediente.IdExpediente)} />
-                    </td>
-                    <td className="px-4 py-3">{expediente.Posicion ?? '—'}</td>
-                    <td className="px-4 py-3">{expediente.CodigoExpediente}</td>
-                    <td className="px-4 py-3">{expediente.NombreAspirante} {expediente.ApellidoAspirante}</td>
-                    <td className="px-4 py-3">{expediente.NombreConvocatoria}</td>
-                    <td className="px-4 py-3">{expediente.Periodo || '—'}</td>
-                    <td className="px-4 py-3">Q{expediente.Quintil} <span className="block text-label-sm text-on-surface-variant">INEC {expediente.AnioReferencia}</span></td>
-                    <td className="px-4 py-3">{expediente.PorcentajeDefinido}%</td>
-                    <td className="px-4 py-3">{expediente.PuntajeTotal ?? '—'}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
+          <div className="mt-6">
+            <TablaDatos
+              clave="IdExpediente"
+              filas={expedientesVisibles}
+              columnas={[
+                {
+                  clave: 'seleccion',
+                  etiqueta: '',
+                  render: (expediente) => (
+                    <input type="checkbox" checked={seleccionados.includes(expediente.IdExpediente)}
+                      disabled={convocatoriaSeleccionada && convocatoriaSeleccionada !== expediente.IdConvocatoria}
+                      onChange={() => alternarSeleccion(expediente.IdExpediente)} />
+                  )
+                },
+                { clave: 'Posicion', etiqueta: 'Posición', render: (e) => e.Posicion ?? '—' },
+                { clave: 'CodigoExpediente', etiqueta: 'Código' },
+                { clave: 'aspirante', etiqueta: 'Aspirante', render: (e) => <>{e.NombreAspirante} {e.ApellidoAspirante}</> },
+                { clave: 'NombreConvocatoria', etiqueta: 'Convocatoria' },
+                { clave: 'Periodo', etiqueta: 'Periodo', render: (e) => e.Periodo || '—' },
+                { clave: 'Quintil', etiqueta: 'Quintil', render: (e) => <>Q{e.Quintil} <span className="block text-label-sm text-on-surface-variant">INEC {e.AnioReferencia}</span></> },
+                { clave: 'PorcentajeDefinido', etiqueta: 'Cobertura', render: (e) => `${e.PorcentajeDefinido}%` },
+                { clave: 'PuntajeTotal', etiqueta: 'Puntaje', render: (e) => e.PuntajeTotal ?? '—' }
+              ]}
+            />
           </div>
 
           <Tarjeta className="mt-6">

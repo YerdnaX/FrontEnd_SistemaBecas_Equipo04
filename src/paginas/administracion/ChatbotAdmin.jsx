@@ -2,8 +2,10 @@ import { useEffect, useState } from 'react';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
+import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
+import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
 import * as servicio from '../../servicios/servicioChatbot.js';
 
 const ENTRADA_VACIA = { pregunta: '', respuesta: '', categoria: '', palabrasClave: '' };
@@ -84,7 +86,7 @@ export default function ChatbotAdmin() {
 
   return (
     <div>
-      <h1 className="text-headline-lg font-semibold text-primary">Base de conocimiento del chatbot</h1>
+      <h1 className="text-headline-lg font-semibold text-on-surface">Base de conocimiento del chatbot</h1>
 
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
       {mensaje && <div className="mt-4"><AlertaMensaje tipo="exito">{mensaje}</AlertaMensaje></div>}
@@ -92,7 +94,9 @@ export default function ChatbotAdmin() {
       <div className="mt-6 grid gap-6 md:grid-cols-2">
         <Tarjeta>
           <h2 className="text-headline-sm font-semibold text-on-surface">Preguntas registradas</h2>
-          {cargando ? <EstadoCarga /> : (
+          {cargando ? <EstadoCarga /> : entradas.length === 0 ? (
+            <div className="mt-3"><EstadoVacio titulo="Sin preguntas registradas" /></div>
+          ) : (
             <ul className="mt-3 flex flex-col gap-2">
               {entradas.map((e) => (
                 <li key={e.IdPreguntaRespuesta} className="flex items-center justify-between gap-2 border-b border-outline-variant pb-2 text-body-sm">
@@ -120,18 +124,15 @@ export default function ChatbotAdmin() {
                 ? setSeleccionada({ ...seleccionada, Pregunta: e.target.value })
                 : setNueva({ ...nueva, pregunta: e.target.value })}
             />
-            <label className="flex flex-col gap-1 text-body-sm">
-              <span className="font-medium text-on-surface">Respuesta</span>
-              <textarea
-                required
-                rows={4}
-                value={seleccionada ? seleccionada.Respuesta : nueva.respuesta}
-                onChange={(e) => seleccionada
-                  ? setSeleccionada({ ...seleccionada, Respuesta: e.target.value })
-                  : setNueva({ ...nueva, respuesta: e.target.value })}
-                className="rounded-md border border-outline-variant px-3 py-2 text-body-md outline-none focus:border-primary-container"
-              />
-            </label>
+            <CampoAreaTexto
+              etiqueta="Respuesta"
+              required
+              rows={4}
+              value={seleccionada ? seleccionada.Respuesta : nueva.respuesta}
+              onChange={(e) => seleccionada
+                ? setSeleccionada({ ...seleccionada, Respuesta: e.target.value })
+                : setNueva({ ...nueva, respuesta: e.target.value })}
+            />
             <CampoTexto
               etiqueta="Categoría"
               value={seleccionada ? seleccionada.Categoria || '' : nueva.categoria}

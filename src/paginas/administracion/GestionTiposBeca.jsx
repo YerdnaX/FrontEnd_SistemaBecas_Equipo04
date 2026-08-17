@@ -4,7 +4,8 @@ import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
-import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
+import TablaDatos from '../../componentes/comunes/TablaDatos.jsx';
+import DialogoConfirmacion from '../../componentes/comunes/DialogoConfirmacion.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
 import { listarTiposBeca, crearTipoBeca, actualizarTipoBeca, cambiarEstadoTipoBeca, obtenerTipoBeca } from '../../servicios/servicioTiposBeca.js';
 import { useSesion } from '../../hooks/useSesion.js';
@@ -22,6 +23,7 @@ export default function GestionTiposBeca() {
   const [idEnEdicion, setIdEnEdicion] = useState(null);
   const [mostrarFormulario, setMostrarFormulario] = useState(false);
   const [guardando, setGuardando] = useState(false);
+  const [confirmacionEstado, setConfirmacionEstado] = useState(null);
 
   const porcentajeCoberturaNumero = Number(formulario.porcentajeCobertura) || 0;
   const sumaRubros = formulario.rubros.reduce((total, rubro) => total + (Number(rubro.porcentaje) || 0), 0);
@@ -129,8 +131,13 @@ export default function GestionTiposBeca() {
     }
   }
 
-  async function manejarCambioEstado(id, activo) {
-    if (!window.confirm(`¿Confirma ${activo ? 'activar' : 'desactivar'} este tipo de beca?`)) return;
+  function solicitarCambioEstado(id, activo) {
+    setConfirmacionEstado({ id, activo });
+  }
+
+  async function confirmarCambioEstado() {
+    const { id, activo } = confirmacionEstado;
+    setConfirmacionEstado(null);
     await cambiarEstadoTipoBeca(id, activo).catch((err) => setError(err.mensaje));
     await cargar();
   }
@@ -138,7 +145,7 @@ export default function GestionTiposBeca() {
   return (
     <div>
       <div className="flex items-center justify-between">
-        <h1 className="text-headline-lg font-semibold text-primary">Gestión de tipos de beca</h1>
+        <h1 className="text-headline-lg font-semibold text-on-surface">Gestión de tipos de beca</h1>
         {puedeCrear && <Boton onClick={nuevoTipoBeca}>Nuevo tipo de beca</Boton>}
       </div>
 
@@ -225,42 +232,40 @@ export default function GestionTiposBeca() {
       )}
 
       <div className="mt-6">
-        {cargando && <EstadoCarga />}
-        {!cargando && tiposBeca.length === 0 && <EstadoVacio titulo="No hay tipos de beca registrados" />}
-        {!cargando && tiposBeca.length > 0 && (
-          <div className="overflow-x-auto rounded-lg bg-surface-container-lowest shadow-elevation-l2">
-            <table className="w-full text-left text-body-sm">
-              <thead className="bg-surface-container-low">
-                <tr>
-                  <th className="px-4 py-3">Nombre</th>
-                  <th className="px-4 py-3">Cobertura</th>
-                  <th className="px-4 py-3">Estado</th>
-                  <th className="px-4 py-3">Acciones</th>
-                </tr>
-              </thead>
-              <tbody>
-                {tiposBeca.map((tipoBeca) => (
-                  <tr key={tipoBeca.IdTipoBeca} className="border-t border-outline-variant">
-                    <td className="px-4 py-3">{tipoBeca.Nombre}</td>
-                    <td className="px-4 py-3">{tipoBeca.PorcentajeCobertura}%</td>
-                    <td className="px-4 py-3"><EtiquetaEstado estado={tipoBeca.Activo ? 'ACTIVO' : 'INACTIVO'} /></td>
-                    <td className="px-4 py-3">
-                      {puedeEditar ? (
-                        <>
-                          <button className="mr-3 text-primary-container hover:underline" onClick={() => editarTipoBeca(tipoBeca.IdTipoBeca)}>Editar</button>
-                          <button className="text-error hover:underline" onClick={() => manejarCambioEstado(tipoBeca.IdTipoBeca, !tipoBeca.Activo)}>
-                            {tipoBeca.Activo ? 'Desactivar' : 'Activar'}
-                          </button>
-                        </>
-                      ) : <span className="text-on-surface-variant">Solo lectura</span>}
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
+        {cargando ? <EstadoCarga /> : (
+          <TablaDatos
+            clave="IdTipoBeca"
+            textoVacio="No hay tipos de beca registrados"
+            filas={tiposBeca}
+            columnas={[
+              { clave: 'Nombre', etiqueta: 'Nombre' },
+              { clave: 'PorcentajeCobertura', etiqueta: 'Cobertura', render: (t) => `${t.PorcentajeCobertura}%` },
+              { clave: 'Activo', etiqueta: 'Estado', render: (t) => <EtiquetaEstado estado={t.Activo ? 'ACTIVO' : 'INACTIVO'} /> },
+              {
+                clave: 'acciones',
+                etiqueta: 'Acciones',
+                render: (t) => puedeEditar ? (
+                  <>
+                    <button className="mr-3 text-primary-container hover:underline" onClick={() => editarTipoBeca(t.IdTipoBeca)}>Editar</button>
+                    <button className="text-error hover:underline" onClick={() => solicitarCambioEstado(t.IdTipoBeca, !t.Activo)}>
+                      {t.Activo ? 'Desactivar' : 'Activar'}
+                    </button>
+                  </>
+                ) : <span className="text-on-surface-variant">Solo lectura</span>
+              }
+            ]}
+          />
         )}
       </div>
+
+      <DialogoConfirmacion
+        abierto={Boolean(confirmacionEstado)}
+        titulo={confirmacionEstado?.activo ? 'Activar tipo de beca' : 'Desactivar tipo de beca'}
+        mensaje={`¿Confirma ${confirmacionEstado?.activo ? 'activar' : 'desactivar'} este tipo de beca?`}
+        varianteConfirmar={confirmacionEstado?.activo ? 'primario' : 'peligro'}
+        confirmar={confirmarCambioEstado}
+        cancelar={() => setConfirmacionEstado(null)}
+      />
     </div>
   );
 }

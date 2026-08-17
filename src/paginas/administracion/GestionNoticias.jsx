@@ -58,7 +58,7 @@ export default function GestionNoticias() {
       <div className="grid gap-6 lg:grid-cols-[1fr_2fr]">
         <Tarjeta>
           <form className="space-y-4" onSubmit={guardar}>
-            <h2 className="font-semibold text-primary">{editandoId ? 'Editar noticia' : 'Nueva noticia'}</h2>
+            <h2 className="font-semibold text-on-surface">{editandoId ? 'Editar noticia' : 'Nueva noticia'}</h2>
             <CampoTexto etiqueta="Título" value={formulario.titulo} onChange={(e) => setFormulario({ ...formulario, titulo: e.target.value })} required />
             <CampoAreaTexto etiqueta="Contenido" value={formulario.contenido} onChange={(e) => setFormulario({ ...formulario, contenido: e.target.value })} required />
             <CampoSelect etiqueta="Público" value={formulario.publicoDestino} onChange={(e) => setFormulario({ ...formulario, publicoDestino: e.target.value })} opciones={[{ valor: 'GENERAL', etiqueta: 'Público general y todos' }, { valor: 'ASPIRANTE', etiqueta: 'Aspirantes' }, { valor: 'BECADO', etiqueta: 'Becados' }]} />

@@ -6,6 +6,7 @@ import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import EstadoVacio from '../../componentes/comunes/EstadoVacio.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EtiquetaEstado from '../../componentes/comunes/EtiquetaEstado.jsx';
+import Boton from '../../componentes/comunes/Boton.jsx';
 import { listarConvocatoriasPublicas } from '../../servicios/servicioPublico.js';
 import { formatearFechaHora, estadoTemporalConvocatoria } from '../../utilidades/formato.js';
 
@@ -31,7 +32,7 @@ export default function ListaConvocatoriasPublicas() {
       <EncabezadoPublico />
       <main className="mx-auto max-w-container-max px-4 py-10 md:px-12">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="text-headline-lg font-semibold text-primary">Convocatorias vigentes</h1>
+          <h1 className="text-headline-lg font-semibold text-on-surface">Convocatorias vigentes</h1>
           <img src="/images/convocatoriasbecas.png" alt="Convocatorias de becas" className="imagen-ui-seccion self-center sm:self-auto" />
         </div>
 
@@ -53,7 +54,7 @@ export default function ListaConvocatoriasPublicas() {
                   <span className="text-label-sm font-semibold uppercase text-primary-container">{convocatoria.NombreTipoBeca}</span>
                   <EtiquetaEstado estado={estadoTemporal} />
                 </div>
-                <p className="mt-2 text-headline-sm font-bold text-primary">{convocatoria.Nombre}</p>
+                <p className="mt-2 text-headline-sm font-bold text-on-surface">{convocatoria.Nombre}</p>
                 <p className="mt-2 text-body-sm text-on-surface-variant">{convocatoria.Descripcion}</p>
                 <p className="mt-3 text-body-sm font-semibold text-on-surface-variant">Cupos disponibles: {convocatoria.Cupos}</p>
                 <p className="text-body-sm text-on-surface-variant">Abre: {formatearFechaHora(convocatoria.FechaInicio)}</p>
@@ -61,8 +62,8 @@ export default function ListaConvocatoriasPublicas() {
                 {cierraPronto && estadoTemporal === 'ABIERTA' && (
                   <p className="mt-1 text-label-sm font-bold text-categoria-urgente">¡Cierra en {restantes} día(s)!</p>
                 )}
-                <Link to={`/convocatorias/${convocatoria.IdConvocatoria}`} className="mt-3 inline-block text-body-sm font-semibold text-primary-container hover:underline">
-                  Ver detalle →
+                <Link to={`/convocatorias/${convocatoria.IdConvocatoria}`} className="mt-3 inline-block">
+                  <Boton variante="texto" tamano="sm">Ver detalle →</Boton>
                 </Link>
               </div>
             );

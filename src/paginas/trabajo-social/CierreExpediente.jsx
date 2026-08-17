@@ -1,8 +1,10 @@
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
+import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import { verificarCierre, cerrarExpediente } from '../../servicios/servicioCierre.js';
@@ -56,7 +58,7 @@ export default function CierreExpediente() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="text-headline-lg font-semibold text-primary">Cierre de expediente {expediente.CodigoExpediente}</h1>
+      <EncabezadoPagina titulo={`Cierre de expediente ${expediente.CodigoExpediente}`} />
 
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
       {mensaje && <div className="mt-4"><AlertaMensaje tipo="exito">{mensaje}</AlertaMensaje></div>}
@@ -82,15 +84,7 @@ export default function CierreExpediente() {
           </p>
           <form onSubmit={confirmarCierre} className="mt-4 flex flex-col gap-4">
             <CampoTexto etiqueta="Motivo del cierre" required value={motivo} onChange={(e) => setMotivo(e.target.value)} />
-            <label className="flex flex-col gap-1 text-body-sm">
-              <span className="font-medium text-on-surface">Resumen (opcional)</span>
-              <textarea
-                rows={4}
-                value={resumen}
-                onChange={(e) => setResumen(e.target.value)}
-                className="rounded-md border border-outline-variant px-3 py-2 text-body-md outline-none focus:border-primary-container"
-              />
-            </label>
+            <CampoAreaTexto etiqueta="Resumen (opcional)" rows={4} value={resumen} onChange={(e) => setResumen(e.target.value)} />
             <Boton type="submit" variante="peligro" cargando={procesando}>Cerrar expediente</Boton>
           </form>
         </Tarjeta>

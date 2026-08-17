@@ -40,7 +40,7 @@ export default function BandejaJustificaciones() {
           clave: 'accion',
           etiqueta: 'Acción',
           render: (fila) => (
-            <Link className="font-semibold text-primary-container hover:underline" to={`/trabajo-social/justificaciones/${fila.IdJustificacion}`}>
+            <Link className="inline-flex items-center rounded-md px-2 py-1 text-label-sm font-semibold text-primary transition hover:bg-primary-container/15" to={`/trabajo-social/justificaciones/${fila.IdJustificacion}`}>
               Revisar
             </Link>
           )

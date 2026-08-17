@@ -51,7 +51,7 @@ export default function ExpedienteBecado() {
         <>
           <div className="grid gap-6 lg:grid-cols-[1fr_1.5fr]">
             <Tarjeta>
-              <h2 className="font-semibold text-primary">Datos consolidados</h2>
+              <h2 className="font-semibold text-on-surface">Datos consolidados</h2>
               <dl className="mt-4 space-y-3 text-body-sm">
                 <div><dt className="text-on-surface-variant">Nombre</dt><dd className="font-semibold">{expediente.Nombre} {expediente.PrimerApellido} {expediente.SegundoApellido}</dd></div>
                 <div><dt className="text-on-surface-variant">Identificación</dt><dd className="font-semibold">{expediente.Identificacion}</dd></div>
@@ -73,7 +73,7 @@ export default function ExpedienteBecado() {
             </Tarjeta>
           </div>
           <section>
-            <h2 className="mb-3 text-headline-sm font-semibold text-primary">Historial de actualizaciones</h2>
+            <h2 className="mb-3 text-headline-sm font-semibold text-on-surface">Historial de actualizaciones</h2>
             <TablaDatos
               filas={historial}
               clave="IdActualizacion"

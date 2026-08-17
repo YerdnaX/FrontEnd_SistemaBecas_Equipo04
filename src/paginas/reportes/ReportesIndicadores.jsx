@@ -5,6 +5,7 @@ import TablaDatos from '../../componentes/comunes/TablaDatos.jsx';
 import CampoSelect from '../../componentes/formularios/CampoSelect.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
+import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import {
   listarBecasReporte,
   listarRenovacionesReporte,
@@ -19,6 +20,7 @@ export default function ReportesIndicadores() {
   const [renovaciones, setRenovaciones] = useState([]);
   const [catalogos, setCatalogos] = useState({ periodos: [], carreras: [], estados: [], tiposBeca: [] });
   const [error, setError] = useState(null);
+  const [cargando, setCargando] = useState(true);
 
   async function cargar() {
     try {
@@ -26,7 +28,7 @@ export default function ReportesIndicadores() {
       setIndicadores(i.datos);
       setBecas(b.datos);
       setRenovaciones(r.datos);
-    } catch (err) { setError(err.message); }
+    } catch (err) { setError(err.message); } finally { setCargando(false); }
   }
   useEffect(() => {
     cargar();
@@ -96,31 +98,35 @@ export default function ReportesIndicadores() {
         <Boton onClick={cargar}>Aplicar filtros</Boton>
         <Boton variante="secundario" deshabilitado={!becas.length} onClick={exportarCsv}>Exportar CSV</Boton>
       </div>
-      <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
-        <Tarjeta><p className="text-body-sm text-on-surface-variant">Solicitudes</p><p className="mt-2 text-headline-lg font-semibold">{indicadores.TotalSolicitudes || 0}</p></Tarjeta>
-        <Tarjeta><p className="text-body-sm text-on-surface-variant">Aprobadas</p><p className="mt-2 text-headline-lg font-semibold">{indicadores.SolicitudesAprobadas || 0}</p></Tarjeta>
-        <Tarjeta><p className="text-body-sm text-on-surface-variant">Becas activas</p><p className="mt-2 text-headline-lg font-semibold">{indicadores.BecasActivas || 0}</p></Tarjeta>
-        <Tarjeta><p className="text-body-sm text-on-surface-variant">% aprobación</p><p className="mt-2 text-headline-lg font-semibold">{indicadores.PorcentajeAprobacion || 0}%</p></Tarjeta>
-      </div>
-      <section>
-        <h2 className="mb-3 text-headline-sm font-semibold text-primary">Beneficiarios</h2>
-        <TablaDatos filas={becas} clave="IdBecaActiva" columnas={[
-          { clave: 'NumeroEstudiante', etiqueta: 'Carné' },
-          { clave: 'Estudiante', etiqueta: 'Estudiante' },
-          { clave: 'Carrera', etiqueta: 'Carrera' },
-          { clave: 'TipoBeca', etiqueta: 'Tipo' },
-          { clave: 'Porcentaje', etiqueta: 'Cobertura', render: (fila) => `${fila.Porcentaje}%` },
-          { clave: 'Estado', etiqueta: 'Estado' }
-        ]} />
-      </section>
-      <section>
-        <h2 className="mb-3 text-headline-sm font-semibold text-primary">Resultados de renovación</h2>
-        <TablaDatos filas={renovaciones} clave={(fila) => `${fila.Periodo}-${fila.Estado}`} columnas={[
-          { clave: 'Periodo', etiqueta: 'Periodo' },
-          { clave: 'Estado', etiqueta: 'Resultado' },
-          { clave: 'Total', etiqueta: 'Total' }
-        ]} />
-      </section>
+      {cargando ? <EstadoCarga /> : (
+        <>
+          <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+            <Tarjeta><p className="text-label-md text-on-surface-variant">Solicitudes</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{indicadores.TotalSolicitudes || 0}</p></Tarjeta>
+            <Tarjeta><p className="text-label-md text-on-surface-variant">Aprobadas</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{indicadores.SolicitudesAprobadas || 0}</p></Tarjeta>
+            <Tarjeta><p className="text-label-md text-on-surface-variant">Becas activas</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{indicadores.BecasActivas || 0}</p></Tarjeta>
+            <Tarjeta><p className="text-label-md text-on-surface-variant">% aprobación</p><p className="mt-2 text-headline-lg font-semibold text-on-surface">{indicadores.PorcentajeAprobacion || 0}%</p></Tarjeta>
+          </div>
+          <section>
+            <h2 className="mb-3 text-headline-sm font-semibold text-on-surface">Beneficiarios</h2>
+            <TablaDatos filas={becas} clave="IdBecaActiva" columnas={[
+              { clave: 'NumeroEstudiante', etiqueta: 'Carné' },
+              { clave: 'Estudiante', etiqueta: 'Estudiante' },
+              { clave: 'Carrera', etiqueta: 'Carrera' },
+              { clave: 'TipoBeca', etiqueta: 'Tipo' },
+              { clave: 'Porcentaje', etiqueta: 'Cobertura', render: (fila) => `${fila.Porcentaje}%` },
+              { clave: 'Estado', etiqueta: 'Estado' }
+            ]} />
+          </section>
+          <section>
+            <h2 className="mb-3 text-headline-sm font-semibold text-on-surface">Resultados de renovación</h2>
+            <TablaDatos filas={renovaciones} clave={(fila) => `${fila.Periodo}-${fila.Estado}`} columnas={[
+              { clave: 'Periodo', etiqueta: 'Periodo' },
+              { clave: 'Estado', etiqueta: 'Resultado' },
+              { clave: 'Total', etiqueta: 'Total' }
+            ]} />
+          </section>
+        </>
+      )}
     </div>
   );
 }

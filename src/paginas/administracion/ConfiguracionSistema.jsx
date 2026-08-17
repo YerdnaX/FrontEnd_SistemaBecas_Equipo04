@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import CampoTexto from '../../componentes/formularios/CampoTexto.jsx';
+import CampoAreaTexto from '../../componentes/formularios/CampoAreaTexto.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
 import EstadoCarga from '../../componentes/comunes/EstadoCarga.jsx';
 import * as servicio from '../../servicios/servicioConfiguracion.js';
@@ -38,14 +39,16 @@ export default function ConfiguracionSistema() {
 
   return (
     <div>
-      <h1 className="text-headline-lg font-semibold text-primary">Configuración del sistema</h1>
+      <h1 className="text-headline-lg font-semibold text-on-surface">Configuración del sistema</h1>
 
-      <div className="mt-4 flex gap-2 border-b border-outline-variant">
+      <div className="mt-4 flex gap-2" role="tablist" aria-label="Configuración del sistema">
         {PESTANAS.map((titulo, indice) => (
           <button
             key={titulo}
+            role="tab"
+            aria-selected={pestana === indice}
             onClick={() => { setPestana(indice); setError(null); setMensaje(null); }}
-            className={`px-4 py-2 text-body-sm font-medium ${pestana === indice ? 'border-b-2 border-primary-container text-primary-container' : 'text-on-surface-variant'}`}
+            className={`rounded-md px-4 py-2 text-body-sm font-medium transition ${pestana === indice ? 'bg-primary-container text-on-primary-container' : 'border border-outline-variant text-on-surface-variant hover:bg-surface-container-high'}`}
           >
             {titulo}
           </button>
@@ -160,7 +163,7 @@ function SeccionPlantillas({ onError, onExito }) {
             <li key={p.Codigo}>
               <button
                 onClick={() => setSeleccionada(p)}
-                className={`w-full rounded-md px-3 py-2 text-left text-body-sm ${seleccionada?.Codigo === p.Codigo ? 'bg-primary-container text-on-primary' : 'hover:bg-surface-container-low'}`}
+                className={`w-full rounded-md px-3 py-2 text-left text-body-sm ${seleccionada?.Codigo === p.Codigo ? 'bg-primary-container text-on-primary-container' : 'hover:bg-surface-container-low'}`}
               >
                 {p.Codigo} {!p.Activo && '(inactiva)'}
               </button>
@@ -172,15 +175,13 @@ function SeccionPlantillas({ onError, onExito }) {
       {seleccionada && (
         <Tarjeta>
           <CampoTexto etiqueta="Asunto" value={seleccionada.Asunto} onChange={(e) => setSeleccionada({ ...seleccionada, Asunto: e.target.value })} />
-          <label className="mt-3 flex flex-col gap-1 text-body-sm">
-            <span className="font-medium text-on-surface">Contenido (HTML, use {'{{variable}}'})</span>
-            <textarea
-              rows={8}
-              value={seleccionada.Contenido}
-              onChange={(e) => setSeleccionada({ ...seleccionada, Contenido: e.target.value })}
-              className="rounded-md border border-outline-variant px-3 py-2 font-mono text-label-sm outline-none focus:border-primary-container"
-            />
-          </label>
+          <CampoAreaTexto
+            className="mt-3"
+            etiqueta="Contenido (HTML, use {{variable}})"
+            rows={8}
+            value={seleccionada.Contenido}
+            onChange={(e) => setSeleccionada({ ...seleccionada, Contenido: e.target.value })}
+          />
           <label className="mt-3 flex items-center gap-2 text-body-sm">
             <input type="checkbox" checked={Boolean(seleccionada.Activo)} onChange={(e) => setSeleccionada({ ...seleccionada, Activo: e.target.checked })} />
             Activa
@@ -230,23 +231,21 @@ function SeccionParametros({ onError, onExito }) {
   }
 
   return (
-    <Tarjeta className="border border-outline-variant bg-surface-container-low/40">
-      <div className="rounded-xl border border-outline-variant bg-surface px-4 py-4 sm:px-5">
-        <h2 className="text-headline-sm font-semibold text-on-surface">Parámetros del sistema</h2>
-        <p className="mt-1 text-body-sm text-on-surface-variant">
-          Ajuste valores operativos y de seguridad desde un panel centralizado.
-        </p>
-      </div>
+    <Tarjeta>
+      <h2 className="text-headline-sm font-semibold text-on-surface">Parámetros del sistema</h2>
+      <p className="mt-1 text-body-sm text-on-surface-variant">
+        Ajuste valores operativos y de seguridad desde un panel centralizado.
+      </p>
 
       <div className="mt-5 grid gap-4 md:grid-cols-2">
         {parametros.map((p) => (
-          <article key={p.Clave} className="rounded-xl border border-outline-variant bg-surface px-4 py-4 shadow-elevation-l1 sm:px-5">
+          <article key={p.Clave} className="rounded-md border border-outline-variant bg-surface-container-high px-4 py-4 sm:px-5">
             <div className="flex items-start justify-between gap-3">
               <div>
-                <p className="text-title-md font-semibold text-on-surface">{formatearClaveParametro(p.Clave)}</p>
+                <p className="text-headline-sm font-semibold text-on-surface">{formatearClaveParametro(p.Clave)}</p>
                 {p.Descripcion && <p className="mt-1 text-body-sm text-on-surface-variant">{p.Descripcion}</p>}
               </div>
-              <span className="rounded-full bg-primary-container px-3 py-1 text-label-sm font-semibold text-on-primary">
+              <span className="rounded-full bg-primary-container px-3 py-1 text-label-sm font-semibold text-on-primary-container">
                 {obtenerEtiquetaTipoDato(p.TipoDato)}
               </span>
             </div>
@@ -261,7 +260,7 @@ function SeccionParametros({ onError, onExito }) {
             </div>
 
             <div className="mt-4 flex items-center justify-between gap-2">
-              <span className={`rounded-full px-2.5 py-1 text-label-sm font-medium ${p.Activo ? 'bg-tertiary-container text-on-tertiary' : 'bg-surface-container text-on-surface-variant'}`}>
+              <span className={`rounded-full px-2.5 py-1 text-label-sm font-medium ${p.Activo ? 'bg-tertiary-container text-on-tertiary-container' : 'bg-surface-container text-on-surface-variant'}`}>
                 {p.Activo ? 'Activo' : 'Inactivo'}
               </span>
               <Boton variante="secundario" onClick={() => guardar(p.Clave, p.Valor)} cargando={guardandoClave === p.Clave}>

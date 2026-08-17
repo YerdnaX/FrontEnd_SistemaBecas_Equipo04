@@ -48,7 +48,7 @@ export default function DetalleConvocatoriaPublica() {
               <p><span className="font-semibold">Cierre:</span> {formatearFechaHora(convocatoria.FechaFin)}</p>
             </div>
 
-            <h2 className="mt-6 text-headline-sm font-semibold text-primary">Requisitos</h2>
+            <h2 className="mt-6 text-headline-sm font-semibold text-on-surface">Requisitos</h2>
             <ul className="mt-2 list-disc pl-6 text-body-sm text-on-surface-variant">
               {convocatoria.requisitos.map((requisito) => (
                 <li key={requisito.Nombre}>

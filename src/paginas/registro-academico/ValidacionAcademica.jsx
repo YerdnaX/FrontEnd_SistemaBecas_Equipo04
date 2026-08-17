@@ -46,7 +46,7 @@ export default function ValidacionAcademica() {
       {mensaje && <AlertaMensaje tipo={mensaje.tipo}>{mensaje.texto}</AlertaMensaje>}
       <div className="grid gap-6 lg:grid-cols-2">
         <Tarjeta>
-          <h2 className="font-semibold text-primary">Expediente {beneficio?.CodigoExpediente}</h2>
+          <h2 className="font-semibold text-on-surface">Expediente {beneficio?.CodigoExpediente}</h2>
           <p className="mt-4 text-body-sm">Tipo de beca: <strong>{beneficio?.TipoBeca}</strong></p>
           <p className="mt-2 text-body-sm">Cobertura: <strong>{beneficio?.Porcentaje}%</strong></p>
           <p className="mt-2 text-body-sm">Estado actual: <strong>{beneficio?.EstadoAcademico || 'PENDIENTE'}</strong></p>

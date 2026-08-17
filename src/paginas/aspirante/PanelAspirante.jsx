@@ -25,7 +25,7 @@ function saludoPorHora() {
 function TarjetaResumen({ valor, etiqueta, destacar }) {
   return (
     <div className={`rounded-lg p-4 shadow-elevation-l2 ${destacar ? 'bg-primary-container text-on-primary-container' : 'bg-surface-container-lowest text-on-surface'}`}>
-      <p className={`text-headline-md font-semibold ${destacar ? '' : 'text-primary'}`}>{valor}</p>
+      <p className={`text-headline-md font-semibold ${destacar ? '' : 'text-on-surface'}`}>{valor}</p>
       <p className={`mt-1 text-label-md ${destacar ? 'opacity-90' : 'text-on-surface-variant'}`}>{etiqueta}</p>
     </div>
   );
@@ -110,7 +110,7 @@ export default function PanelAspirante() {
       <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
         <div>
           <p className="text-label-md font-semibold uppercase tracking-wide text-primary-container">{saludoPorHora()}</p>
-          <h1 className="text-headline-lg font-semibold text-primary">{usuario?.nombre || 'Su panel'}</h1>
+          <h1 className="text-headline-lg font-semibold text-on-surface">{usuario?.nombre || 'Su panel'}</h1>
           <p className="mt-1 text-body-md text-on-surface-variant">Gestione sus solicitudes de beca y consulte sus notificaciones.</p>
         </div>
         <img src="/images/aspirante.png" alt="Panel de aspirante" className="imagen-ui-seccion self-center sm:self-auto" />
@@ -183,9 +183,11 @@ export default function PanelAspirante() {
                         ? `/aspirante/solicitudes/${solicitud.IdSolicitud}/continuar`
                         : `/aspirante/solicitudes/${solicitud.IdSolicitud}/resultado`
                     }
-                    className="mt-auto text-body-sm font-semibold text-primary-container hover:underline"
+                    className="mt-auto"
                   >
-                    {solicitud.Estado === 'BORRADOR' ? 'Continuar solicitud →' : 'Ver estado →'}
+                    <Boton variante="texto" tamano="sm">
+                      {solicitud.Estado === 'BORRADOR' ? 'Continuar solicitud →' : 'Ver estado →'}
+                    </Boton>
                   </Link>
                 </Tarjeta>
               ))}

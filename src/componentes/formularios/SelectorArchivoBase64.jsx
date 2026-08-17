@@ -44,8 +44,8 @@ export default function SelectorArchivoBase64({ etiqueta = 'Documento de respald
 
   return (
     <div className="flex flex-col gap-1">
-      <label className="flex cursor-pointer flex-col items-center rounded-lg border-2 border-dashed border-outline-variant bg-surface-container-low p-6 text-center">
-        <span className="font-semibold text-primary">{etiqueta}</span>
+      <label className="flex cursor-pointer flex-col items-center rounded-lg border-2 border-dashed border-outline-variant bg-surface-container-low p-6 text-center transition hover:border-primary-container hover:bg-surface-container">
+        <span className="font-semibold text-on-surface">{etiqueta}</span>
         <span className="mt-1 text-body-sm text-on-surface-variant">
           {archivo ? archivo.nombre : `${extensionesPermitidas.join(', ').toUpperCase()} · máximo ${tamanoMaximoMb} MB`}
         </span>

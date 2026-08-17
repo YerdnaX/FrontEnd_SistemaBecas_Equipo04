@@ -20,21 +20,21 @@ export default function EncabezadoPublico() {
   const rutaMiCuenta = usuario ? '/mi-cuenta' : null;
 
   return (
-    <header className="sticky top-0 z-10 border-b border-outline-variant bg-surface-container-lowest">
+    <header className="sticky top-0 z-10 border-b border-outline-variant bg-surface-container-lowest/95 backdrop-blur">
       <div className="mx-auto flex max-w-container-max items-center justify-between px-4 py-4 md:px-12">
-        <Link to="/" className="flex items-center gap-3 text-headline-sm font-bold text-primary-container">
-          <img src="/images/logo.png" alt="Logo SGBE CUC" className="h-20 w-20 object-contain" />
+        <Link to="/" className="flex items-center gap-3 text-headline-sm font-bold text-on-surface">
+          <img src="/images/logo.png" alt="Logo SGBE CUC" className="h-14 w-14 object-contain" />
           <span>SGBE · CUC</span>
         </Link>
 
         <nav className="hidden items-center gap-6 md:flex">
           {ENLACES.map((enlace) => (
-            <Link key={enlace.ruta} to={enlace.ruta} className="text-body-md text-on-surface hover:text-primary-container">
+            <Link key={enlace.ruta} to={enlace.ruta} className="text-body-md text-on-surface-variant transition hover:text-primary">
               {enlace.etiqueta}
             </Link>
           ))}
           {usuario ? (
-            <Link to={rutaMiCuenta} className="inline-flex items-center gap-2 rounded-md bg-primary-container px-4 py-2 text-label-md text-on-primary">
+            <Link to={rutaMiCuenta} className="inline-flex items-center gap-2 rounded-md bg-primary-container px-4 py-2 text-label-md text-on-primary-container transition hover:bg-primary">
               <span className="flex h-8 w-8 items-center justify-center rounded-full bg-surface-container-lowest font-semibold text-primary-container">
                 {avatarInicial(usuario.nombre)}
               </span>
@@ -42,33 +42,38 @@ export default function EncabezadoPublico() {
             </Link>
           ) : (
             <>
-              <Link to="/login" className="text-body-md text-on-surface hover:text-primary-container">Iniciar sesión</Link>
-              <Link to="/registro" className="rounded-md bg-primary-container px-4 py-2 text-label-md text-on-primary">Registrarme</Link>
+              <Link to="/login" className="text-body-md text-on-surface-variant transition hover:text-primary">Iniciar sesión</Link>
+              <Link to="/registro" className="rounded-md bg-primary-container px-4 py-2 text-label-md text-on-primary-container transition hover:bg-primary">Registrarme</Link>
             </>
           )}
         </nav>
 
-        <button className="md:hidden" onClick={() => setMenuAbierto((valor) => !valor)} aria-label="Abrir menú">
-          <span className="text-headline-sm">☰</span>
+        <button
+          className="rounded-md p-2 text-on-surface md:hidden"
+          onClick={() => setMenuAbierto((valor) => !valor)}
+          aria-label="Abrir menú"
+          aria-expanded={menuAbierto}
+        >
+          <span className="text-headline-sm" aria-hidden="true">☰</span>
         </button>
       </div>
 
       {menuAbierto && (
-        <nav className="flex flex-col gap-3 border-t border-outline-variant px-4 py-4 md:hidden">
+        <nav className="anim-fade flex flex-col gap-3 border-t border-outline-variant px-4 py-4 md:hidden">
           {ENLACES.map((enlace) => (
-            <Link key={enlace.ruta} to={enlace.ruta} onClick={() => setMenuAbierto(false)}>{enlace.etiqueta}</Link>
+            <Link key={enlace.ruta} to={enlace.ruta} onClick={() => setMenuAbierto(false)} className="text-body-md text-on-surface">{enlace.etiqueta}</Link>
           ))}
           {usuario ? (
             <Link to={rutaMiCuenta} onClick={() => setMenuAbierto(false)} className="inline-flex items-center gap-2">
-              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-container font-semibold text-on-primary">
+              <span className="flex h-8 w-8 items-center justify-center rounded-full bg-primary-container font-semibold text-on-primary-container">
                 {avatarInicial(usuario.nombre)}
               </span>
-              <span>Mi cuenta</span>
+              <span className="text-on-surface">Mi cuenta</span>
             </Link>
           ) : (
             <>
-              <Link to="/login" onClick={() => setMenuAbierto(false)}>Iniciar sesión</Link>
-              <Link to="/registro" onClick={() => setMenuAbierto(false)}>Registrarme</Link>
+              <Link to="/login" onClick={() => setMenuAbierto(false)} className="text-on-surface">Iniciar sesión</Link>
+              <Link to="/registro" onClick={() => setMenuAbierto(false)} className="text-on-surface">Registrarme</Link>
             </>
           )}
         </nav>

@@ -80,8 +80,8 @@ export default function JustificacionesCursos() {
             etiqueta: 'Respaldo',
             render: (fila) => fila.NombreOriginal ? (
               <div className="flex gap-3">
-                <button type="button" className="font-semibold text-primary-container hover:underline" onClick={() => manejarArchivo(fila.IdJustificacion, 'abrir')}>Ver</button>
-                <button type="button" className="font-semibold text-primary-container hover:underline" onClick={() => manejarArchivo(fila.IdJustificacion, 'descargar')}>Descargar</button>
+                <Boton type="button" variante="texto" onClick={() => manejarArchivo(fila.IdJustificacion, 'abrir')}>Ver</Boton>
+                <Boton type="button" variante="texto" onClick={() => manejarArchivo(fila.IdJustificacion, 'descargar')}>Descargar</Boton>
               </div>
             ) : 'Sin archivo'
           }

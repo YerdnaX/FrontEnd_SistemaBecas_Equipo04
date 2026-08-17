@@ -32,7 +32,7 @@ export default function ListaNoticiasPublicas() {
       <EncabezadoPublico />
       <main className="mx-auto max-w-container-max px-4 py-10 md:px-12">
         <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
-          <h1 className="text-headline-lg font-semibold text-primary">Noticias</h1>
+          <h1 className="text-headline-lg font-semibold text-on-surface">Noticias</h1>
           <img src="/images/noticias.png" alt="Noticias del sistema" className="imagen-ui-seccion self-center sm:self-auto" />
         </div>
 
@@ -48,7 +48,7 @@ export default function ListaNoticiasPublicas() {
               <button
                 key={opcion.valor}
                 onClick={() => setCategoriaFiltro(opcion.valor)}
-                className={`rounded-full px-3 py-1 text-label-sm font-semibold transition ${categoriaFiltro === opcion.valor ? obtenerCategoria(opcion.valor).barra + ' text-white' : obtenerCategoria(opcion.valor).clase + ' hover:opacity-80'}`}
+                className={`rounded-full px-3 py-1 text-label-sm font-semibold transition ${categoriaFiltro === opcion.valor ? obtenerCategoria(opcion.valor).barra + ' text-on-primary' : obtenerCategoria(opcion.valor).clase + ' hover:opacity-80'}`}
               >
                 {opcion.etiqueta}
               </button>

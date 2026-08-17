@@ -57,7 +57,7 @@ export default function RevisionEnvioSolicitud() {
     <div>
       <PasosSolicitud pasoActual="revision" estadoSolicitud={estadoSolicitud} />
       <Tarjeta>
-        <h1 className="text-headline-sm font-semibold text-primary">Revisión final</h1>
+        <h1 className="text-headline-sm font-semibold text-on-surface">Revisión final</h1>
 
         {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
 

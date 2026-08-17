@@ -118,7 +118,7 @@ export default function SolicitudDatosPersonales() {
     <div>
       <PasosSolicitud pasoActual="personal" estadoSolicitud={estadoSolicitud} />
       <Tarjeta>
-        <h1 className="text-headline-sm font-semibold text-primary">Información personal</h1>
+        <h1 className="text-headline-sm font-semibold text-on-surface">Información personal</h1>
         <form className="mt-6 grid gap-4 sm:grid-cols-2" onSubmit={manejarEnvio}>
           {error && <div className="sm:col-span-2"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
           <CampoTexto etiqueta="Identificación" value={formulario.identificacion} required inputMode="numeric" maxLength={9}

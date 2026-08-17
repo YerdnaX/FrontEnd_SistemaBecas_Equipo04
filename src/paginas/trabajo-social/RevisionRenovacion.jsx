@@ -81,7 +81,7 @@ export default function RevisionRenovacion() {
         </div>
       </Tarjeta>
       <Tarjeta>
-        <h2 className="font-semibold text-primary">Actualización socioeconómica</h2>
+        <h2 className="font-semibold text-on-surface">Actualización socioeconómica</h2>
         <p className="mt-3 whitespace-pre-wrap">
           {renovacion?.datosActualizados?.actualizacionSocioeconomica || 'El estudiante no indicó cambios.'}
         </p>
@@ -105,16 +105,22 @@ export default function RevisionRenovacion() {
       <div className="grid gap-6 lg:grid-cols-2">
         <Tarjeta>
           <form className="space-y-4" onSubmit={evaluar}>
-            <h2 className="font-semibold text-primary">Evaluación</h2>
-            <label className="flex gap-2"><input type="checkbox" checked={evaluacion.cumpleAcademico} onChange={(e) => setEvaluacion({ ...evaluacion, cumpleAcademico: e.target.checked })} /> Cumple requisitos académicos</label>
-            <label className="flex gap-2"><input type="checkbox" checked={evaluacion.cumpleSocioeconomico} onChange={(e) => setEvaluacion({ ...evaluacion, cumpleSocioeconomico: e.target.checked })} /> Cumple condición socioeconómica</label>
+            <h2 className="font-semibold text-on-surface">Evaluación</h2>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" className="h-4 w-4 rounded-sm border-outline-variant bg-surface-container-low text-primary-container focus-visible:ring-2 focus-visible:ring-primary accent-primary-container" checked={evaluacion.cumpleAcademico} onChange={(e) => setEvaluacion({ ...evaluacion, cumpleAcademico: e.target.checked })} />
+              Cumple requisitos académicos
+            </label>
+            <label className="flex items-center gap-2">
+              <input type="checkbox" className="h-4 w-4 rounded-sm border-outline-variant bg-surface-container-low text-primary-container focus-visible:ring-2 focus-visible:ring-primary accent-primary-container" checked={evaluacion.cumpleSocioeconomico} onChange={(e) => setEvaluacion({ ...evaluacion, cumpleSocioeconomico: e.target.checked })} />
+              Cumple condición socioeconómica
+            </label>
             <CampoAreaTexto etiqueta="Observaciones" value={evaluacion.observaciones} onChange={(e) => setEvaluacion({ ...evaluacion, observaciones: e.target.value })} />
             <Boton type="submit" deshabilitado={renovacion?.Estado !== 'EN_REEVALUACION'}>Guardar evaluación</Boton>
           </form>
         </Tarjeta>
         <Tarjeta>
           <form className="space-y-4" onSubmit={resolver}>
-            <h2 className="font-semibold text-primary">Resolución</h2>
+            <h2 className="font-semibold text-on-surface">Resolución</h2>
             <CampoSelect etiqueta="Resultado" value={resolucion.resultado} onChange={(e) => setResolucion({ ...resolucion, resultado: e.target.value })} opciones={['RENOVADA', 'REDUCIDA', 'SUSPENDIDA', 'DENEGADA'].map((valor) => ({ valor, etiqueta: valor }))} />
             <CampoTexto etiqueta="Nuevo porcentaje" type="number" min="1" max="100" value={resolucion.porcentajeNuevo} onChange={(e) => setResolucion({ ...resolucion, porcentajeNuevo: e.target.value })} />
             <CampoAreaTexto etiqueta="Motivo" value={resolucion.motivo} onChange={(e) => setResolucion({ ...resolucion, motivo: e.target.value })} />

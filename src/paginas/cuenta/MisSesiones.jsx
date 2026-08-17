@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import EncabezadoPagina from '../../componentes/comunes/EncabezadoPagina.jsx';
 import Tarjeta from '../../componentes/comunes/Tarjeta.jsx';
 import Boton from '../../componentes/comunes/Boton.jsx';
 import AlertaMensaje from '../../componentes/comunes/AlertaMensaje.jsx';
@@ -41,10 +42,10 @@ export default function MisSesiones() {
 
   return (
     <div className="mx-auto max-w-2xl">
-      <h1 className="text-headline-lg font-semibold text-primary">Mis sesiones activas</h1>
-      <p className="mt-1 text-body-sm text-on-surface-variant">
-        Aquí puede ver desde dónde ha iniciado sesión y cerrar cualquiera que no reconozca.
-      </p>
+      <EncabezadoPagina
+        titulo="Mis sesiones activas"
+        descripcion="Aquí puede ver desde dónde ha iniciado sesión y cerrar cualquiera que no reconozca."
+      />
 
       {error && <div className="mt-4"><AlertaMensaje tipo="error">{error}</AlertaMensaje></div>}
       {cargando && <EstadoCarga />}
