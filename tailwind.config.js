@@ -1,9 +1,8 @@
 /**
- * Design tokens SGBE - CUC (identidad 2026).
- * Paleta base: #2F2FE4 (primary) · #162E93 (secondary) · #1A1953 (surface) · #080616 (background).
- * Los NOMBRES de los tokens se mantienen respecto a la versión anterior a propósito: todas las
- * pantallas ya consumen estas clases (bg-primary-container, text-on-surface-variant, etc.), así que
- * repintar la app es, en su mayoría, cambiar los VALORES aquí — no editar cada archivo.
+ * Sistema cromático SGBE - CUC.
+ * Paleta base: carbón vegetal #181C14, grafito #3C3D37, salvia #697565 y marfil #ECDFCC.
+ * Los tonos intermedios son mezclas de estos cuatro colores y se reservan para
+ * separar niveles de superficie sin introducir matices ajenos a la identidad.
  */
 export default {
   content: ['./index.html', './src/**/*.{js,jsx}'],
@@ -19,65 +18,65 @@ export default {
     },
     extend: {
       colors: {
-        background: '#080616',
-        'on-background': '#f1f1fb',
+        background: '#181C14',
+        'on-background': '#ECDFCC',
 
-        surface: '#1a1953',
-        'surface-dim': '#100e30',
-        'surface-bright': '#2e2b7a',
-        'surface-container-lowest': '#0c0a24',
-        'surface-container-low': '#120f38',
-        'surface-container': '#1a1953',
-        'surface-container-high': '#232064',
-        'surface-container-highest': '#2c2874',
+        surface: '#3C3D37',
+        'surface-dim': '#181C14',
+        'surface-bright': '#596054',
+        'surface-container-lowest': '#181C14',
+        'surface-container-low': '#22271F',
+        'surface-container': '#2C302A',
+        'surface-container-high': '#3C3D37',
+        'surface-container-highest': '#4A4D46',
 
-        'on-surface': '#e9e9f8',
-        'on-surface-variant': '#a6a8cc',
-        outline: '#4a4790',
-        'outline-variant': '#2a2760',
+        'on-surface': '#ECDFCC',
+        'on-surface-variant': '#C8C1B3',
+        outline: '#8B9588',
+        'outline-variant': '#697565',
 
-        primary: '#4f4fff',
-        'on-primary': '#ffffff',
-        'primary-container': '#2f2fe4',
-        'on-primary-container': '#ffffff',
+        primary: '#F7ECDD',
+        'on-primary': '#181C14',
+        'primary-container': '#ECDFCC',
+        'on-primary-container': '#181C14',
 
-        secondary: '#162e93',
-        'on-secondary': '#ffffff',
-        'secondary-container': '#22337a',
-        'on-secondary-container': '#c7d0f5',
+        secondary: '#9BA692',
+        'on-secondary': '#181C14',
+        'secondary-container': '#3C3D37',
+        'on-secondary-container': '#ECDFCC',
 
-        tertiary: '#7c5cfc',
-        'on-tertiary': '#ffffff',
-        'tertiary-container': '#2a2064',
-        'on-tertiary-container': '#d9ccff',
+        tertiary: '#D2C9B9',
+        'on-tertiary': '#181C14',
+        'tertiary-container': '#465044',
+        'on-tertiary-container': '#ECDFCC',
 
-        error: '#ef4444',
-        'on-error': '#ffffff',
-        'error-container': '#3a1520',
-        'on-error-container': '#fca5a5',
+        error: '#E2BFAF',
+        'on-error': '#181C14',
+        'error-container': '#493A34',
+        'on-error-container': '#F0D2C3',
 
-        exito: '#22c55e',
-        'exito-container': '#12301f',
-        'on-exito-container': '#86efac',
+        exito: '#BFCBB7',
+        'exito-container': '#344236',
+        'on-exito-container': '#DCE6D5',
 
-        advertencia: '#f59e0b',
-        'advertencia-container': '#332510',
-        'on-advertencia-container': '#fcd34d',
+        advertencia: '#E0CDAF',
+        'advertencia-container': '#4A4233',
+        'on-advertencia-container': '#F0DFC4',
 
-        'categoria-academica': '#5b8def',
-        'categoria-academica-container': '#16223f',
-        'categoria-financiera': '#2dd4bf',
-        'categoria-financiera-container': '#0f2e2c',
-        'categoria-convocatoria': '#b48cf5',
-        'categoria-convocatoria-container': '#241c3d',
-        'categoria-evento': '#fb923c',
-        'categoria-evento-container': '#3a2410',
-        'categoria-urgente': '#fb7185',
-        'categoria-urgente-container': '#3a1622',
-        'categoria-general': '#9aa3c7',
-        'categoria-general-container': '#20233a',
-        'convocatoria-destacada': '#facc15',
-        'convocatoria-destacada-container': '#332b0a'
+        'categoria-academica': '#D5D8C9',
+        'categoria-academica-container': '#384038',
+        'categoria-financiera': '#BFCBB7',
+        'categoria-financiera-container': '#344236',
+        'categoria-convocatoria': '#D9CEC0',
+        'categoria-convocatoria-container': '#46413B',
+        'categoria-evento': '#E0CDAF',
+        'categoria-evento-container': '#4A4233',
+        'categoria-urgente': '#E2BFAF',
+        'categoria-urgente-container': '#493A34',
+        'categoria-general': '#C8C1B3',
+        'categoria-general-container': '#3C3D37',
+        'convocatoria-destacada': '#ECDFCC',
+        'convocatoria-destacada-container': '#465044'
       },
       fontFamily: {
         sans: ['Hanken Grotesk', 'sans-serif']
@@ -98,10 +97,10 @@ export default {
         'container-max': '80rem'
       },
       boxShadow: {
-        'elevation-l1': '0 1px 2px rgba(0,0,0,0.5)',
-        'elevation-l2': '0 8px 24px -8px rgba(0,0,0,0.55)',
-        'elevation-l3': '0 20px 48px -12px rgba(0,0,0,0.65)',
-        'focus-ring': '0 0 0 3px rgba(79,79,255,0.45)'
+        'elevation-l1': '0 1px 2px rgba(24,28,20,0.55)',
+        'elevation-l2': '0 8px 24px -8px rgba(24,28,20,0.72)',
+        'elevation-l3': '0 20px 48px -12px rgba(24,28,20,0.84)',
+        'focus-ring': '0 0 0 3px rgba(236,223,204,0.4)'
       },
       transitionDuration: {
         DEFAULT: '160ms'
