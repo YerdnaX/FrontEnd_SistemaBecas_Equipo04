@@ -36,7 +36,7 @@ export default function FormalizacionBeneficio() {
     setProcesando(true);
     try {
       await aceptarFormalizacion(id, { acepta });
-      setMensaje({ tipo: 'exito', texto: 'La aceptación quedó registrada. El beneficio pasa a validación académica.' });
+      setMensaje({ tipo: 'exito', texto: 'Las condiciones y el convenio fueron aceptados correctamente.' });
       setConfirmar(false);
       cargar();
     } catch (error) {
